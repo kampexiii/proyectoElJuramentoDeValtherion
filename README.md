@@ -1,68 +1,83 @@
 # El Juramento de Valtherion 🛡️⚔️
 
-> RPG narrativo en web (Laravel 12) basado en decisiones, progreso y combate por turnos.
+> RPG narrativo en web desarrollado con **Laravel 12**, enfocado en la toma de decisiones, progresión de personajes y combates por turnos con estética Pixel Art.
 
 [![Laravel](https://img.shields.io/badge/Laravel-12.x-red.svg)](https://laravel.com/)
 [![PHP](https://img.shields.io/badge/PHP-8.2%2B-blue.svg)](https://www.php.net/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](#licencia)
 
-## 📌 ¿Qué es este proyecto?
+## 📌 Sobre el Proyecto
 
-**El Juramento de Valtherion** es un proyecto de RPG en web donde el jugador avanza a través de una historia de fantasía épica tomando decisiones que alteran el desarrollo de misiones, la dificultad de los enemigos y el estado final del personaje.
+**El Juramento de Valtherion** es un juego web donde cada decisión cuenta. Los jugadores exploran un mundo de fantasía, mejoran su equipo y se enfrentan a desafíos que cambian según sus elecciones previas.
 
-La idea central:
+### ✨ Funcionalidades Principales
 
--   **Decisiones con impacto real** (misión más dura o más fácil según tus elecciones).
--   **Progresión** del personaje y mejoras.
--   **Combate por turnos** (enfoque táctico).
--   Base técnica sólida con **Laravel 12** para crecer de forma limpia y mantenible.
-
-> Nota: si algunas funcionalidades están en desarrollo, revisa el apartado “Roadmap” más abajo.
-
----
-
-## 🧭 Tabla de contenido
-
--   [Demo / Capturas](#-demo--capturas)
--   [Requisitos](#-requisitos)
--   [Instalación (local)](#-instalación-local)
--   [Ejecutar el proyecto](#-ejecutar-el-proyecto)
--   [Credenciales de prueba](#-credenciales-de-prueba)
--   [Arquitectura y estructura](#-arquitectura-y-estructura)
--   [Comandos útiles](#-comandos-útiles)
--   [Testing](#-testing)
--   [Roadmap](#-roadmap)
--   [Contribuir](#-contribuir)
--   [Licencia](#-licencia)
+-   **Misiones con Ramificaciones**: Elige tu camino y asume las consecuencias.
+-   **Sistema de Personajes**: Atributos, niveles y gestión de inventario.
+-   **Combates por Turnos**: Sistema táctico estilo RPG clásico.
+-   **Mensajería en Tiempo Real**: Chat global y de grupo usando Laravel Reverb.
+-   **Modos de Juego**: Experiencia offline (historia) y online (misiones en pareja y duelos PvP).
+-   **Panel de Administración**: Gestión completa de contenido (usuarios, ítems, misiones).
 
 ---
 
-## 🌐 Demo / Capturas
+## 🚀 Inicio Rápido
 
--   **Demo (si aplica):** _(pendiente de añadir)_
--   **Capturas:** _(pendiente de añadir en `/docs/screenshots`)_
-
-> Sugerencia: añade aquí el enlace de despliegue cuando lo tengas (Render/Forge/VPS/Hostinger/etc.).
-
----
-
-## ✅ Requisitos
-
-Asegúrate de tener instalado:
+### Requisitos Técnicos
 
 -   **PHP 8.2+**
--   **Composer**
--   **Node.js 20+** (o la versión que uses) + **npm**
--   **MySQL / MariaDB** (o el motor que estés usando)
--   Extensiones PHP comunes para Laravel (OpenSSL, PDO, Mbstring, Tokenizer, XML, Ctype, JSON, etc.)
+-   **Composer** (gestor de dependencias PHP)
+-   **Node.js 20+** y **NPM** (para assets y chat en vivo)
+-   **MySQL / MariaDB** (base de datos)
+-   **DBeaver** (recomendado para ver la BD)
+
+### Instalación en Local
+
+1. **Clonar el proyecto:**
+    ```bash
+    git clone https://github.com/kampexiii/proyectoElJuramentoDeValtherion.git
+    cd proyectoElJuramentoDeValtherion
+    ```
+2. **Instalar dependencias:**
+    ```bash
+    composer install
+    npm install
+    ```
+3. **Configurar el entorno:**
+    - Copia `.env.example` a `.env`.
+    - Crea una base de datos llamada `valtherion`.
+    - Configura las credenciales de la BD en el archivo `.env`.
+4. **Levantar el proyecto:**
+    ```bash
+    php artisan key:generate
+    php artisan migrate --seed
+    npm run dev
+    php artisan serve
+    ```
 
 ---
 
-## 🧩 Instalación (local)
+## 📂 Estructura del Proyecto
 
-### 1) Clonar el repositorio
+Para entender cómo está organizado el desarrollo, consulta la carpeta de **[Documentación](./docs/)**, que incluye:
 
-```bash
-git clone https://github.com/<TU_USUARIO>/<TU_REPO>.git
-cd <TU_REPO>
-```
+-   **[Calendario de Trabajo](./docs/calendario.md)**: Planificación de 6 semanas.
+-   **[Modelo de Base de Datos](./docs/MODELO_BD.md)**: Tablas y relaciones.
+-   **[Guía de Instalación Detallada](./docs/GUIA_INSTALACION.md)**.
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+-   **Backend**: Laravel 12 (PHP)
+-   **Frontend**: Blade, CSS (Pixel Art focus), JavaScript (Vite)
+-   **Real-time**: Laravel Reverb + Laravel Echo
+-   **Auth**: Laravel Breeze
+-   **Diseño**: Figma, Photoshop
+
+---
+
+## 👨‍💻 Autor
+
+Proyecto desarrollado por **Kampexiii** como proyecto final para 2º DAW.
+
+-   GitHub: [@kampexiii](https://github.com/kampexiii)
