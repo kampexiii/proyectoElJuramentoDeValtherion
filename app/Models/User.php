@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'plan',
+        'premium_granted_by_code_id',
+        'premium_granted_at',
     ];
 
     /**
@@ -43,6 +46,18 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'premium_granted_at' => 'datetime',
         ];
     }
+
+    public function characters()
+    {
+        return $this->hasMany(Character::class);
+    }
+
+    public function premiumGrantedByCode()
+    {
+        return $this->belongsTo(PremiumCode::class, 'premium_granted_by_code_id');
+    }
 }
+
