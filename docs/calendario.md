@@ -82,6 +82,7 @@ Repo:
 - Preparación carpeta ERD (`docs/ERD/`).
 - Estructura base de Welcome público y Home privado modular por secciones (Bootstrap básico).
 - Refactor de Welcome/Home: secciones con tono de crónica + estructura para logo en public/assets/brand/.
+- Logo dentro del hero + footer welcome + limpieza de secciones no usadas.
 - Ajuste final Semana 0 en calendario.
 
 **Bitácora:** `docs/bitacora/2026-01-18.md`
