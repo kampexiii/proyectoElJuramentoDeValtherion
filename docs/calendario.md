@@ -80,6 +80,7 @@ Repo:
 - Instalación de Laravel Reverb (Broadcasting).
 - Documentación del modelo de datos (`docs/MODELO_BD.md`).
 - Preparación carpeta ERD (`docs/ERD/`).
+- Estructura base de Welcome público y Home privado modular por secciones (Bootstrap básico).
 - Ajuste final Semana 0 en calendario.
 
 **Bitácora:** `docs/bitacora/2026-01-18.md`
@@ -106,7 +107,7 @@ Archivos a crear/tocar:
 
 Acciones:
 
-- Añadir campo role a users
+- revisar users y SOLO crear migration si falta el campo
 - Seed: crear admin por defecto (email fijo de clase)
 
 Comandos:
@@ -668,39 +669,54 @@ Bitácora:
 
 ---
 
-### 2026-02-06 (Vie) — 3h — Premium B+C (códigos + pagos)
+### 2026-02-06 (Vie) — 3h — Premium por códigos + Temporadas (ranking mensual por raza + cofre)
 
 Trello:
 
-- "Día 22 — Códigos + pagos"
+- "Día 22 — Premium por códigos + Ranking mensual"
 
-Parte B (códigos):
+Parte A — Premium por códigos (real)
 Archivos:
 
-- database/migrations/create_redeem_codes_table.php (crear)
-- app/Models/RedeemCode.php (crear)
-- app/Http/Controllers/RedeemCodeController.php (crear)
-- resources/views/game/profile/redeem.blade.php (crear)
-- routes/web.php (tocar)
+- database/migrations/create_redeem_codes_table.php (si no existe)
+- app/Models/RedeemCode.php
+- app/Http/Controllers/RedeemCodeController.php
+- resources/views/game/profile/redeem.blade.php
+- routes/web.php
 
-Parte C (pagos):
-Archivos (mínimo para dejarlo funcional):
+Reglas:
 
-- database/migrations/create_payments_table.php (crear)
-- app/Models/Payment.php (crear)
-- app/Http/Controllers/PaymentController.php (crear)
-- resources/views/game/profile/payments.blade.php (crear)
-- docs/GUIA_INSTALACION.md (tocar: variables .env de pago en modo test)
+- Código con usos máximos
+- Al canjear: usuario pasa a premium y se guarda cuándo + qué código
+- El admin puede generar códigos desde BD o un seeder simple
+
+Parte B — Temporada / ranking por raza + cofre al ganador
+Archivos:
+
+- app/Console/Commands/CloseSeason.php (crear)
+- app/Services/SeasonService.php (crear)
+- app/Services/ChestService.php (crear)
+- docs/COMANDOS.md (añadir cómo ejecutarlo)
+- docs/MODELO_BD.md (añadir nota si faltaba)
+
+Objetivo mínimo:
+
+- Calcular puntuación por raza del mes (lo que ya tengas modelado en BD)
+- Detectar raza ganadora
+- Generar cofre con 3 objetos (usando loot/rareza)
+- Guardar el resultado (tabla winners / openings / rewards)
+- Ejecutar manualmente el comando para probarlo (sin scheduler todavía)
 
 Comandos:
 
-- php artisan migrate
-- npm run build
+- php artisan make:command CloseSeason
+- php artisan close:season --month=2026-01 (o lo que uses)
+- php artisan test (si metes un test simple opcional)
 
-Commits (2–4):
+Commits:
 
-- "flujo de codigos para ser premium"
-- "flujo de pagos de prueba para premium"
+- "feat: premium por codigos canjeables"
+- "feat: ranking mensual por raza y cofre de recompensa"
 - git push
 
 Bitácora:
