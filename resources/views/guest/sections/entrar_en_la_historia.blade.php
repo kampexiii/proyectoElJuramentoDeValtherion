@@ -1,8 +1,8 @@
-<section class="mb-5 text-center bg-black p-4 rounded border border-light">
-    <h2 class="text-white mb-3" style="font-family: serif;">Entrar en la Historia</h2>
-    <p class="text-muted fst-italic mb-4">Si vas a jurar lealtad, que sea con tu verdadero nombre.</p>
-    <div class="d-flex justify-content-center gap-3">
-        <a href="{{ route('register') }}" class="btn btn-primary">Registrarse</a>
-        <a href="{{ route('login') }}" class="btn btn-outline-light">Acceder</a>
+<section class="mb-5 text-center bg-transparent p-4">
+    <p class="text-white fst-italic fs-5 mb-4">“Toda historia de ida, tiene un camino de vuelta...”</p>
+    <div>
+        <a href="#hero" class="text-white text-decoration-none border-bottom border-white pb-1">
+            ↑ Volver al inicio para Jurar (Login/Registro)
+        </a>
     </div>
 </section>
