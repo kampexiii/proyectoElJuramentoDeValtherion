@@ -81,6 +81,7 @@ Repo:
 - Documentación del modelo de datos (`docs/MODELO_BD.md`).
 - Preparación carpeta ERD (`docs/ERD/`).
 - Estructura base de Welcome público y Home privado modular por secciones (Bootstrap básico).
+- Refactor de Welcome/Home: secciones con tono de crónica + estructura para logo en public/assets/brand/.
 - Ajuste final Semana 0 en calendario.
 
 **Bitácora:** `docs/bitacora/2026-01-18.md`
