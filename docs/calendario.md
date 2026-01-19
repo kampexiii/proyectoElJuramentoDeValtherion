@@ -131,39 +131,23 @@ Commit:
 
 ---
 
-### 2026-01-20 (Mar) — 1h — Middleware roles + rutas protegidas
+### 2026-01-20 (Mar) — 1h — Middleware roles + rutas protegidas + Home Juego Base
 
-Trello:
+**Hecho:**
 
-- "Día 5 — Middleware roles"
+- Middleware para exigir role admin (`EnsureRole`).
+- Registro de alias de middleware en `bootstrap/app.php`.
+- Creación de ruta `/admin` y panel administrativo mínimo.
+- Ajuste estético de Login/Register (Modo oscuro + Logo + Castellano).
+- **Home Juego Base**: Estructura fija (no-scroll) con doble navbar (superior e inferior).
+- **Navegación**: Implementación de iconos y rutas placeholder para Tienda, Inventario, Perfil, Misiones, Peleas y Chat.
 
-Archivos:
+**Bitácora:** `docs/bitacora/2026-01-20.md`
 
-- app/Http/Middleware/EnsureRole.php (crear)
-- app/Http/Kernel.php (tocar) o bootstrap/app.php (según Laravel 12)
-- routes/web.php (tocar)
-
-Acciones:
-
-- Middleware para exigir role admin
-- Crear ruta /admin (pantalla simple)
-
-Comandos:
-
-- php artisan make:middleware EnsureRole
-
-Views:
-
-- resources/views/admin/index.blade.php (crear)
-
-Bitácora:
-
-- docs/bitacora/2026-01-20.md
-
-Commit:
+**Commit:**
 
 - git add .
-- git commit -m "middleware de roles y acceso a panel de admin"
+- git commit -m "middleware de roles, acceso a panel de admin y home juego base"
 - git push
 
 ---

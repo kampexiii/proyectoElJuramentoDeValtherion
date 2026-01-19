@@ -11,8 +11,19 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return view('home');
+    return view('game.home.index');
 })->middleware(['auth', 'verified'])->name('home');
+
+// Rutas del Juego (Placeholders)
+Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
+    Route::get('/tienda', function () { return view('game.tienda'); })->name('game.tienda');
+    Route::get('/inventario', function () { return view('game.inventario'); })->name('game.inventario');
+    Route::get('/perfil', function () { return view('game.perfil'); })->name('game.perfil');
+    Route::get('/ajustes', function () { return view('game.ajustes'); })->name('game.ajustes');
+    Route::get('/misiones', function () { return view('game.misiones'); })->name('game.misiones');
+    Route::get('/peleas', function () { return view('game.peleas'); })->name('game.peleas');
+    Route::get('/chat', function () { return view('game.chat'); })->name('game.chat');
+});
 
 Route::get('/dashboard', function () {
     return redirect()->route('home');

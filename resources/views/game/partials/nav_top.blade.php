@@ -1,0 +1,30 @@
+<nav class="navbar navbar-dark bg-dark border-bottom border-secondary" style="height: 64px;">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <!-- Izquierda: Tienda | Inventario -->
+        <div class="d-flex gap-3">
+            <a href="{{ route('game.tienda') }}" class="text-white fs-4" title="Tienda">
+                <i class="bi bi-bag"></i>
+            </a>
+            <a href="{{ route('game.inventario') }}" class="text-white fs-4" title="Inventario">
+                <i class="bi bi-backpack"></i>
+            </a>
+        </div>
+
+        <!-- Centro: Logo -->
+        <div class="position-absolute start-50 translate-middle-x">
+            <a href="{{ route('home') }}">
+                <img src="{{ asset('assets/brand/logo.png') }}" alt="Valtherion" style="height: 32px;">
+            </a>
+        </div>
+
+        <!-- Derecha: Perfil | Ajustes -->
+        <div class="d-flex gap-3">
+            <a href="{{ route('game.perfil') }}" class="text-white fs-4" title="Perfil">
+                <i class="bi bi-person"></i>
+            </a>
+            <a href="{{ route('game.ajustes') }}" class="text-white fs-4" title="Ajustes">
+                <i class="bi bi-gear"></i>
+            </a>
+        </div>
+    </div>
+</nav>
