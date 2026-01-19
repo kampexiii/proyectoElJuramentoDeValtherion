@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             EquipmentSlotsSeeder::class,
             HeroesSeeder::class,
             LootBaseSeeder::class,
+            AdminUserSeeder::class,
         ]);
 
         if (!User::query()->where('email', 'test@example.com')->exists()) {
