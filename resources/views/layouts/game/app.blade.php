@@ -11,22 +11,29 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <style>
-        body {
+        html, body {
+            height: 100dvh; /* Usamos dvh para navegadores móviles modernos */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
             background-color: #000;
             color: #fff;
-            height: 100vh;
-            overflow: hidden;
-            margin: 0;
+        }
+        body {
             display: flex;
             flex-direction: column;
         }
         main {
             flex: 1;
-            height: calc(100vh - 128px);
-            overflow: hidden;
+            overflow: hidden; /* Evita scroll absoluto, el contenido debe ajustarse */
+            display: flex;
+            flex-direction: column;
             padding: 1rem;
+            position: relative;
         }
-        .navbar {
+        .navbar-game {
+            flex-shrink: 0;
+            height: 64px;
             z-index: 1030;
         }
     </style>
@@ -35,7 +42,7 @@
 
     @include('game.partials.nav_top')
 
-    <main>
+    <main id="game-container">
         @yield('content')
     </main>
 

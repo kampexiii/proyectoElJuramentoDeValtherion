@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-dark border-top border-secondary fixed-bottom" style="height: 64px;">
+<nav class="navbar navbar-game navbar-dark bg-dark border-top border-secondary">
     <div class="container-fluid d-flex justify-content-around align-items-center">
         <!-- Home | Misiones | Peleas | Chat -->
         <a href="{{ route('home') }}" class="text-white fs-4" title="Home">

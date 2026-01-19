@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-dark border-bottom border-secondary" style="height: 64px;">
+<nav class="navbar navbar-game navbar-dark bg-dark border-bottom border-secondary">
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <!-- Izquierda: Tienda | Inventario -->
         <div class="d-flex gap-3">
