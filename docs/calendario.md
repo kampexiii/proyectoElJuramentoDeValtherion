@@ -206,6 +206,16 @@ Bitácora:
 
 [ ] docs/bitacora/2026-01-24.md
 
+**Actualización (2026-01-23, tarde) — Landing: Razas**
+
+- [x] `public/css/landing-theme.css` creado/extendido con tokens y estilos para `race-*`.
+- [x] Partial moderno `resources/views/guest/sections/_razas_grid.blade.php` creado.
+- [x] `resources/views/guest/welcome.blade.php` actualizado para incluir el nuevo partial.
+- [x] Se reemplazó/neutralizó el partial legacy `razas_del_viejo_mundo.blade.php` para evitar duplicados.
+- [x] Ajustes de accesibilidad: `alt` en avatars, `aria-label` en badge premium, focus-visible en cards.
+- [x] Cachés limpiadas (`view:clear`, `cache:clear`, `route:clear`, `config:clear`) y assets compilados (`npm run build`).
+
+
 Commit:
 
 [ ] "inventario funcional y seeders de items"
