@@ -8,17 +8,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('rarities', function (Blueprint $table) {
+        Schema::create('game_classes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->unsignedInteger('weight');
-            $table->unsignedInteger('min_level')->default(1);
+            $table->string('min_role')->default('free')->index();
+            $table->json('bonuses_json')->nullable();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('rarities');
+        Schema::dropIfExists('game_classes');
     }
 };
