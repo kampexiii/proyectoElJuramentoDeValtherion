@@ -1,106 +1,196 @@
 /* =========================================
-   THEMING SYSTEM — Valtherion
-   Dualidad: Claro ("Crónica Antigua") vs Oscuro ("Abismo")
+   Landing theme — componentes
+   Nota: variables / fondo / modos están en public/css/theme.css
    ========================================= */
 
-/* --- MODO CLARO (Por defecto: "La Crónica Antigua") --- */
-:root {
-    --brand-primary: #C59D5F; /* Bronce Valtherion */
-    --bg-app: #F2EAD3;        /* Pergamino Real */
-    --bg-surface: #E6DBC0;    /* Cuero Claro */
-    --text-main: #3E3228;     /* Tinta Sepia */
-    --text-muted: #7A5C35;    /* Sombra Bronce */
-    --border-style: 3px double var(--brand-primary); /* Bordes marcados */
-    --shadow: 0 4px 12px rgba(122, 92, 53, 0.3); /* Sombras cálidas */
+/* =========================================================
+     Palette placeholders (fácil de retocar sin romper nada)
+     ========================================================= */
+:root{
+    --bg: var(--bg-app);
+    --card: var(--bg-surface);
+    --text: var(--text-main);
+    --muted: var(--text-muted);
+    --accent: var(--brand-primary);
+    --premium: #f0ad4e;
+    /* avatar / badge sizing variables */
+    --race-avatar-size: 52px;
+    --race-badge-height: 34px;
 }
 
-/* --- MODO OSCURO (Se activa con clase .dark-mode en el body: "El Abismo") --- */
-body.dark-mode {
-    --brand-primary: #5C9EAD; /* Acento Espectral */
-    --bg-app: #121212;        /* Vacío */
-    --bg-surface: #242424;    /* Piedra Mazmorra */
-    --text-main: #D4D4D4;     /* Acero Pulido */
-    --text-muted: #8F8F8F;    /* Ceniza */
-    --border-style: 1px solid #333; /* Bordes mínimos */
-    --shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Sombras frías */
+/* =========================================================
+     Reader (Prólogo): excerpt + modal lectura
+     ========================================================= */
+.reader-card{
+    background: color-mix(in srgb, var(--card) 92%, var(--bg));
+    color: var(--text);
+    border: 1px solid color-mix(in srgb, var(--muted) 20%, transparent);
 }
 
-/* Aplicación básica */
-html, body {
-    background-color: var(--bg-app);
-    color: var(--text-main);
-    font-family: 'Instrument Sans', sans-serif;
-    line-height: 1.55;
+.reader-title{
+    font-family: serif;
+    letter-spacing: .2px;
 }
 
-a { color: var(--brand-primary); }
-a:hover { color: var(--text-main); }
-
-:focus-visible {
-    outline: 3px solid var(--brand-primary);
-    outline-offset: 3px;
-    border-radius: 10px;
+.reader-badge{
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: var(--text);
+    border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
+
+.reader-divider{
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 35%, var(--muted)), transparent);
+}
+
+.reader{
+    max-width: 70ch;
+}
+
+.reader-surface{
+    background: color-mix(in srgb, var(--card) 88%, white);
+    border: 1px solid color-mix(in srgb, var(--muted) 18%, transparent);
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 12px 34px rgba(0,0,0,.12);
+}
+
+.reader-text{
+    font-size: 1.02rem;
+    line-height: 1.75;
+    white-space: pre-line;
+    color: var(--text);
+}
+
+.reader-text.reader-dropcap::first-letter{
+    float: left;
+    font-size: 3.1rem;
+    line-height: 1;
+    font-weight: 800;
+    margin: .1rem .6rem 0 0;
+    color: var(--accent);
+}
+
+/* =========================================================
+     Razas: cards más ligeras (ancho editorial)
+     ========================================================= */
+.race-item{
+    background: color-mix(in srgb, var(--card) 92%, var(--bg));
+    color: var(--text);
+    border: 1px solid color-mix(in srgb, var(--muted) 18%, transparent);
+    border-radius: 16px;
+}
+
+.race-icon{
+    width: 44px;
+    height: 44px;
+    opacity: .9;
+    filter: drop-shadow(0 6px 14px rgba(0,0,0,.16));
+}
+
+/* default badge (final definition further below) */
 /* Contenedores y superficies */
 .section-panel {
     background: var(--bg-surface);
     border: var(--border-style);
     border-radius: 16px;
     padding: 18px;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-sm, 0 4px 12px rgba(122, 92, 53, 0.3));
 }
 
-.race-card {
-    background: linear-gradient(180deg, var(--bg-surface), var(--bg-app));
-    border: var(--border-style);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    padding: 16px;
+/* =========================================================
+     Razas (Grid) — cards modernas, compactas y casi cuadradas
+     Requiere variables: --bg, --card, --text, --muted, --accent, --premium
+     ========================================================= */
+
+.race-card{
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     position: relative;
-    transition: transform 0.18s cubic-bezier(.2,.8,.2,1), box-shadow 0.18s cubic-bezier(.2,.8,.2,1), border-color 0.18s cubic-bezier(.2,.8,.2,1);
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid color-mix(in srgb, var(--muted) 22%, transparent);
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--card) 92%, transparent),
+        color-mix(in srgb, var(--card) 72%, var(--bg))
+    );
+    box-shadow: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.12));
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
-.race-card:hover {
+.race-card:hover{
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-    border-color: var(--brand-primary);
+    border-color: color-mix(in srgb, var(--accent) 48%, transparent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
 }
 
-/* Tipografía */
-.race-title {
+.race-card:focus-visible{
+    outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent);
+    outline-offset: 2px;
+}
+
+.race-card.is-premium{
+    border-color: color-mix(in srgb, var(--premium) 42%, transparent);
+}
+
+.race-card.is-premium:hover{
+    border-color: color-mix(in srgb, var(--premium) 70%, transparent);
+}
+
+/* Reserve space at bottom of content so absolute avatar/badge don't overlap */
+.race-card .card-body{ padding-bottom: 56px; }
+
+.race-title{
+    color: var(--text);
     font-weight: 800;
-    letter-spacing: .2px;
+    letter-spacing: .15px;
     font-size: 1.05rem;
-    margin: 0 0 4px;
-    color: var(--text-main);
 }
 
-.race-meta {
-    font-size: .86rem;
-    color: var(--text-muted);
-    margin: 0 0 10px;
-}
-
-.race-desc {
+.race-desc{
+    color: var(--muted);
     font-size: .95rem;
-    color: var(--text-main);
+    line-height: 1.45;
     margin: 0;
-    max-width: 70ch;
 }
 
-/* Badge */
-.race-badge {
+.race-avatar{
     position: absolute;
-    top: 14px;
-    right: 14px;
-    padding: 6px 10px;
+    left: 14px;
+    bottom: 14px;
+    width: var(--race-avatar-size);
+    height: var(--race-avatar-size);
     border-radius: 999px;
-    font-size: .78rem;
+    object-fit: cover;
+    background: color-mix(in srgb, var(--card) 70%, var(--bg));
+    border: 1px solid color-mix(in srgb, var(--muted) 30%, transparent);
+    z-index: 2;
+}
+
+.race-badge-corner{
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    padding: 4px 8px;
+    border-radius: 10px;
+    font-size: .75rem;
     font-weight: 800;
-    border: 1px solid var(--text-muted);
-    background: rgba(197, 157, 95, 0.12);
-    color: var(--text-main);
+    background: var(--premium, #f0ad4e);
+    color: #111;
+    box-shadow: 0 6px 16px rgba(0,0,0,.18);
+    z-index: 3;
+}
+
+.line-clamp-2{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 
 /* Botones */
@@ -118,17 +208,5 @@ a:hover { color: var(--text-main); }
     background-color: var(--text-main);
     color: var(--bg-app);
     transform: translateY(-1px);
-    box-shadow: var(--shadow);
-}
-
-/* Para modo claro: texturas sutiles (opcional, añadir imagen de fondo) */
-body:not(.dark-mode) {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text fill="%23C59D5F" font-size="20" opacity="0.03">⚔</text></svg>');
-    background-repeat: repeat;
-    background-size: 50px 50px;
-}
-
-/* Para modo oscuro: minimalista */
-body.dark-mode {
-    background-image: none;
+    box-shadow: var(--shadow-sm, 0 4px 12px rgba(122, 92, 53, 0.3));
 }
