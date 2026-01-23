@@ -1,131 +1,134 @@
 /* =========================================
-   LANDING THEME (SIEMPRE CLARO) — Valtherion
-   Sin build / sin Tailwind compilado
+   THEMING SYSTEM — Valtherion
+   Dualidad: Claro ("Crónica Antigua") vs Oscuro ("Abismo")
    ========================================= */
 
-/* Tokens exactos (modo claro fijo) */
-:root{
-  --bg: #f6f7fb;
-  --surface-1: #ffffff;
-  --surface-2: #f0f2f7;
-
-  --text-1: #0f172a;
-  --text-2: #334155;
-  --text-3: #64748b;
-
-  --border: rgba(15, 23, 42, .12);
-
-  --accent: #00cfff;
-  --accent-2: #0ea5e9;
-  --accent-soft: rgba(0, 207, 255, .12);
-
-  --focus: rgba(0, 207, 255, .45);
-
-  --radius-lg: 16px;
-  --radius-md: 12px;
-
-  --shadow-sm: 0 6px 18px rgba(0,0,0,.18);
-  --shadow-md: 0 14px 40px rgba(0,0,0,.28);
-
-  --border-w: 1px;
-  --ease: cubic-bezier(.2,.8,.2,1);
+/* --- MODO CLARO (Por defecto: "La Crónica Antigua") --- */
+:root {
+    --brand-primary: #C59D5F; /* Bronce Valtherion */
+    --bg-app: #F2EAD3;        /* Pergamino Real */
+    --bg-surface: #E6DBC0;    /* Cuero Claro */
+    --text-main: #3E3228;     /* Tinta Sepia */
+    --text-muted: #7A5C35;    /* Sombra Bronce */
+    --border-style: 3px double var(--brand-primary); /* Bordes marcados */
+    --shadow: 0 4px 12px rgba(122, 92, 53, 0.3); /* Sombras cálidas */
 }
 
-/* Bootstrap mapping (para que .btn-primary, body, links, etc encajen) */
-:root{
-  --bs-body-bg: var(--bg);
-  --bs-body-color: var(--text-1);
-  --bs-secondary-color: var(--text-3);
-
-  --bs-border-color: var(--border);
-
-  --bs-primary: var(--accent);
-  --bs-primary-rgb: 0, 207, 255;
-
-  --bs-secondary: var(--accent-2);
-  --bs-secondary-rgb: 14, 165, 233;
-
-  --bs-link-color: var(--accent);
-  --bs-link-hover-color: var(--accent-2);
+/* --- MODO OSCURO (Se activa con clase .dark-mode en el body: "El Abismo") --- */
+body.dark-mode {
+    --brand-primary: #5C9EAD; /* Acento Espectral */
+    --bg-app: #121212;        /* Vacío */
+    --bg-surface: #242424;    /* Piedra Mazmorra */
+    --text-main: #D4D4D4;     /* Acero Pulido */
+    --text-muted: #8F8F8F;    /* Ceniza */
+    --border-style: 1px solid #333; /* Bordes mínimos */
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Sombras frías */
 }
 
-/* Base legibilidad */
-html, body{
-  background: var(--bg);
-  color: var(--text-1);
+/* Aplicación básica */
+html, body {
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    font-family: 'Instrument Sans', sans-serif;
+    line-height: 1.55;
 }
 
-body{
-  font-size: 16px;
-  line-height: 1.55;
+a { color: var(--brand-primary); }
+a:hover { color: var(--text-main); }
+
+:focus-visible {
+    outline: 3px solid var(--brand-primary);
+    outline-offset: 3px;
+    border-radius: 10px;
 }
 
-a{ color: var(--accent); }
-a:hover{ color: var(--accent-2); }
-
-:focus-visible{
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
-  border-radius: 10px;
+/* Contenedores y superficies */
+.section-panel {
+    background: var(--bg-surface);
+    border: var(--border-style);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: var(--shadow);
 }
 
-/* Bloque contenedor (panel) */
-.section-panel{
-  background: var(--surface-2);
-  border: var(--border-w) solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 18px;
+.race-card {
+    background: linear-gradient(180deg, var(--bg-surface), var(--bg-app));
+    border: var(--border-style);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 16px;
+    position: relative;
+    transition: transform 0.18s cubic-bezier(.2,.8,.2,1), box-shadow 0.18s cubic-bezier(.2,.8,.2,1), border-color 0.18s cubic-bezier(.2,.8,.2,1);
 }
 
-/* Card/item */
-.race-card{
-  background: linear-gradient(180deg, var(--surface-1), var(--surface-2));
-  border: var(--border-w) solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  padding: 16px;
-  position: relative;
-  transition: transform .18s var(--ease), box-shadow .18s var(--ease), border-color .18s var(--ease);
+.race-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    border-color: var(--brand-primary);
 }
 
-.race-card:hover{
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: rgba(0, 207, 255, .25);
+/* Tipografía */
+.race-title {
+    font-weight: 800;
+    letter-spacing: .2px;
+    font-size: 1.05rem;
+    margin: 0 0 4px;
+    color: var(--text-main);
 }
 
-/* Tipografía/jerarquía */
-.race-title{
-  font-weight: 800;
-  letter-spacing: .2px;
-  font-size: 1.05rem;
-  margin: 0 0 4px;
-  color: var(--text-1);
+.race-meta {
+    font-size: .86rem;
+    color: var(--text-muted);
+    margin: 0 0 10px;
 }
 
-.race-meta{
-  font-size: .86rem;
-  color: var(--text-3);
-  margin: 0 0 10px;
+.race-desc {
+    font-size: .95rem;
+    color: var(--text-main);
+    margin: 0;
+    max-width: 70ch;
 }
 
-.race-desc{
-  font-size: .95rem;
-  color: var(--text-2);
-  margin: 0;
-  max-width: 70ch;
+/* Badge */
+.race-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 800;
+    border: 1px solid var(--text-muted);
+    background: rgba(197, 157, 95, 0.12);
+    color: var(--text-main);
 }
 
-/* Badge estado (Libre, Premium...) */
-.race-badge{
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: .78rem;
-  font-weight: 800;
-  border: var(--border-w) solid var(--border);
-  background: var(--accent-soft);
-  color: var(--text-1);
+/* Botones */
+.btn-primary {
+    background-color: var(--brand-primary);
+    color: var(--bg-app);
+    border: var(--border-style);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all 0.15s cubic-bezier(.2,.8,.2,1);
+}
+
+.btn-primary:hover {
+    background-color: var(--text-main);
+    color: var(--bg-app);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+/* Para modo claro: texturas sutiles (opcional, añadir imagen de fondo) */
+body:not(.dark-mode) {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text fill="%23C59D5F" font-size="20" opacity="0.03">⚔</text></svg>');
+    background-repeat: repeat;
+    background-size: 50px 50px;
+}
+
+/* Para modo oscuro: minimalista */
+body.dark-mode {
+    background-image: none;
 }

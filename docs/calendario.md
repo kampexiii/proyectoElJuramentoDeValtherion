@@ -151,6 +151,7 @@ Acciones:
 [ ] Crear public/css/landing-theme.css con tokens claros y componentes
 [ ] Enlazar CSS en layouts/guest.blade.php después de Bootstrap
 [ ] Aplicar clases section-panel y race-* en razas_del_viejo_mundo.blade.php
+[ ] Implementar sistema de theming dual (claro "Crónica Antigua" + oscuro "Abismo")
 [ ] Actualizar bitácora del día
 [ ] Commit + push
 
