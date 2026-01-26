@@ -15,8 +15,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Theme (Landing forzado a claro) -->
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/landing-theme.css') }}">
+    @vite(['resources/css/theme.css', 'resources/css/landing/theme.css'])
 </head>
 
 <body>

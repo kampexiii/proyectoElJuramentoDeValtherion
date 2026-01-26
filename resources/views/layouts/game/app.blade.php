@@ -20,7 +20,7 @@
         })();
     </script>
 
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    @vite(['resources/css/theme.css'])
     
     <style>
         html, body {

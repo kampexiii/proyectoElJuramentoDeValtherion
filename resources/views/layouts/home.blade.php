@@ -16,7 +16,7 @@
         })();
     </script>
 
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    @vite(['resources/css/theme.css'])
 </head>
 <body>
     <header class="v-surface-nav p-3 mb-4">
