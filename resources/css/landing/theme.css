@@ -304,7 +304,7 @@
 }
 
 /* Botón Acceder: fondo negro, borde beige, texto blanco en estado normal para legibilidad */
-.btn.btn-hero-access{
+#hero .btn.btn-hero-access{
   background-color: rgba(0,0,0,0.8) !important;
   color: #ffffff !important;
   border: 2px solid rgba(242,230,207,.6) !important;
@@ -314,8 +314,8 @@
   transition: all 0.15s ease;
 }
 
-.btn.btn-hero-access:hover,
-.btn.btn-hero-access:focus{
+#hero .btn.btn-hero-access:hover,
+#hero .btn.btn-hero-access:focus{
   background-color: var(--beige-200, #f2e6cf) !important;
   color: #0b0f14 !important;
   border-color: var(--beige-200, #f2e6cf) !important;
