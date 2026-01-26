@@ -81,15 +81,6 @@
                 </div>
               </div>
             </div>
-
-            {{-- Footer --}}
-            <div class="mt-4 pt-3 border-top border-secondary-subtle d-flex flex-wrap justify-content-between align-items-center gap-3">
-              <small class="text-secondary">
-                Consejo: no persigas “el mejor stat”. Persigue un estilo… y una historia que aguante el peso.
-              </small>
-
-            </div>
-
           </div>
         </div>
 
