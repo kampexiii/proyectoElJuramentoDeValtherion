@@ -154,11 +154,8 @@
 .race-card-body{
   display:grid;
   grid-template-columns: 72px 1fr;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    "aside header"
-    "aside main"
-    "aside footer";
+  grid-template-rows: 1fr;
+  grid-template-areas: "aside content";
   gap: 10px 14px;
   height: 100%;
   padding: 1rem;
@@ -166,11 +163,13 @@
 
 .race-aside{ grid-area: aside; display:flex; align-items:center; justify-content:center; }
 
-.race-header{ grid-area: header; }
+.race-content{ grid-area: content; display:flex; flex-direction:column; }
 
-.race-main{ grid-area: main; }
+.race-header{ }
 
-.race-footer{ grid-area: footer; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.race-main{ flex:1; }
+
+.race-footer{ }
 
 .race-title{
     color: var(--text);

@@ -135,18 +135,20 @@
                                         loading="lazy"
                                     >
                                 </div>
-                                <div class="race-header">
-                                    <h4 class="race-title">{{ $raza['nombre'] }}</h4>
-                                </div>
-                                <div class="race-main">
-                                    <p class="race-desc">{{ $raza['descripcion'] }}</p>
-                                </div>
-                                <div class="race-footer">
-                                    @if(!$raza['is_premium'])
-                                        <span class="race-status">Disponible</span>
-                                    @else
-                                        <div class="race-pill-premium">Premium</div>
-                                    @endif
+                                <div class="race-content">
+                                    <div class="race-header">
+                                        <h4 class="race-title">{{ $raza['nombre'] }}</h4>
+                                    </div>
+                                    <div class="race-main">
+                                        <p class="race-desc">{{ $raza['descripcion'] }}</p>
+                                    </div>
+                                    <div class="race-footer">
+                                        @if(!$raza['is_premium'])
+                                            <span class="race-status">Disponible</span>
+                                        @else
+                                            <div class="race-pill-premium">Premium</div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </article>
