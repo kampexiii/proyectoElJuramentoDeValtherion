@@ -405,3 +405,8 @@
   border-radius: 12px;
   background: rgba(242,230,207,.05);
 }
+
+.section-description-races{
+  font-size: 1.1rem;
+  max-width: 80ch;
+}

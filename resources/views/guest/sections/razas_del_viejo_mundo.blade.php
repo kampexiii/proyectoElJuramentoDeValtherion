@@ -12,7 +12,7 @@
                 <h2 class="mb-3 section-title-races" style="font-family: serif; font-size: 2.5rem;">
                   Razas del Viejo Mundo
                 </h2>
-                <p class="text-secondary mb-4" style="max-width: 80ch; font-size: 1.1rem;">
+                <p class="text-secondary mb-4 section-description-races">
                   Elige tu facción en esta guerra eterna. Cada raza porta su propio destino y poder ancestral.
                 </p>
               </div>
