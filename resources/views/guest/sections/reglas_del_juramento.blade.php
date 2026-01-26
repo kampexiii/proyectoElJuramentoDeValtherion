@@ -17,9 +17,7 @@
                 </p>
               </div>
 
-              <span class="badge rounded-pill rules-badge px-3 py-2">
-                Sistema base
-              </span>
+
             </div>
 
             <div class="row g-3 mt-4">
@@ -30,7 +28,7 @@
                     <span class="rules-icon">⚔️</span>
                     <div>
                       <p class="mb-1 fw-semibold" style="color: #654321;">Stats base por raza</p>
-                      <small class="text-secondary">
+                      <small class="text-white">
                         Cada raza nace con un reparto inicial: vida, fuerza, magia, defensa y velocidad.
                       </small>
                     </div>
@@ -45,7 +43,7 @@
                     <span class="rules-icon">🛡️</span>
                     <div>
                       <p class="mb-1 fw-semibold" style="color: #654321;">Equipamiento que modifica</p>
-                      <small class="text-secondary">
+                      <small class="text-white">
                         Los objetos cambian tus stats al equiparlos. El poder se construye pieza a pieza.
                       </small>
                     </div>
@@ -60,7 +58,7 @@
                     <span class="rules-icon">📜</span>
                     <div>
                       <p class="mb-1 fw-semibold" style="color: #654321;">Misiones con decisiones</p>
-                      <small class="text-secondary">
+                      <small class="text-white">
                         Hay rutas fáciles y rutas dignas. El camino cómodo suele dar menos gloria.
                       </small>
                     </div>
@@ -75,7 +73,7 @@
                     <span class="rules-icon">🐎</span>
                     <div>
                       <p class="mb-1 fw-semibold" style="color: #654321;">Monturas legendarias</p>
-                      <small class="text-secondary">
+                      <small class="text-white">
                         Criaturas que suman poder si cabalgas sobre ellas. No todas aceptan jinete.
                       </small>
                     </div>
@@ -89,9 +87,7 @@
               <small class="text-secondary">
                 Consejo: no persigas “el mejor stat”. Persigue un estilo… y una historia que aguante el peso.
               </small>
-              <a href="#" class="btn btn-outline-light btn-sm">
-                Ver detalles
-              </a>
+
             </div>
 
           </div>

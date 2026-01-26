@@ -45,7 +45,7 @@
                         <span class="badge rounded-pill chronicle-step">+P</span>
                         <div>
                           <p class="mb-1 fw-semibold" style="color: #654321;">Victorias en combates</p>
-                          <small class="text-secondary">Duelos, batallas y enfrentamientos suman puntos según dificultad.</small>
+                          <small class="text-white">Duelos, batallas y enfrentamientos suman puntos según dificultad.</small>
                         </div>
                       </div>
                     </div>
@@ -55,7 +55,7 @@
                         <span class="badge rounded-pill chronicle-step">+P</span>
                         <div>
                           <p class="mb-1 fw-semibold" style="color: #654321;">Misiones completadas</p>
-                          <small class="text-secondary">Cada misión aporta puntos. Las de mayor rango aportan más.</small>
+                          <small class="text-white">Cada misión aporta puntos. Las de mayor rango aportan más.</small>
                         </div>
                       </div>
                     </div>
@@ -65,7 +65,7 @@
                         <span class="badge rounded-pill chronicle-step">+P</span>
                         <div>
                           <p class="mb-1 fw-semibold" style="color: #654321;">Logros y hitos</p>
-                          <small class="text-secondary">Subidas de nivel, objetivos especiales y eventos del mes.</small>
+                          <small class="text-white">Subidas de nivel, objetivos especiales y eventos del mes.</small>
                         </div>
                       </div>
                     </div>
