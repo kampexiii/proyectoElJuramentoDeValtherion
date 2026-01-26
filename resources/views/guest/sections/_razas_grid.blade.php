@@ -124,15 +124,8 @@
                             role="group"
                             aria-label="{{ $raza['nombre'] }}"
                         >
-                            <div class="card-body d-flex flex-column p-3">
-                                <div class="race-content">
-                                    <header class="mb-2">
-                                        <h3 class="race-title mb-0 line-clamp-2">{{ $raza['nombre'] }}</h3>
-                                    </header>
-                                    <p class="race-desc line-clamp-2 mb-0">{{ $raza['descripcion'] }}</p>
-                                </div>
-
-                                <div class="race-footer">
+                            <div class="race-card-body">
+                                <div class="race-aside">
                                     <img
                                         src="{{ $raza['imagen'] }}"
                                         alt="Avatar de {{ $raza['nombre'] }}"
@@ -141,10 +134,18 @@
                                         height="52"
                                         loading="lazy"
                                     >
-                                    @if($raza['is_premium'])
-                                        <div class="race-premium-pill">Premium</div>
+                                </div>
+                                <div class="race-header">
+                                    <h4 class="race-title">{{ $raza['nombre'] }}</h4>
+                                </div>
+                                <div class="race-main">
+                                    <p class="race-desc">{{ $raza['descripcion'] }}</p>
+                                </div>
+                                <div class="race-footer">
+                                    @if(!$raza['is_premium'])
+                                        <span class="race-status">Disponible</span>
                                     @else
-                                        <small class="race-status">Disponible</small>
+                                        <div class="race-pill-premium">Premium</div>
                                     @endif
                                 </div>
                             </div>
