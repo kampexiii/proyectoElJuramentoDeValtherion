@@ -204,7 +204,7 @@
     border-radius: 50%;
     object-fit: cover;
     object-position: 50% 40%;
-    transform: scale(1.22);
+    transform: scale(1.22) translateY(8px);
     transform-origin: center;
     border: 1px solid rgba(0,0,0,.12);
     background: rgba(255,255,255,.10);
