@@ -1,1 +1,305 @@
-/* General theme variables and base styles for the whole app. */
+/* =========================================================
+   THEME SYSTEM — Valtherion (Light/Dark)
+   Landing: forzado a LIGHT
+   App: toggle LIGHT/DARK
+   ========================================================= */
+
+/* ---------- Base tokens (comunes) ---------- */
+:root{
+  --radius-lg: 16px;
+  --radius-md: 12px;
+
+  --shadow-sm: 0 8px 24px rgba(0,0,0,.12);
+  --shadow-md: 0 16px 44px rgba(0,0,0,.22);
+
+  --border-w: 1px;
+  --ease: cubic-bezier(.2,.8,.2,1);
+
+  --fs-base: 16px;
+  --lh-base: 1.55;
+}
+
+/* =========================================================
+   LIGHT — “La Crónica Antigua”
+   ========================================================= */
+:root[data-theme="light"]{
+  --brand-primary: #C59D5F; /* Bronce Valtherion */
+  --brand-shadow:  #7A5C35; /* Sombra de Bronce */
+  --bg-app:        #F2EAD3; /* Pergamino Real */
+  --bg-surface:    #E6DBC0; /* Cuero Claro */
+  --text-main:     #3E3228; /* Tinta Sepia */
+  --text-muted:    #7A5C35; /* Sombra Bronce */
+
+  --border-style:  3px double var(--brand-primary);
+  --border-soft:   rgba(62, 50, 40, .16);
+
+  --btn-grad-1:    #D3B074;
+  --btn-grad-2:    #C59D5F;
+  --btn-grad-3:    #7A5C35;
+}
+
+/* =========================================================
+   DARK — “El Abismo”
+   ========================================================= */
+:root[data-theme="dark"]{
+  --brand-primary: #5C9EAD; /* Acento Espectral */
+  --bg-app:        #121212; /* Vacío */
+  --bg-surface:    #242424; /* Piedra de Mazmorra */
+  --text-main:     #D4D4D4; /* Acero Pulido */
+  --text-muted:    #8F8F8F; /* Ceniza */
+
+  --border-style:  1px solid #333;
+  --border-soft:   rgba(212, 212, 212, .12);
+
+  --btn-grad-1:    var(--brand-primary);
+  --btn-grad-2:    var(--brand-primary);
+  --btn-grad-3:    var(--brand-primary);
+}
+
+/* ---------- Aplicación base ---------- */
+html, body{
+  background: var(--bg-app);
+  color: var(--text-main);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+}
+
+a{ color: var(--brand-primary); }
+a:hover{ filter: brightness(1.1); }
+
+:focus-visible{
+  outline: 3px solid color-mix(in srgb, var(--brand-primary) 55%, transparent);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+/* =========================================================
+   Texturas de fondo
+   ========================================================= */
+:root[data-theme="light"] body{
+  background-color: var(--bg-app);
+  background-image:
+    radial-gradient(rgba(62,50,40,.05) 1px, transparent 1px),
+    radial-gradient(rgba(62,50,40,.03) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255,255,255,.25), rgba(0,0,0,0));
+  background-size: 28px 28px, 20px 20px, 100% 100%;
+  background-position: 0 0, 10px 8px, 0 0;
+}
+
+:root[data-theme="dark"] body{
+  background-color: var(--bg-app);
+  background-image:
+    radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    radial-gradient(rgba(92,158,173,.025) 1px, transparent 1px),
+    radial-gradient(1200px 600px at 50% 0%, rgba(92,158,173,.08), transparent 60%);
+  background-size: 36px 36px, 22px 22px, 100% 100%;
+  background-position: 0 0, 12px 10px, 0 0;
+}
+
+/* =========================================================
+   Superficies
+   ========================================================= */
+.v-surface{
+  background: var(--bg-surface);
+  border: var(--border-style);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.v-surface-soft{
+  background: color-mix(in srgb, var(--bg-surface) 88%, var(--bg-app));
+  border: var(--border-w) solid var(--border-soft);
+  border-radius: var(--radius-lg);
+}
+
+.v-surface-nav{
+  background: var(--bg-surface);
+  border-bottom: var(--border-w) solid var(--border-soft);
+}
+
+.v-muted{ color: var(--text-muted); }
+
+/* =========================================================
+   Botón primario
+   ========================================================= */
+.v-btn-primary{
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 800;
+  color: var(--bg-app);
+  background: linear-gradient(180deg, var(--btn-grad-1), var(--btn-grad-2) 55%, var(--btn-grad-3));
+  box-shadow: var(--shadow-sm);
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease);
+}
+
+.v-btn-primary:hover{
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+:root[data-theme="dark"] .v-btn-primary{
+  color: #121212;
+}
+
+/* Badge */
+.v-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 800;
+  border: var(--border-w) solid var(--border-soft);
+  background: color-mix(in srgb, var(--brand-primary) 14%, transparent);
+}
+
+/* Item tipo lista */
+.v-item{
+  background: color-mix(in srgb, var(--bg-surface) 92%, var(--bg-app));
+  border: var(--border-w) solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  position: relative;
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease), border-color .18s var(--ease);
+}
+
+.v-item:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: color-mix(in srgb, var(--brand-primary) 35%, var(--border-soft));
+}
+
+.v-item-title{
+  margin: 0 0 4px;
+  font-weight: 900;
+  letter-spacing: .2px;
+}
+
+.v-item-meta{
+  margin: 0 0 10px;
+  font-size: .86rem;
+  color: color-mix(in srgb, var(--text-muted) 80%, var(--text-main));
+}
+
+.v-item-desc{
+  margin: 0;
+  color: color-mix(in srgb, var(--text-main) 82%, var(--text-muted));
+  max-width: 70ch;
+}
+
+/* =========================================================
+   BOOTSTRAP 5.3 mapping (usa tus variables)
+   ========================================================= */
+:root{
+  --bs-body-bg: var(--bg-app);
+  --bs-body-color: var(--text-main);
+  --bs-secondary-color: var(--text-muted);
+  --bs-border-color: var(--border-soft);
+
+  --bs-primary: var(--brand-primary);
+
+  --bs-link-color: var(--brand-primary);
+  --bs-link-hover-color: color-mix(in srgb, var(--brand-primary) 85%, white);
+}
+
+.card, .modal-content, .dropdown-menu, .offcanvas{
+  background: var(--bg-surface);
+  color: var(--text-main);
+  border: var(--border-style);
+  border-radius: var(--radius-lg);
+}
+
+.form-control, .form-select, .input-group-text{
+  background: color-mix(in srgb, var(--bg-surface) 92%, var(--bg-app));
+  color: var(--text-main);
+  border: var(--border-w) solid var(--border-soft);
+}
+
+.btn-primary{
+  border: none;
+  font-weight: 800;
+  color: var(--bg-app);
+  background: linear-gradient(180deg, var(--btn-grad-1), var(--btn-grad-2) 55%, var(--btn-grad-3));
+}
+
+:root[data-theme="dark"] .btn-primary{
+  color: #121212;
+}
+
+/* =========================================================
+   Compatibility layer
+   Objetivo: que vistas existentes (Tailwind/Zinc/Bootstrap)
+   obedezcan al tema sin reescribir cada plantilla.
+   ========================================================= */
+
+/* ---------- Tailwind: fondos típicos ---------- */
+:root[data-theme] .bg-white{ background-color: var(--bg-surface) !important; }
+:root[data-theme] .bg-gray-50,
+:root[data-theme] .bg-gray-100{ background-color: var(--bg-app) !important; }
+
+/* ---------- Tailwind: texto típico ---------- */
+:root[data-theme] .text-gray-900,
+:root[data-theme] .text-gray-800{ color: var(--text-main) !important; }
+
+:root[data-theme] .text-gray-700,
+:root[data-theme] .text-gray-600,
+:root[data-theme] .text-gray-500,
+:root[data-theme] .text-gray-400{ color: var(--text-muted) !important; }
+
+/* ---------- Tailwind: bordes típicos ---------- */
+:root[data-theme] .border-gray-50,
+:root[data-theme] .border-gray-100,
+:root[data-theme] .border-gray-200,
+:root[data-theme] .border-gray-300{ border-color: var(--border-soft) !important; }
+
+/* ---------- Tailwind: sombras típicas ---------- */
+:root[data-theme] .shadow,
+:root[data-theme] .shadow-sm{ box-shadow: var(--shadow-sm) !important; }
+:root[data-theme] .shadow-md,
+:root[data-theme] .shadow-lg,
+:root[data-theme] .shadow-xl{ box-shadow: var(--shadow-md) !important; }
+
+/* ---------- Zinc (auth) ---------- */
+:root[data-theme] .bg-zinc-950{ background-color: var(--bg-app) !important; }
+:root[data-theme] .bg-zinc-900{ background-color: var(--bg-surface) !important; }
+:root[data-theme] .bg-zinc-100{ background-color: var(--bg-surface) !important; }
+
+:root[data-theme] .text-zinc-200,
+:root[data-theme] .text-zinc-900,
+:root[data-theme] .text-zinc-800{ color: var(--text-main) !important; }
+:root[data-theme] .text-zinc-600,
+:root[data-theme] .text-zinc-500,
+:root[data-theme] .text-zinc-400{ color: var(--text-muted) !important; }
+
+:root[data-theme] .border-zinc-800,
+:root[data-theme] .border-zinc-700{ border-color: var(--border-soft) !important; }
+
+/* ---------- Bootstrap: clases de contexto ---------- */
+:root[data-theme] .bg-dark{ background-color: var(--bg-surface) !important; }
+:root[data-theme] .bg-secondary{
+  background-color: color-mix(in srgb, var(--bg-app) 70%, var(--bg-surface)) !important;
+}
+
+:root[data-theme] .text-light{ color: var(--text-main) !important; }
+
+:root[data-theme] .border-secondary,
+:root[data-theme] .border-secondary-subtle,
+:root[data-theme] .border-light{ border-color: var(--border-soft) !important; }
+
+:root[data-theme] .border-warning{ border-color: var(--brand-primary) !important; }
+
+:root[data-theme] .text-bg-dark{
+  background-color: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+}
+
+:root[data-theme="light"] .btn-outline-light{
+  color: var(--text-main) !important;
+  border-color: color-mix(in srgb, var(--text-main) 70%, var(--brand-primary)) !important;
+}
+:root[data-theme="light"] .btn-outline-light:hover{
+  background-color: var(--text-main) !important;
+  color: var(--bg-app) !important;
+}
