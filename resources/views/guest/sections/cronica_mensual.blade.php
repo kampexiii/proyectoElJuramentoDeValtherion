@@ -9,13 +9,18 @@
             {{-- Header --}}
             <div class="d-flex flex-wrap align-items-start justify-content-between gap-3">
               <div class="text-start">
-                <h3 class="mb-2 section-title-chronicle" style="font-family: serif;">
+                <h2 class="mb-2 section-title-chronicle" style="font-family: serif; font-size: 2.5rem;">
                   Crónica Mensual
-                </h3>
-                <p class="text-secondary mb-0" style="max-width: 80ch;">
+                </h2>
+                <p class="text-secondary mb-3 text-center" style="max-width: 80ch;">
                   Cada mes, las razas compiten por el dominio del Viejo Mundo. La facción ganadora recibe un
                   <span class="fw-semibold chronicle-accent">cofre con 3 objetos de poder</span>.
                 </p>
+                <div class="d-flex justify-content-center gap-3 mb-3">
+                  <i class="fas fa-gift text-warning fa-2x" title="Cofre de premio"></i>
+                  <i class="fas fa-gift text-warning fa-2x" title="Cofre de premio"></i>
+                  <i class="fas fa-gift text-warning fa-2x" title="Cofre de premio"></i>
+                </div>
               </div>
 
               <span class="badge rounded-pill chronicle-badge px-3 py-2">
@@ -41,7 +46,7 @@
                       <div class="d-flex gap-3 align-items-start p-3 rounded-4 border border-secondary-subtle bg-dark bg-opacity-25">
                         <span class="badge rounded-pill chronicle-step">+P</span>
                         <div>
-                          <p class="mb-1 text-white fw-semibold">Victorias en combates</p>
+                          <p class="mb-1 fw-semibold" style="color: #654321;">Victorias en combates</p>
                           <small class="text-secondary">Duelos, batallas y enfrentamientos suman puntos según dificultad.</small>
                         </div>
                       </div>
@@ -51,7 +56,7 @@
                       <div class="d-flex gap-3 align-items-start p-3 rounded-4 border border-secondary-subtle bg-dark bg-opacity-25">
                         <span class="badge rounded-pill chronicle-step">+P</span>
                         <div>
-                          <p class="mb-1 text-white fw-semibold">Misiones completadas</p>
+                          <p class="mb-1 fw-semibold" style="color: #654321;">Misiones completadas</p>
                           <small class="text-secondary">Cada misión aporta puntos. Las de mayor rango aportan más.</small>
                         </div>
                       </div>
@@ -61,7 +66,7 @@
                       <div class="d-flex gap-3 align-items-start p-3 rounded-4 border border-secondary-subtle bg-dark bg-opacity-25">
                         <span class="badge rounded-pill chronicle-step">+P</span>
                         <div>
-                          <p class="mb-1 text-white fw-semibold">Logros y hitos</p>
+                          <p class="mb-1 fw-semibold" style="color: #654321;">Logros y hitos</p>
                           <small class="text-secondary">Subidas de nivel, objetivos especiales y eventos del mes.</small>
                         </div>
                       </div>
