@@ -138,7 +138,7 @@
                                 loading="lazy"
                             >
 
-                            <div class="card-body d-flex flex-column align-items-start text-start p-3">
+                            <div class="card-body d-flex flex-column align-items-center text-center p-3 pb-4">
                                 <header class="mb-2 w-100">
                                     <h3 class="race-title mb-0">{{ $raza['nombre'] }}</h3>
                                 </header>
@@ -147,7 +147,7 @@
                                     <p class="race-desc line-clamp-2 mb-0">{{ $raza['descripcion'] }}</p>
                                 </div>
 
-                                <div class="w-100 d-flex justify-content-end mt-2">
+                                <div class="w-100 d-flex justify-content-center mt-2">
                                     @if(!$raza['is_premium'])
                                         <small class="text-muted">Disponible</small>
                                     @endif
