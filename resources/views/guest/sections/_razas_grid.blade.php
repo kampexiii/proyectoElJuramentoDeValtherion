@@ -103,8 +103,8 @@
           <div class="card-body p-4 p-md-5">
 
             {{-- Header --}}
-            <div class="d-flex flex-wrap align-items-start justify-content-between gap-3">
-              <div class="text-start">
+            <div class="d-flex flex-wrap align-items-start justify-content-center gap-3">
+              <div class="text-center">
                 <h2 class="mb-3 section-title-races" style="font-family: serif; font-size: 2.5rem;">
                   Razas del Viejo Mundo
                 </h2>
