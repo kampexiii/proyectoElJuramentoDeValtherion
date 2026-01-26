@@ -303,9 +303,9 @@
   text-shadow: 1px 1px 2px #000;
 }
 
-/* Botón Acceder: texto beige claro en estado normal */
+/* Botón Acceder: texto blanco en estado normal para mejor legibilidad */
 .btn-hero-access{
-  color: var(--beige-200, #f2e6cf) !important;
+  color: white !important;
   border-color: rgba(242,230,207,.6) !important;
 }
 
