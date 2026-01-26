@@ -148,8 +148,12 @@
     border-color: color-mix(in srgb, var(--premium) 70%, transparent);
 }
 
-/* Reserve space at bottom of content so absolute avatar/badge don't overlap */
-.race-card .card-body{ padding-bottom: 56px; }
+/* Layout flex para cards de razas */
+.race-card .card-body{ display:flex; flex-direction:column; height:100%; padding: 1rem; }
+
+.race-content{ flex:1 1 auto; }
+
+.race-footer{ margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; }
 
 .race-title{
     color: var(--text);
@@ -166,9 +170,6 @@
 }
 
 .race-avatar{
-    position: absolute;
-    left: 14px;
-    bottom: 14px;
     width: var(--race-avatar-size);
     height: var(--race-avatar-size);
     border-radius: 50%;
@@ -178,7 +179,6 @@
     transform-origin: center;
     border: 1px solid rgba(0,0,0,.12);
     background: rgba(255,255,255,.12);
-    z-index: 2;
 }
 
 /* Variantes opcionales para ajustes específicos de avatares */
@@ -186,6 +186,10 @@
 .avatar-zoom-wide  { transform: scale(1.28); }
 .avatar-pos-up     { object-position: 50% 32%; }
 .avatar-pos-center { object-position: 50% 40%; }
+
+.race-status{ font-size:.9rem; color: rgba(0,0,0,.55); }
+
+.race-premium-pill{ padding:.35rem .65rem; border-radius:999px; background: var(--premium,#ffc107); color:#111; font-weight:700; font-size:.85rem; }
 
 .race-badge-corner{
     position: absolute;

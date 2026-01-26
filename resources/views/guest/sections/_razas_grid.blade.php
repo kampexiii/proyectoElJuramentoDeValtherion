@@ -124,32 +124,27 @@
                             role="group"
                             aria-label="{{ $raza['nombre'] }}"
                         >
-                            @if($raza['is_premium'])
-                                <div class="race-badge-corner" aria-label="Raza Premium">Premium</div>
-                            @endif
-
-                            {{-- avatar absolute bottom-left --}}
-                            <img
-                                src="{{ $raza['imagen'] }}"
-                                alt="Avatar de {{ $raza['nombre'] }}"
-                                class="race-avatar"
-                                width="52"
-                                height="52"
-                                loading="lazy"
-                            >
-
-                            <div class="card-body d-flex flex-column align-items-center text-center p-3 pb-4">
-                                <header class="mb-2 w-100">
-                                    <h3 class="race-title mb-0">{{ $raza['nombre'] }}</h3>
-                                </header>
-
-                                <div class="flex-grow-1 w-100">
+                            <div class="card-body d-flex flex-column p-3">
+                                <div class="race-content">
+                                    <header class="mb-2">
+                                        <h3 class="race-title mb-0 line-clamp-2">{{ $raza['nombre'] }}</h3>
+                                    </header>
                                     <p class="race-desc line-clamp-2 mb-0">{{ $raza['descripcion'] }}</p>
                                 </div>
 
-                                <div class="w-100 d-flex justify-content-center mt-2">
-                                    @if(!$raza['is_premium'])
-                                        <small class="text-muted">Disponible</small>
+                                <div class="race-footer">
+                                    <img
+                                        src="{{ $raza['imagen'] }}"
+                                        alt="Avatar de {{ $raza['nombre'] }}"
+                                        class="race-avatar"
+                                        width="52"
+                                        height="52"
+                                        loading="lazy"
+                                    >
+                                    @if($raza['is_premium'])
+                                        <div class="race-premium-pill">Premium</div>
+                                    @else
+                                        <small class="race-status">Disponible</small>
                                     @endif
                                 </div>
                             </div>
