@@ -1,13 +1,105 @@
 <section class="mb-5">
-    <div class="card bg-dark text-light border-secondary">
-        <div class="card-body">
-            <h3 class="card-title text-success" style="font-family: serif;">Reglas del Juramento</h3>
-            <ul class="list-group list-group-flush mt-3">
-                <li class="list-group-item bg-dark text-light border-secondary">⚔️ Stats base por raza (vida, fuerza, magia, defensa, velocidad).</li>
-                <li class="list-group-item bg-dark text-light border-secondary">🛡️ Los objetos modifican tus stats al equiparlos.</li>
-                <li class="list-group-item bg-dark text-light border-secondary">📜 Las misiones tienen decisiones: el camino fácil suele dar menos gloria.</li>
-                <li class="list-group-item bg-dark text-light border-secondary">🐎 Monturas: criaturas legendarias que suman poder si cabalgas sobre ellas.</li>
-            </ul>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-9">
+
+        <div class="card bg-dark text-light border-secondary rounded-4 shadow-sm overflow-hidden">
+          <div class="card-body p-4 p-md-5">
+
+            {{-- Header --}}
+            <div class="d-flex flex-wrap align-items-start justify-content-between gap-3">
+              <div class="text-start">
+                <h3 class="mb-2 section-title-rules" style="font-family: serif;">
+                  Reglas del Juramento
+                </h3>
+                <p class="text-secondary mb-0" style="max-width: 80ch;">
+                  Nada aquí es gratis. Cada elección deja marca, cada objeto exige precio y cada combate te enseña lo que eres.
+                </p>
+              </div>
+
+              <span class="badge rounded-pill rules-badge px-3 py-2">
+                Sistema base
+              </span>
+            </div>
+
+            <div class="row g-3 mt-4">
+              {{-- Regla 1 --}}
+              <div class="col-12 col-md-6">
+                <div class="p-3 p-md-4 rounded-4 border border-secondary-subtle bg-black bg-opacity-25 h-100">
+                  <div class="d-flex align-items-start gap-3">
+                    <span class="rules-icon">⚔️</span>
+                    <div>
+                      <p class="mb-1 text-white fw-semibold">Stats base por raza</p>
+                      <small class="text-secondary">
+                        Cada raza nace con un reparto inicial: vida, fuerza, magia, defensa y velocidad.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {{-- Regla 2 --}}
+              <div class="col-12 col-md-6">
+                <div class="p-3 p-md-4 rounded-4 border border-secondary-subtle bg-black bg-opacity-25 h-100">
+                  <div class="d-flex align-items-start gap-3">
+                    <span class="rules-icon">🛡️</span>
+                    <div>
+                      <p class="mb-1 text-white fw-semibold">Equipamiento que modifica</p>
+                      <small class="text-secondary">
+                        Los objetos cambian tus stats al equiparlos. El poder se construye pieza a pieza.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {{-- Regla 3 --}}
+              <div class="col-12 col-md-6">
+                <div class="p-3 p-md-4 rounded-4 border border-secondary-subtle bg-black bg-opacity-25 h-100">
+                  <div class="d-flex align-items-start gap-3">
+                    <span class="rules-icon">📜</span>
+                    <div>
+                      <p class="mb-1 text-white fw-semibold">Misiones con decisiones</p>
+                      <small class="text-secondary">
+                        Hay rutas fáciles y rutas dignas. El camino cómodo suele dar menos gloria.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {{-- Regla 4 --}}
+              <div class="col-12 col-md-6">
+                <div class="p-3 p-md-4 rounded-4 border border-secondary-subtle bg-black bg-opacity-25 h-100">
+                  <div class="d-flex align-items-start gap-3">
+                    <span class="rules-icon">🐎</span>
+                    <div>
+                      <p class="mb-1 text-white fw-semibold">Monturas legendarias</p>
+                      <small class="text-secondary">
+                        Criaturas que suman poder si cabalgas sobre ellas. No todas aceptan jinete.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {{-- Footer --}}
+            <div class="mt-4 pt-3 border-top border-secondary-subtle d-flex flex-wrap justify-content-between align-items-center gap-3">
+              <small class="text-secondary">
+                Consejo: no persigas “el mejor stat”. Persigue un estilo… y una historia que aguante el peso.
+              </small>
+              <a href="#" class="btn btn-outline-light btn-sm">
+                Ver detalles
+              </a>
+            </div>
+
+          </div>
         </div>
+
+      </div>
     </div>
+  </div>
 </section>
+
+

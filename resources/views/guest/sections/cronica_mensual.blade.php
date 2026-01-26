@@ -23,9 +23,7 @@
                 </div>
               </div>
 
-              <span class="badge rounded-pill chronicle-badge px-3 py-2">
-                Recompensa mensual
-              </span>
+
             </div>
 
             <div class="row g-4 mt-3 align-items-stretch">
@@ -73,12 +71,7 @@
                     </div>
                   </div>
 
-                  <div class="mt-3 pt-3 border-top border-secondary-subtle">
-                    <small class="text-secondary">
-                      Nota: la facción <span class="fw-semibold">Premium</span> siempre aparece la primera en la lista.
-                      “Guerreros del Caos” no se muestra en esta clasificación.
-                    </small>
-                  </div>
+
                 </div>
               </div>
 
@@ -89,9 +82,7 @@
                     <h4 class="h6 mb-0 section-subtitle-chronicle" style="font-family: serif;">
                       Ejemplo de Clasificación
                     </h4>
-                    <span class="badge rounded-pill chronicle-badge px-3 py-2">
-                      Vista previa
-                    </span>
+
                   </div>
 
                   <div class="ratio ratio-16x9 rounded-4 overflow-hidden border border-secondary-subtle bg-dark">
@@ -104,23 +95,11 @@
                     >
                   </div>
 
-                  <small class="text-secondary d-block mt-3">
-                    La clasificación muestra todas las razas ordenadas por puntos. La premium aparece la primera.
-                  </small>
                 </div>
               </div>
             </div>
 
-            {{-- Footer --}}
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mt-4 pt-3 border-top border-secondary-subtle">
-              <small class="text-secondary">
-                Recompensa: cofre con <span class="fw-semibold chronicle-accent">3 objetos de poder</span> para la facción ganadora del mes.
-              </small>
 
-              <a href="#" class="btn btn-outline-light btn-sm">
-                Ver reglas
-              </a>
-            </div>
 
           </div>
         </div>
