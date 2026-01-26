@@ -10,8 +10,7 @@
             <div class="col-md-4 mb-4">
                 <h6 class="text-warning fw-bold mb-3 text-uppercase">Enlaces</h6>
                 <ul class="list-unstyled">
-                    <li><a href="{{ route('register') }}" class="text-light text-decoration-none border-bottom border-secondary pb-1">Registrarse</a></li>
-                    <li><a href="{{ route('login') }}" class="text-light text-decoration-none border-bottom border-secondary pb-1">Iniciar Sesión</a></li>
+                   
                     <li><a href="#hero" class="text-light text-decoration-none border-bottom border-secondary pb-1">Inicio</a></li>
                     <li><a href="#razas" class="text-light text-decoration-none border-bottom border-secondary pb-1">Razas</a></li>
                     <li><a href="#" class="text-light text-decoration-none border-bottom border-secondary pb-1">Legales</a></li>

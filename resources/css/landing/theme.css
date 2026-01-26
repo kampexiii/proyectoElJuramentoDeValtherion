@@ -340,3 +340,28 @@
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
+
+/* CSS para crónica mensual */
+.section-title-chronicle{
+  color: #2a1a10; /* marrón oscuro */
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);
+  padding: .35rem .75rem;
+  display: inline-block;
+  border: 1px solid rgba(202,168,106,.35); /* oro muy leve */
+  border-radius: 12px;
+  background: rgba(242,230,207,.05);
+}
+.section-subtitle-chronicle{
+  color: #2a1a10;
+}
+.chronicle-accent{ color: rgba(202,168,106,.95); }
+.chronicle-badge{
+  background: rgba(202,168,106,.16);
+  color: rgba(202,168,106,.95);
+  border: 1px solid rgba(202,168,106,.35);
+}
+.chronicle-step{
+  background: rgba(202,168,106,.16);
+  color: rgba(202,168,106,.95);
+  border: 1px solid rgba(202,168,106,.35);
+}
