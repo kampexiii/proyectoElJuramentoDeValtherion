@@ -94,58 +94,74 @@
     ];
 @endphp
 
-<section class="py-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-11 col-xl-10 col-xxl-9">
-                <div class="text-center mb-4">
-                    <h2 class="mb-2">Razas del Viejo Mundo</h2>
-                    <p class="mb-0 text-muted">Elige tu origen. El mundo te devolverá la mirada.</p>
-                </div>
+<section class="mb-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-9">
 
-                <div class="row g-3 g-md-4 justify-content-center">
-                    @foreach($razas as $raza)
-                        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                            <article
-                                class="race-card card h-100 border-0 shadow-sm {{ $raza['is_premium'] ? 'is-premium' : '' }}"
-                                tabindex="0"
-                                role="group"
-                                aria-label="{{ $raza['nombre'] }}"
-                            >
-                                @if($raza['is_premium'])
-                                    <div class="race-badge-corner" aria-label="Raza Premium">Premium</div>
-                                @endif
+        <div class="card bg-dark text-light border-secondary rounded-4 shadow-sm overflow-hidden">
+          <div class="card-body p-4 p-md-5">
 
-                                {{-- avatar absolute bottom-left --}}
-                                <img
-                                    src="{{ $raza['imagen'] }}"
-                                    alt="Avatar de {{ $raza['nombre'] }}"
-                                    class="race-avatar"
-                                    width="52"
-                                    height="52"
-                                    loading="lazy"
-                                >
-
-                                <div class="card-body d-flex flex-column align-items-start text-start p-3">
-                                    <header class="mb-2 w-100">
-                                        <h3 class="race-title mb-0">{{ $raza['nombre'] }}</h3>
-                                    </header>
-
-                                    <div class="flex-grow-1 w-100">
-                                        <p class="race-desc line-clamp-2 mb-0">{{ $raza['descripcion'] }}</p>
-                                    </div>
-
-                                    <div class="w-100 d-flex justify-content-end mt-2">
-                                        @if(!$raza['is_premium'])
-                                            <small class="text-muted">Disponible</small>
-                                        @endif
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    @endforeach
-                </div>
+            {{-- Header --}}
+            <div class="d-flex flex-wrap align-items-start justify-content-between gap-3">
+              <div class="text-start">
+                <h2 class="mb-3 section-title-races" style="font-family: serif; font-size: 2.5rem;">
+                  Razas del Viejo Mundo
+                </h2>
+                <p class="text-secondary mb-4 section-description-races">
+                  Elige tu facción en esta guerra eterna. Cada raza porta su propio destino y poder ancestral.
+                </p>
+              </div>
             </div>
+
+            {{-- Grid de Razas --}}
+            <div class="row g-3 g-md-4 justify-content-center">
+                @foreach($razas as $raza)
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                        <article
+                            class="race-card card h-100 border-0 shadow-sm {{ $raza['is_premium'] ? 'is-premium' : '' }}"
+                            tabindex="0"
+                            role="group"
+                            aria-label="{{ $raza['nombre'] }}"
+                        >
+                            @if($raza['is_premium'])
+                                <div class="race-badge-corner" aria-label="Raza Premium">Premium</div>
+                            @endif
+
+                            {{-- avatar absolute bottom-left --}}
+                            <img
+                                src="{{ $raza['imagen'] }}"
+                                alt="Avatar de {{ $raza['nombre'] }}"
+                                class="race-avatar"
+                                width="52"
+                                height="52"
+                                loading="lazy"
+                            >
+
+                            <div class="card-body d-flex flex-column align-items-start text-start p-3">
+                                <header class="mb-2 w-100">
+                                    <h3 class="race-title mb-0">{{ $raza['nombre'] }}</h3>
+                                </header>
+
+                                <div class="flex-grow-1 w-100">
+                                    <p class="race-desc line-clamp-2 mb-0">{{ $raza['descripcion'] }}</p>
+                                </div>
+
+                                <div class="w-100 d-flex justify-content-end mt-2">
+                                    @if(!$raza['is_premium'])
+                                        <small class="text-muted">Disponible</small>
+                                    @endif
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                @endforeach
+            </div>
+
+          </div>
         </div>
+
+      </div>
     </div>
+  </div>
 </section>
