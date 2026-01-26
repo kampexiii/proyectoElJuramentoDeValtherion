@@ -313,12 +313,12 @@
   font-size: 1.1rem;
 }
 
-/* Estilo marrón oscuro desgastado para entrar_en_la_historia */
+/* Estilo marrón oscuro para entrar_en_la_historia (sin sombra) */
 .entrar_en_la_historia p,
 .entrar_en_la_historia a{
   color: #654321 !important; /* Marrón oscuro */
   font-style: italic;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.8), 0 0 5px rgba(101,67,33,0.5); /* Efecto desgastado */
+  text-shadow: none; /* Sin sombra */
 }
 
 /* Botón Acceder: fondo negro, borde beige, texto blanco en estado normal para legibilidad */
