@@ -14,6 +14,9 @@
                     <li><a href="{{ route('login') }}" class="text-light text-decoration-none">Iniciar Sesión</a></li>
                     <li><a href="#hero" class="text-light text-decoration-none">Inicio</a></li>
                     <li><a href="#razas" class="text-light text-decoration-none">Razas</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Legales</a></li>
+                    <li><a href="https://amazon.com" class="text-light text-decoration-none">Libro</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Lore</a></li>
                 </ul>
             </div>
             <!-- Redes sociales -->
