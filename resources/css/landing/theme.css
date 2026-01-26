@@ -169,7 +169,7 @@
 
 .race-main{ flex:1; }
 
-.race-footer{ }
+.race-footer{ display:flex; justify-content:flex-end; align-items:center; }
 
 .race-title{
     color: var(--text);
@@ -216,7 +216,7 @@
 .avatar-pos-up     { object-position: 50% 32%; }
 .avatar-pos-center { object-position: 50% 40%; }
 
-.race-status{ font-size:.9rem; color: rgba(0,0,0,.55); }
+.race-status{ font-size:.8rem; color: rgba(0,0,0,.55); }
 
 .race-pill-premium{
   padding:.35rem .65rem;
@@ -224,7 +224,7 @@
   background: var(--premium,#ffc107);
   color:#111;
   font-weight:700;
-  font-size:.85rem;
+  font-size:.75rem;
 }
 
 .race-badge-corner{
