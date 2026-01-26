@@ -9,9 +9,9 @@
             {{-- Header --}}
             <div class="d-flex flex-wrap align-items-start justify-content-between gap-3">
               <div class="text-start">
-                <h3 class="mb-2 section-title-rules" style="font-family: serif;">
+                <h2 class="mb-2 section-title-rules" style="font-family: serif; font-size: 2.5rem;">
                   Reglas del Juramento
-                </h3>
+                </h2>
                 <p class="text-secondary mb-0" style="max-width: 80ch;">
                   Nada aquí es gratis. Cada elección deja marca, cada objeto exige precio y cada combate te enseña lo que eres.
                 </p>
@@ -29,7 +29,7 @@
                   <div class="d-flex align-items-start gap-3">
                     <span class="rules-icon">⚔️</span>
                     <div>
-                      <p class="mb-1 text-white fw-semibold">Stats base por raza</p>
+                      <p class="mb-1 fw-semibold" style="color: #654321;">Stats base por raza</p>
                       <small class="text-secondary">
                         Cada raza nace con un reparto inicial: vida, fuerza, magia, defensa y velocidad.
                       </small>
@@ -44,7 +44,7 @@
                   <div class="d-flex align-items-start gap-3">
                     <span class="rules-icon">🛡️</span>
                     <div>
-                      <p class="mb-1 text-white fw-semibold">Equipamiento que modifica</p>
+                      <p class="mb-1 fw-semibold" style="color: #654321;">Equipamiento que modifica</p>
                       <small class="text-secondary">
                         Los objetos cambian tus stats al equiparlos. El poder se construye pieza a pieza.
                       </small>
@@ -59,7 +59,7 @@
                   <div class="d-flex align-items-start gap-3">
                     <span class="rules-icon">📜</span>
                     <div>
-                      <p class="mb-1 text-white fw-semibold">Misiones con decisiones</p>
+                      <p class="mb-1 fw-semibold" style="color: #654321;">Misiones con decisiones</p>
                       <small class="text-secondary">
                         Hay rutas fáciles y rutas dignas. El camino cómodo suele dar menos gloria.
                       </small>
@@ -74,7 +74,7 @@
                   <div class="d-flex align-items-start gap-3">
                     <span class="rules-icon">🐎</span>
                     <div>
-                      <p class="mb-1 text-white fw-semibold">Monturas legendarias</p>
+                      <p class="mb-1 fw-semibold" style="color: #654321;">Monturas legendarias</p>
                       <small class="text-secondary">
                         Criaturas que suman poder si cabalgas sobre ellas. No todas aceptan jinete.
                       </small>
