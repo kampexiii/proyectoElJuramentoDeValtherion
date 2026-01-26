@@ -303,15 +303,22 @@
   text-shadow: 1px 1px 2px #000;
 }
 
-/* Botón Acceder: texto blanco en estado normal para mejor legibilidad */
+/* Botón Acceder: fondo negro, borde beige, texto blanco en estado normal para legibilidad */
 .btn-hero-access{
+  background-color: rgba(0,0,0,0.8) !important;
   color: white !important;
-  border-color: rgba(242,230,207,.6) !important;
+  border: 2px solid rgba(242,230,207,.6) !important;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.15s ease;
 }
 
 .btn-hero-access:hover,
 .btn-hero-access:focus{
+  background-color: var(--beige-200, #f2e6cf) !important;
   color: #0b0f14 !important;
-  background: var(--beige-200, #f2e6cf) !important;
   border-color: var(--beige-200, #f2e6cf) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
