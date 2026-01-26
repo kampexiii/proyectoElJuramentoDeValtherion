@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="dark">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,16 +11,28 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        <script>
+            (function () {
+                const key = 'valtherion_theme';
+                const saved = localStorage.getItem(key);
+                if (saved === 'light' || saved === 'dark') {
+                    document.documentElement.dataset.theme = saved;
+                }
+            })();
+        </script>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white shadow">
+                <header class="v-surface-nav">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -32,5 +44,21 @@
                 {{ $slot }}
             </main>
         </div>
+
+        <script>
+            (function () {
+                const root = document.documentElement;
+                const key = 'valtherion_theme';
+
+                const btn = document.getElementById('themeToggle');
+                if (!btn) return;
+
+                btn.addEventListener('click', () => {
+                    const next = (root.dataset.theme === 'dark') ? 'light' : 'dark';
+                    root.dataset.theme = next;
+                    localStorage.setItem(key, next);
+                });
+            })();
+        </script>
     </body>
 </html>

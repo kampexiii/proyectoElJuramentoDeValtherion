@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -9,6 +9,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script>
+        (function () {
+            const key = 'valtherion_theme';
+            const saved = localStorage.getItem(key);
+            if (saved === 'light' || saved === 'dark') {
+                document.documentElement.dataset.theme = saved;
+            }
+        })();
+    </script>
+
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
     
     <style>
         html, body {
@@ -16,8 +28,8 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #000;
-            color: #fff;
+            background-color: var(--bg-app);
+            color: var(--text-main);
         }
         body {
             display: flex;
@@ -50,5 +62,20 @@
 
     <!-- Bootstrap JS Bundle CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        (function () {
+            const root = document.documentElement;
+            const key = 'valtherion_theme';
+            const btn = document.getElementById('themeToggle');
+            if (!btn) return;
+
+            btn.addEventListener('click', () => {
+                const next = (root.dataset.theme === 'dark') ? 'light' : 'dark';
+                root.dataset.theme = next;
+                localStorage.setItem(key, next);
+            });
+        })();
+    </script>
 </body>
 </html>

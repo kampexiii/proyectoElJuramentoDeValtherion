@@ -19,6 +19,9 @@
 
         <!-- Derecha: Perfil | Ajustes -->
         <div class="d-flex gap-3">
+            <button id="themeToggle" type="button" class="btn btn-sm btn-outline-secondary" title="Cambiar tema">
+                <i class="bi bi-moon-stars"></i>
+            </button>
             <a href="{{ route('game.perfil') }}" class="text-white fs-4" title="Perfil">
                 <i class="bi bi-person"></i>
             </a>
