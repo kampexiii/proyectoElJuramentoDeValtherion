@@ -7,6 +7,5 @@
     @include('guest.sections.reglas_del_juramento')
     @include('guest.sections.cronica_mensual')
     @include('guest.sections.entrar_en_la_historia')
-    @include('guest.sections.colofon')
     @include('guest.sections.footer')
 @endsection
