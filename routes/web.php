@@ -1,14 +1,18 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    if (auth()->check()) {
+    if (Auth::check()) {
         return redirect()->route('home');
     }
     return view('guest.welcome');
 });
+
+// Se removió la ruta dedicada /prologo: el prólogo ahora es una sección
+// incluida directamente en la landing (`guest.sections.prologo`).
 
 Route::get('/home', function () {
     return view('game.home.index');
