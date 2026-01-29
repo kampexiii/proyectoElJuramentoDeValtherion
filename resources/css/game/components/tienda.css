@@ -109,19 +109,34 @@
     }
 
     .shop-row-body {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .shop-row-body--mount {
-        grid-template-rows: minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .shop-card {
-        padding: 0.4rem;
+        padding: 0.35rem;
     }
 
     .shop-card-name {
-        font-size: 0.8rem;
+        font-size: 0.72rem;
+    }
+
+    .shop-card-meta,
+    .shop-card-bonus {
+        font-size: 0.62rem;
+    }
+
+    .shop-card-badge {
+        font-size: 0.55rem;
+        padding: 0.15rem 0.25rem;
+    }
+
+    .shop-card .btn {
+        font-size: 0.65rem;
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
     }
 }

@@ -62,6 +62,7 @@ class CharacterController extends Controller
         $stats = null;
         $mountId = null;
         $hasMount = false;
+        $hpMax = 0;
         if (!empty($validated['race_id'])) {
             $race = Race::find($validated['race_id']);
             if ($race) {
@@ -71,6 +72,7 @@ class CharacterController extends Controller
                     'defensa' => $race->base_defense,
                     'velocidad' => $race->base_speed,
                 ];
+                $hpMax = $race->base_hp;
 
                 if ($race->name === 'Señor Legendario del Caos') {
                     $adminMount = $this->obtenerMonturaAdmin();
@@ -95,6 +97,8 @@ class CharacterController extends Controller
             'mount_id' => $mountId,
             'stats_json' => $stats,
             'has_mount' => $hasMount,
+            'hp_max' => $hpMax,
+            'hp_current' => $hpMax,
         ]);
 
         return redirect()->route('game.personaje.edit');

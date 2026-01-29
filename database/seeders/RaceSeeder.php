@@ -10,11 +10,10 @@ class RaceSeeder extends Seeder
     public function run(): void
     {
         $races = [
-            // Freemium
             [
                 'name' => 'Humanos',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 5,
                 'base_strength' => 5,
                 'base_magic' => 5,
@@ -23,8 +22,8 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Enanos',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 6,
                 'base_strength' => 6,
                 'base_magic' => 1,
@@ -33,8 +32,8 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Altos Elfos',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 3,
                 'base_strength' => 4,
                 'base_magic' => 8,
@@ -43,8 +42,8 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Elfos Silvanos',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 3,
                 'base_strength' => 5,
                 'base_magic' => 5,
@@ -53,8 +52,8 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Elfos Oscuros',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 3,
                 'base_strength' => 7,
                 'base_magic' => 4,
@@ -63,8 +62,8 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Orcos',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 6,
                 'base_strength' => 9,
                 'base_magic' => 0,
@@ -73,8 +72,8 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Skaven',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 2,
                 'base_strength' => 5,
                 'base_magic' => 3,
@@ -83,8 +82,8 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Hombres Bestia',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 4,
                 'base_strength' => 8,
                 'base_magic' => 1,
@@ -93,8 +92,8 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Condes Vampiro',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 3,
                 'base_strength' => 5,
                 'base_magic' => 7,
@@ -103,8 +102,8 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Reyes Funerarios',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 4,
                 'base_strength' => 5,
                 'base_magic' => 5,
@@ -113,8 +112,8 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Hombres Lagarto',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 5,
                 'base_strength' => 6,
                 'base_magic' => 2,
@@ -123,8 +122,8 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Enanos del Caos',
-                'min_role' => 'free',
-                'stat_points_total' => 25,
+                'min_role' => 'user',
+                'stat_points_total' => 32,
                 'base_hp' => 5,
                 'base_strength' => 7,
                 'base_magic' => 2,
@@ -135,7 +134,7 @@ class RaceSeeder extends Seeder
             [
                 'name' => 'Demonios del Caos',
                 'min_role' => 'premium',
-                'stat_points_total' => 33,
+                'stat_points_total' => 42,
                 'base_hp' => 6,
                 'base_strength' => 8,
                 'base_magic' => 10,
@@ -146,7 +145,7 @@ class RaceSeeder extends Seeder
             [
                 'name' => 'Señor Legendario del Caos',
                 'min_role' => 'admin',
-                'stat_points_total' => 40,
+                'stat_points_total' => 52,
                 'base_hp' => 9,
                 'base_strength' => 12,
                 'base_magic' => 7,
