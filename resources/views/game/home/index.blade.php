@@ -16,6 +16,11 @@
                         <p class="mb-2 text-truncate w-100">Nombre: {{ $character->name }}</p>
                         <p class="mb-2 text-truncate w-100">Raza: {{ $character->race->name ?? 'Pendiente' }}</p>
                         <a href="{{ route('game.personaje.edit') }}" class="btn btn-outline-light btn-sm">Editar personaje</a>
+                        @if($spriteUrl)
+                            <img src="{{ $spriteUrl }}" alt="Sprite del personaje" class="home-sprite-img mt-2">
+                        @else
+                            <div class="home-sprite-placeholder mt-2"></div>
+                        @endif
                     @endif
                 </div>
             </div>
