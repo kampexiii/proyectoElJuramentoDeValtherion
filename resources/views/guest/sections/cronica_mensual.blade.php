@@ -78,44 +78,61 @@
               {{-- Imagen ejemplo clasificación --}}
               <div class="col-12 col-lg-6">
                 <div class="p-3 p-md-4 rounded-4 bg-black bg-opacity-25 border border-secondary-subtle h-100">
+
                   <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
                     <h4 class="h6 mb-0 section-subtitle-chronicle" style="font-family: serif;">
-                      Ejemplo de Clasificación
+                      Clasificación mensual
                     </h4>
-
                   </div>
 
                   <div class="rounded-4 overflow-hidden border border-secondary-subtle bg-dark p-3">
-                    @if (!isset($previousSeason) || !$previousSeason)
-                      <p class="mb-0 text-light">Aún no hay datos del mes anterior.</p>
-                    @else
-                      @if (isset($seasonWinner) && $seasonWinner)
-                        <p class="mb-2 text-warning"><strong>Raza ganadora del mes:</strong> {{ $seasonWinner->race_name ?? '—' }}</p>
-                      @endif
+                    @if (!empty($fallbackMessage))
+                      <div class="alert alert-warning bg-dark bg-opacity-75 border-0 rounded-4 shadow-sm mb-3" role="alert">
+                        <strong>{{ $fallbackMessage }}</strong>
+                      </div>
+                    @endif
 
-                      @if (isset($seasonRankings) && $seasonRankings->count() > 0)
-                        <div class="table-responsive">
-                          <table class="table table-sm table-striped table-dark mb-0">
-                            <thead>
+                    @if (isset($seasonWinner) && $seasonWinner)
+                      <p class="mb-2 text-warning text-center fs-5">
+                        👑 Raza ganadora del mes anterior: <strong>{{ $seasonWinner->race_name ?? '—' }}</strong> 👑
+                      </p>
+                    @endif
+
+                    @if (isset($seasonRankings) && $seasonRankings->count() > 0)
+                      <div class="table-responsive">
+                        <table class="table table-sm table-striped table-dark mb-0 align-middle">
+                          <thead>
+                            <tr>
+                              <th>Posición</th>
+                              <th>Raza</th>
+                              <th class="text-end">Puntos</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($seasonRankings as $i => $r)
                               <tr>
-                                <th>Posición</th>
-                                <th>Raza</th>
-                                <th>Puntos</th>
+                                <td>
+                                  @if($i === 0)
+                                    <span class="badge bg-warning text-dark fs-6">🥇</span>
+                                  @elseif($i === 1)
+                                    <span class="badge bg-secondary fs-6">🥈</span>
+                                  @elseif($i === 2)
+                                    <span class="badge bg-brown text-light fs-6" style="background-color:#8B5C2A!important;">🥉</span>
+                                  @else
+                                    <span class="badge bg-dark border border-secondary">{{ $i+1 }}</span>
+                                  @endif
+                                </td>
+                                <td>{{ $r->race_name }}</td>
+                                <td class="text-end">{{ $r->points }}</td>
                               </tr>
-                            </thead>
-                            <tbody>
-                              @foreach($seasonRankings as $i => $r)
-                                <tr>
-                                  <td>{{ $i + 1 }}</td>
-                                  <td>{{ $r->race_name }}</td>
-                                  <td>{{ $r->points }}</td>
-                                </tr>
-                              @endforeach
-                            </tbody>
-                          </table>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
+                      @if(isset($fallbackUsed) && $fallbackUsed === 'A')
+                        <div class="mt-2 text-center">
+                          <small class="text-secondary">Clasificación provisional (sin puntos aún)</small>
                         </div>
-                      @else
-                        <p class="mb-0 text-light">Aún no hay rankings para ese mes.</p>
                       @endif
                     @endif
                   </div>
