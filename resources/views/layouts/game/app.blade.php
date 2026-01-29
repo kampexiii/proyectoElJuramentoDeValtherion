@@ -12,45 +12,7 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <script>
-        (function () {
-            const key = 'valtherion_theme';
-            const saved = localStorage.getItem(key);
-            if (saved === 'light' || saved === 'dark') {
-                document.documentElement.dataset.theme = saved;
-            }
-        })();
-    </script>
-
-    @vite(['resources/css/theme.css'])
-
-    <style>
-        html, body {
-            height: 100dvh; /* Usamos dvh para navegadores móviles modernos */
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: var(--bg-app);
-            color: var(--text-main);
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-        main {
-            flex: 1;
-            overflow: hidden; /* Evita scroll absoluto, el contenido debe ajustarse */
-            display: flex;
-            flex-direction: column;
-            padding: 1rem;
-            position: relative;
-        }
-        .navbar-game {
-            flex-shrink: 0;
-            height: 64px;
-            z-index: 1030;
-        }
-    </style>
+    @vite(['resources/css/game/app.css', 'resources/js/game/app.js'])
 </head>
 <body>
 
@@ -65,19 +27,5 @@
     <!-- Bootstrap JS Bundle CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        (function () {
-            const root = document.documentElement;
-            const key = 'valtherion_theme';
-            const btn = document.getElementById('themeToggle');
-            if (!btn) return;
-
-            btn.addEventListener('click', () => {
-                const next = (root.dataset.theme === 'dark') ? 'light' : 'dark';
-                root.dataset.theme = next;
-                localStorage.setItem(key, next);
-            });
-        })();
-    </script>
 </body>
 </html>

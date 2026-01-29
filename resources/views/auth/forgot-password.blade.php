@@ -6,7 +6,7 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('password.email') }}">
+    <form method="POST" action="{{ route('password.email') }}" class="auth-form">
         @csrf
 
         <!-- Email Address -->
@@ -16,8 +16,8 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
+        <div class="flex items-center justify-end mt-4 auth-actions">
+            <x-primary-button class="auth-btn">
                 Enviar enlace de restablecimiento
             </x-primary-button>
         </div>

@@ -1,1 +1,8 @@
 /* Estilos migrados de components/dropdown.blade.php */
+.dropdown-hidden {
+    display: none;
+}
+
+.dropdown-open {
+    display: block;
+}

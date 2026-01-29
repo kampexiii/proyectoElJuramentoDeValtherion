@@ -13,7 +13,7 @@
         <!-- Centro: Logo -->
         <div class="position-absolute start-50 translate-middle-x">
             <a href="{{ route('home') }}">
-                <img src="{{ asset('assets/brand/logo.png') }}" alt="Valtherion" style="height: 48px;">
+                <img src="{{ asset('assets/brand/logo.png') }}" alt="Valtherion" class="nav-top-logo">
             </a>
         </div>
 

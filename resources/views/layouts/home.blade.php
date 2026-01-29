@@ -6,16 +6,6 @@
     <title>Home - Valtherion</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <script>
-        (function () {
-            const key = 'valtherion_theme';
-            const saved = localStorage.getItem(key);
-            if (saved === 'light' || saved === 'dark') {
-                document.documentElement.dataset.theme = saved;
-            }
-        })();
-    </script>
-
     @vite(['resources/css/game/app.css', 'resources/js/game/app.js'])
 </head>
 <body>
@@ -39,19 +29,5 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        (function () {
-            const root = document.documentElement;
-            const key = 'valtherion_theme';
-            const btn = document.getElementById('themeToggle');
-            if (!btn) return;
-
-            btn.addEventListener('click', () => {
-                const next = (root.dataset.theme === 'dark') ? 'light' : 'dark';
-                root.dataset.theme = next;
-                localStorage.setItem(key, next);
-            });
-        })();
-    </script>
 </body>
 </html>

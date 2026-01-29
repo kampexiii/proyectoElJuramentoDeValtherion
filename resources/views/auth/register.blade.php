@@ -1,5 +1,5 @@
 <x-auth-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" class="auth-form">
         @csrf
 
         <!-- Name -->
@@ -39,12 +39,12 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="flex items-center justify-end mt-4 auth-actions auth-actions--between">
             <a class="underline text-sm text-zinc-400 hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500" href="{{ route('login') }}">
                 ¿Ya estás registrado?
             </a>
 
-            <x-primary-button class="ms-4">
+            <x-primary-button class="ms-4 auth-btn">
                 Registrarse
             </x-primary-button>
         </div>

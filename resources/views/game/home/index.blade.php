@@ -1,61 +1,12 @@
 @extends('layouts.game.app')
 
 @section('content')
-<style>
-    @media (max-width: 767.98px) {
-        .home-viewport {
-            height: 100vh;
-            min-height: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .home-content {
-            flex: 1 1 auto;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            min-height: 0;
-        }
-        .home-panel {
-            height: 50%;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-        }
-        .home-panel .card-body {
-            padding: 0.5rem !important;
-            font-size: 0.95rem;
-        }
-        .home-panel .table {
-            font-size: 0.95rem;
-        }
-        .home-panel .mx-auto.w-75 {
-            width: 100% !important;
-            max-width: 100% !important;
-        }
-        .home-panel .mb-3 {
-            margin-bottom: 0.5rem !important;
-        }
-        .home-panel .card-header {
-            padding-top: 0.4rem !important;
-            padding-bottom: 0.4rem !important;
-            font-size: 1rem;
-        }
-        .home-panel .table-responsive {
-            max-height: 100%;
-        }
-        .home-panel .table td, .home-panel .table th {
-            padding: 0.3rem 0.5rem !important;
-        }
-    }
-</style>
 <div class="home-viewport">
     <div class="home-content flex-grow-1">
         <div class="row g-0 flex-grow-1 h-100">
         <!-- Bloque Personaje actual -->
-        <div class="col-12 col-lg-6 d-flex flex-column home-panel" style="min-height: 0;">
-            <div class="card bg-zinc-900 border-secondary flex-grow-1 text-white shadow-sm overflow-hidden" style="background-color: #111;">
+        <div class="col-12 col-lg-6 d-flex flex-column home-panel hx-min-0">
+            <div class="card bg-zinc-900 border-secondary flex-grow-1 text-white shadow-sm overflow-hidden hx-card-bg">
                 <div class="card-header border-secondary bg-dark text-center py-2 flex-shrink-0">Estado del Héroe</div>
                 <div class="card-body d-flex flex-column justify-content-center align-items-center text-center p-2 overflow-hidden">
                     <p class="mb-2 text-truncate w-100">Aún no has forjado tu leyenda.</p>
@@ -65,8 +16,8 @@
         </div>
 
         <!-- Crónica Mensual: clasificación mes anterior -->
-        <div class="col-12 col-lg-6 d-flex flex-column home-panel" style="min-height: 0;">
-            <div class="card bg-zinc-900 border-secondary text-white shadow-sm overflow-hidden" style="background-color: #111;">
+        <div class="col-12 col-lg-6 d-flex flex-column home-panel hx-min-0">
+            <div class="card bg-zinc-900 border-secondary text-white shadow-sm overflow-hidden hx-card-bg">
                 <div class="card-body p-3 overflow-auto">
                     <div class="text-center mx-auto w-75 mb-3">
                         <h5 class="mb-1">{{ $chronicleTitle ?? 'Crónica Mensual' }}</h5>
@@ -89,9 +40,9 @@
                             <table class="table table-sm table-dark mb-0 align-middle">
                                 <thead>
                                     <tr>
-                                        <th style="width:60px">Puesto</th>
+                                        <th class="hx-col-puesto">Puesto</th>
                                         <th>Raza</th>
-                                        <th style="width:70px">Puntos</th>
+                                        <th class="hx-col-puntos">Puntos</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -109,7 +60,7 @@
                                                     <span class="badge bg-secondary">{{ $pos }}</span>
                                                 @endif
                                             </td>
-                                            <td class="text-truncate" style="max-width:110px">{{ $name }}</td>
+                                            <td class="text-truncate hx-name-max">{{ $name }}</td>
                                             <td><span class="badge bg-success">{{ $points }}</span></td>
                                         </tr>
                                     @endforeach

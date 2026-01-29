@@ -97,7 +97,7 @@
 <section class="mb-5">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-12 col-lg-10 col-xl-9">
+      <div class="col-12 col-lg-11 col-xl-10 rg-wrap">
 
         <div class="card bg-dark text-light border-secondary rounded-4 shadow-sm overflow-hidden">
           <div class="card-body p-4 p-md-5">
@@ -106,7 +106,7 @@
             <div class="d-flex flex-wrap align-items-start justify-content-center gap-3">
               <div class="text-center">
                 <h2 class="mb-3 section-title-races rg-title">
-                  Razas del Viejo Mundo
+                  Razas de Valtherion
                 </h2>
                 <p class="text-center mb-4 section-description-races rg-description">
                     Cada raza carga un legado… y una deuda. Al jurar, heredas su gloria y su condena:</p>
@@ -117,7 +117,7 @@
             {{-- Grid de Razas --}}
             <div class="row g-3 g-md-4 justify-content-center">
                 @foreach($razas as $raza)
-                    <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-4">
                         <article
                             class="race-card card h-100 border-0 shadow-sm {{ $raza['is_premium'] ? 'is-premium' : '' }}"
                             tabindex="0"

@@ -1,9 +1,2 @@
+@import "../theme.css";
 @import "./theme.css";
-@import "./components/home_index.css";
-@import "./components/tablon.css";
-@import "./components/sala_de_guerra.css";
-@import "./components/estado_del_personaje.css";
-@import "../shared/components/modal.css";
-@import "../shared/components/dropdown.css";
-@import "../shared/components/site_logo.css";
-@import "../shared/components/nav_top.css";

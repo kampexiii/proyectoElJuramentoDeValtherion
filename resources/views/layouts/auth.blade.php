@@ -7,49 +7,21 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <script>
-        (function () {
-            const key = 'valtherion_theme';
-            const saved = localStorage.getItem(key);
-            if (saved === 'light' || saved === 'dark') {
-                document.documentElement.dataset.theme = saved;
-            }
-        })();
-    </script>
-
     <!-- CSS/JS zona logueada -->
     @vite(['resources/css/game/app.css', 'resources/js/game/app.js'])
 </head>
-<body class="antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-        <div>
+<body class="antialiased auth-shell">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 auth-wrap">
+        <div class="auth-logo">
             <a href="/">
                 <x-application-logo class="w-20 h-20 fill-current" />
             </a>
         </div>
 
-        <button id="themeToggle" type="button" class="mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm">
-            Tema
-        </button>
-
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-zinc-900 shadow-md overflow-hidden sm:rounded-lg border border-zinc-800">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-zinc-900 shadow-md overflow-hidden sm:rounded-lg border border-zinc-800 auth-card">
             {{ $slot }}
         </div>
     </div>
 
-    <script>
-        (function () {
-            const root = document.documentElement;
-            const key = 'valtherion_theme';
-            const btn = document.getElementById('themeToggle');
-            if (!btn) return;
-
-            btn.addEventListener('click', () => {
-                const next = (root.dataset.theme === 'dark') ? 'light' : 'dark';
-                root.dataset.theme = next;
-                localStorage.setItem(key, next);
-            });
-        })();
-    </script>
 </body>
 </html>
