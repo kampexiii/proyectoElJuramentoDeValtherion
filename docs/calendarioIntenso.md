@@ -58,6 +58,7 @@ Objetivo principal: **sitio completo (API + web) listo como tarde el lunes 2 de 
 - Perfil compacto funcional (sin scroll, validación real y disponibilidad).
 - Perfil: mostrar personaje, oro y experiencia.
 - Seed objetos base tienda.
+- Códigos de recompensa: creación en admin y canje en ajustes.
 
 **Cierre obligatorio**
 - Bitácora del día.
@@ -90,6 +91,7 @@ Objetivo principal: **sitio completo (API + web) listo como tarde el lunes 2 de 
 
 **Hecho hoy**
 - Equipamiento base (equipar/desequipar), inventario y montura (admin fija).
+- Tienda semanal con rotación estable y montura elegida en admin.
 
 **Cierre obligatorio**
 - Bitácora del día.

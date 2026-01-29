@@ -23,14 +23,26 @@ class GameProfileController extends Controller
                     $character->load('race');
                 }
 
-                $level = '—';
+                $gold = 0;
+                if (Schema::hasColumn('characters', 'gold')) {
+                    $gold = (int) ($character->gold ?? 0);
+                }
+
+                $xp = 0;
+                if (Schema::hasColumn('characters', 'xp')) {
+                    $xp = (int) ($character->xp ?? 0);
+                }
+
+                $level = 1;
                 if (Schema::hasColumn('characters', 'level')) {
-                    $level = $character->level ?? '—';
+                    $level = (int) ($character->level ?? 1);
                 }
 
                 $characterSummary = [
                     'name' => $character->name,
                     'race' => $character->race->name ?? '—',
+                    'gold' => $gold,
+                    'xp' => $xp,
                     'level' => $level,
                 ];
             }

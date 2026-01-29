@@ -42,14 +42,22 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.45rem;
     justify-content: center;
 }
 
 .ajustes-panel-body .form-control,
 .ajustes-panel-body .form-select,
 .ajustes-panel-body .btn {
-    font-size: 0.9rem;
+    font-size: 0.84rem;
+}
+
+.ajustes-panel-body .alert {
+    padding: 0.35rem 0.55rem;
+}
+
+.ajustes-panel-body .form-label {
+    font-size: 0.78rem;
 }
 
 .ajustes-switch {
@@ -69,7 +77,37 @@
 
 .ajustes-section {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 0.75rem;
+    padding-top: 0.5rem;
+}
+
+.ajustes-code-form .form-label {
+    margin-bottom: 0.25rem;
+}
+
+.ajustes-code-form .input-group {
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+.ajustes-code-form .input-group .form-control {
+    min-width: 0;
+}
+
+.ajustes-code-form .input-group .btn {
+    white-space: nowrap;
+}
+
+.ajustes-code-form .input-group .form-control {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+body.vth-compact .ajustes-panel-body .alert {
+    padding: 0.3rem 0.5rem;
+}
+
+body.vth-compact .ajustes-section {
+    padding-top: 0.5rem;
 }
 
 

@@ -86,6 +86,27 @@
                         <button type="submit" class="btn btn-warning btn-sm w-100">Cambiar contraseña</button>
                     </form>
 
+                    <div class="ajustes-section">
+                        @if ($errors->has('code'))
+                            <div class="alert alert-danger small mb-2">{{ $errors->first('code') }}</div>
+                        @endif
+
+                        @if (session('code-status'))
+                            <div class="alert alert-success small mb-2">{{ session('code-status') }}</div>
+                        @endif
+
+                        <form method="POST" action="{{ route('game.ajustes.codigo') }}" class="d-grid gap-2 ajustes-code-form">
+                            @csrf
+                            <div>
+                                <label for="reward_code" class="form-label">Código de recompensa</label>
+                                <div class="input-group input-group-sm">
+                                    <input id="reward_code" name="code" type="text" class="form-control text-uppercase" maxlength="64" autocomplete="off" required>
+                                    <button type="submit" class="btn btn-outline-info">Canjear</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                     <form method="POST" action="{{ route('logout') }}" class="mt-auto ajustes-section">
                         @csrf
                         <button type="submit" class="btn btn-outline-light btn-sm w-100">Cerrar sesión</button>

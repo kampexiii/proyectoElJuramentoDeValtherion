@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
+use App\Http\Controllers\Admin\RewardCodeController as AdminRewardCodeController;
+use App\Http\Controllers\Admin\ShopController as AdminShopController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterEquipmentController;
+use App\Http\Controllers\Game\ShopController as GameShopController;
 use App\Http\Controllers\GameProfileController;
+use App\Http\Controllers\GameRewardCodeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
@@ -29,21 +33,13 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
     Route::get('/ajustes', function () {
         return view('game.ajustes');
     })->name('game.ajustes');
+    Route::post('/ajustes/codigo', [GameRewardCodeController::class, 'redeem'])->name('game.ajustes.codigo');
 
     Route::middleware('has.character')->group(function () {
         Route::post('/personaje/equipar', [CharacterEquipmentController::class, 'equip'])->name('game.personaje.equipar');
         Route::post('/personaje/desequipar', [CharacterEquipmentController::class, 'unequip'])->name('game.personaje.desequipar');
 
-        Route::get('/tienda', function () {
-            $items = collect();
-            if (\Illuminate\Support\Facades\Schema::hasTable('items')) {
-                $items = \App\Models\Item::query()->orderBy('name')->get();
-            }
-
-            return view('game.tienda', [
-                'items' => $items,
-            ]);
-        })->name('game.tienda');
+        Route::get('/tienda', [GameShopController::class, 'index'])->name('game.tienda');
         Route::get('/inventario', function () {
             $inventory = collect();
             $character = request()->user()?->character;
@@ -82,8 +78,11 @@ Route::middleware('auth')->group(function () {
 Route::get('/admin/login', [AdminAuthenticatedSessionController::class, 'create'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthenticatedSessionController::class, 'store'])->name('admin.login.store');
 
-Route::get('/admin', function () {
-    return view('admin.index');
-})->middleware(['auth', 'role:admin'])->name('admin.index');
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('/', [AdminRewardCodeController::class, 'index'])->name('admin.index');
+    Route::post('/codigos', [AdminRewardCodeController::class, 'store'])->name('admin.codigos.store');
+    Route::get('/tienda', [AdminShopController::class, 'index'])->name('admin.tienda');
+    Route::post('/tienda/montura', [AdminShopController::class, 'storeMount'])->name('admin.tienda.montura');
+});
 
 require __DIR__ . '/auth.php';

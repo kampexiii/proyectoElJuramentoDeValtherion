@@ -33,7 +33,7 @@ class AdminUserSeeder extends Seeder
         }
 
         // 4. Campos fijos e idempotentes
-        $admin->name = 'Pablo Sevillano';
+        $admin->name = 'kampeXIII';
         $admin->plan = 'premium';
         $admin->role = 'admin';
         

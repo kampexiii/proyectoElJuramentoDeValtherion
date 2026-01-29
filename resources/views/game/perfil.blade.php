@@ -80,18 +80,26 @@
                 <div class="card-body p-2 perfil-panel-body">
                     <div class="perfil-section-title small text-secondary">Tu personaje</div>
                     @if ($characterSummary)
-                        <div class="list-group list-group-flush">
-                            <div class="list-group-item bg-transparent text-white border-secondary px-0 d-flex justify-content-between">
+                        <div class="perfil-summary">
+                            <div class="perfil-summary-item">
                                 <span>Nombre</span>
                                 <span class="text-truncate">{{ $characterSummary['name'] }}</span>
                             </div>
-                            <div class="list-group-item bg-transparent text-white border-secondary px-0 d-flex justify-content-between">
+                            <div class="perfil-summary-item">
                                 <span>Raza</span>
                                 <span class="text-truncate">{{ $characterSummary['race'] }}</span>
                             </div>
-                            <div class="list-group-item bg-transparent text-white border-secondary px-0 d-flex justify-content-between">
+                            <div class="perfil-summary-item">
+                                <span>Oro</span>
+                                <span class="text-truncate">{{ $characterSummary['gold'] ?? 0 }}</span>
+                            </div>
+                            <div class="perfil-summary-item">
+                                <span>Experiencia</span>
+                                <span class="text-truncate">{{ $characterSummary['xp'] ?? 0 }}</span>
+                            </div>
+                            <div class="perfil-summary-item">
                                 <span>Nivel</span>
-                                <span class="text-truncate">{{ $characterSummary['level'] }}</span>
+                                <span class="text-truncate">{{ $characterSummary['level'] ?? 1 }}</span>
                             </div>
                         </div>
                     @else
