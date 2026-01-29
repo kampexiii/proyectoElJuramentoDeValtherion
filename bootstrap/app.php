@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'role' => \App\Http\Middleware\EnsureRole::class,
+            'has.character' => \App\Http\Middleware\EnsureHasCharacter::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

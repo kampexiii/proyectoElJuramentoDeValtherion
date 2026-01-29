@@ -9,8 +9,14 @@
             <div class="card bg-zinc-900 border-secondary flex-grow-1 text-white shadow-sm overflow-hidden hx-card-bg">
                 <div class="card-header border-secondary bg-dark text-center py-2 flex-shrink-0">Estado del Héroe</div>
                 <div class="card-body d-flex flex-column justify-content-center align-items-center text-center p-2 overflow-hidden">
-                    <p class="mb-2 text-truncate w-100">Aún no has forjado tu leyenda.</p>
-                    <a href="{{ route('game.perfil') }}" class="btn btn-primary btn-sm">Crear Personaje</a>
+                    @if (empty($character))
+                        <p class="mb-2 text-truncate w-100">Aún no has forjado tu leyenda.</p>
+                        <a href="{{ route('game.personaje.create') }}" class="btn btn-primary btn-sm">Crear personaje</a>
+                    @else
+                        <p class="mb-2 text-truncate w-100">Nombre: {{ $character->name }}</p>
+                        <p class="mb-2 text-truncate w-100">Raza: {{ $character->race->name ?? 'Pendiente' }}</p>
+                        <a href="{{ route('game.personaje.edit') }}" class="btn btn-outline-light btn-sm">Editar personaje</a>
+                    @endif
                 </div>
             </div>
         </div>

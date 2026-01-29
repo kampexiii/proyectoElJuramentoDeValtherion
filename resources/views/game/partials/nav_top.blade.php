@@ -12,9 +12,21 @@
 
         <!-- Centro: Logo -->
         <div class="position-absolute start-50 translate-middle-x">
-            <a href="{{ route('home') }}">
-                <img src="{{ asset('assets/brand/logo.png') }}" alt="Valtherion" class="nav-top-logo">
-            </a>
+            @auth
+                @if(auth()->user()->role === 'admin')
+                    <a href="{{ route('admin.login') }}">
+                        <img src="{{ asset('assets/brand/logo.png') }}" alt="Valtherion" class="nav-top-logo">
+                    </a>
+                @else
+                    <a href="{{ route('home') }}">
+                        <img src="{{ asset('assets/brand/logo.png') }}" alt="Valtherion" class="nav-top-logo">
+                    </a>
+                @endif
+            @else
+                <a href="{{ route('home') }}">
+                    <img src="{{ asset('assets/brand/logo.png') }}" alt="Valtherion" class="nav-top-logo">
+                </a>
+            @endauth
         </div>
 
         <!-- Derecha: Perfil | Ajustes -->
