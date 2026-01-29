@@ -46,8 +46,6 @@ Route::get('/', function () {
 // Se removió la ruta dedicada /prologo: el prólogo ahora es una sección
 // incluida directamente en la landing (`guest.sections.prologo`).
 
-use Illuminate\Support\Facades\DB;
-
 Route::get('/home', function () {
     // Calcular mes anterior
     $now = now();
