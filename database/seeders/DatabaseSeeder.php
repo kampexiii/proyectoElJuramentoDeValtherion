@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\RaceSeeder::class);
         $this->call(\Database\Seeders\MountSeeder::class);
         $this->call(\Database\Seeders\ShopItemsSeeder::class);
+        $this->call(\Database\Seeders\AdminUserSeeder::class);
     }
 }

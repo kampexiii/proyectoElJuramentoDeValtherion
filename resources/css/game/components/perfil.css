@@ -75,6 +75,15 @@
     }
 }
 
+@media (min-width: 992px) {
+    .perfil-col {
+        height: 100%;
+    }
+    .perfil-row {
+        height: 100%;
+    }
+}
+
 body.vth-compact .perfil-panel-body {
     gap: 0.35rem;
 }

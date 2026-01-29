@@ -38,12 +38,30 @@ class GameProfileController extends Controller
                     $level = (int) ($character->level ?? 1);
                 }
 
+                $hp_max = 100;
+                if (Schema::hasColumn('characters', 'hp_max')) {
+                    $hp_max = (int) ($character->hp_max ?? 100);
+                }
+
+                $hp_current = 100;
+                if (Schema::hasColumn('characters', 'hp_current')) {
+                    $hp_current = (int) ($character->hp_current ?? 100);
+                }
+
+                $stats = [];
+                if (Schema::hasColumn('characters', 'stats_json')) {
+                    $stats = $character->stats_json ?? [];
+                }
+
                 $characterSummary = [
                     'name' => $character->name,
                     'race' => $character->race->name ?? '—',
                     'gold' => $gold,
                     'xp' => $xp,
                     'level' => $level,
+                    'hp_max' => $hp_max,
+                    'hp_current' => $hp_current,
+                    'stats' => $stats,
                 ];
             }
         }
@@ -84,7 +102,7 @@ class GameProfileController extends Controller
 
         $exists = User::query()
             ->where($field, $value)
-            ->when($user, fn ($query) => $query->where('id', '!=', $user->id))
+            ->when($user, fn($query) => $query->where('id', '!=', $user->id))
             ->exists();
 
         if ($exists) {

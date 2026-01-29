@@ -35,6 +35,7 @@
                                             value="{{ $race->id }}"
                                             @selected(old('race_id') == $race->id)
                                             data-sprite="{{ $race->sprite }}"
+                                            data-hp="{{ $race->base_hp }}"
                                             data-fuerza="{{ $race->base_strength }}"
                                             data-magia="{{ $race->base_magic }}"
                                             data-defensa="{{ $race->base_defense }}"
@@ -70,6 +71,15 @@
                                 </div>
                                 <div class="col-12 col-md-7">
                                     <div class="d-grid gap-2">
+                                        <div>
+                                            <div class="d-flex justify-content-between small">
+                                                <span>Vida</span>
+                                                <span id="stat-hp-val">-</span>
+                                            </div>
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-success hx-bar-0" id="stat-hp-bar" role="progressbar"></div>
+                                            </div>
+                                        </div>
                                         <div>
                                             <div class="d-flex justify-content-between small">
                                                 <span>Fuerza</span>
@@ -127,6 +137,7 @@
         const preview = document.querySelector('.character-preview');
 
         const bars = {
+            hp: document.getElementById('stat-hp-bar'),
             fuerza: document.getElementById('stat-fuerza-bar'),
             magia: document.getElementById('stat-magia-bar'),
             defensa: document.getElementById('stat-defensa-bar'),
@@ -134,6 +145,7 @@
         };
 
         const values = {
+            hp: document.getElementById('stat-hp-val'),
             fuerza: document.getElementById('stat-fuerza-val'),
             magia: document.getElementById('stat-magia-val'),
             defensa: document.getElementById('stat-defensa-val'),
@@ -141,6 +153,7 @@
         };
 
         const max = {
+            hp: 100, // Asumir max HP para preview
             fuerza: parseInt(preview.dataset.maxFuerza || '1', 10),
             magia: parseInt(preview.dataset.maxMagia || '1', 10),
             defensa: parseInt(preview.dataset.maxDefensa || '1', 10),
@@ -211,6 +224,7 @@
             sprite.classList.remove('opacity-50');
             nameLabel.textContent = raceName;
 
+            setBar('hp', parseInt(option.dataset.hp || '0', 10));
             setBar('fuerza', parseInt(option.dataset.fuerza || '0', 10));
             setBar('magia', parseInt(option.dataset.magia || '0', 10));
             setBar('defensa', parseInt(option.dataset.defensa || '0', 10));
