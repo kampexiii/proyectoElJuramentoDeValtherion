@@ -7,23 +7,20 @@
           <div class="card-body p-4 p-md-5">
 
             {{-- Header --}}
-            <div class="d-flex flex-wrap align-items-start justify-content-between gap-3">
-              <div class="text-start">
-                <h2 class="mb-2 section-title-chronicle" style="font-family: serif; font-size: 2.5rem;">
-                  Crónica Mensual
-                </h2>
-                <p class="text-secondary mb-3 text-center" style="max-width: 80ch;">
-                  Cada mes, las razas compiten por el dominio del Viejo Mundo. La facción ganadora recibe un
-                  <span class="fw-semibold chronicle-accent">cofre con 3 objetos de poder</span>.
-                </p>
-                <div class="d-flex justify-content-center gap-3 mb-3">
-                  <i class="fas fa-gift text-warning fa-2x" title="Cofre de premio"></i>
-                  <i class="fas fa-gift text-warning fa-2x" title="Cofre de premio"></i>
-                  <i class="fas fa-gift text-warning fa-2x" title="Cofre de premio"></i>
-                </div>
+
+            <div class="text-center">
+              <h2 class="mb-2 section-title-chronicle" style="font-family: serif; font-size: 2.5rem;">
+                {{ $chronicleTitle ?? 'Crónica Mensual' }}
+              </h2>
+              <p class="text-secondary mb-3 text-center" style="max-width: 80ch; margin-left:auto; margin-right:auto;">
+                Cada mes, las razas compiten por el dominio del Viejo Mundo. La facción ganadora recibe un
+                <span class="fw-semibold chronicle-accent">cofre con 3 objetos de poder</span>.
+              </p>
+              <div class="d-flex justify-content-center gap-3 mb-3">
+                <i class="fas fa-gift text-warning fa-2x" title="Cofre de premio"></i>
+                <i class="fas fa-gift text-warning fa-2x" title="Cofre de premio"></i>
+                <i class="fas fa-gift text-warning fa-2x" title="Cofre de premio"></i>
               </div>
-
-
             </div>
 
             <div class="row g-4 mt-3 align-items-stretch">
@@ -94,20 +91,10 @@
 
                     {{-- Bloque ganador del mes anterior --}}
                     <div class="mb-3">
-                      @if (isset($seasonWinner) && $seasonWinner && !empty($seasonWinner->race_name))
-                        <div class="p-2 px-3 rounded-4 bg-white bg-opacity-75 border mb-1 text-center">
-                          <span class="fw-bold">Ganador del mes anterior:</span>
-                          <span class="ms-2">{{ $seasonWinner->race_name }}</span>
-                        </div>
-                      @else
-                        <div class="p-2 px-3 rounded-4 bg-white bg-opacity-75 border mb-1 text-center">
-                          <span class="fw-bold">Ganador del mes anterior:</span>
-                          <span class="ms-2">Aldrik Vhar <span class="text-secondary">(provisional)</span></span>
-                        </div>
-                        <div class="text-center mb-2">
-                          <small class="text-secondary">Aún no hay cierres mensuales registrados. Esto es un marcador temporal.</small>
-                        </div>
-                      @endif
+                      <div class="p-2 px-3 rounded-4 bg-white bg-opacity-75 border mb-1 text-center">
+                        <span class="fw-bold">{{ $winnerLabel ?? 'Ganador del mes:' }}</span>
+                        <span class="ms-2">{{ $winnerName ?? '' }}</span>
+                      </div>
                     </div>
 
                     @if (isset($seasonRankings) && $seasonRankings->count() > 0)

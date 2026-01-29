@@ -83,7 +83,7 @@ class MonthlyChronicleService
         // Etiquetas de mes
         $chronicleTitle = 'Crónica del mes: ' . $meses[$cm] . ' ' . $cy;
         $winnerLabel = 'Ganador del mes: ' . $meses[$pm] . ' ' . $py;
-        $winnerName = ($winner && !empty($winner->race_name)) ? $winner->race_name : 'Aldrik Vhar (provisional)';
+        $winnerName = ($winner && !empty($winner->race_name)) ? $winner->race_name : 'Aldrik Vhar El Juramentado Negro  ';
 
         return [
             'previousSeason' => $season,

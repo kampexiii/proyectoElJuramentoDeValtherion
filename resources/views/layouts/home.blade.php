@@ -16,7 +16,7 @@
         })();
     </script>
 
-    @vite(['resources/css/theme.css'])
+    @vite(['resources/css/game/app.css', 'resources/js/game/app.js'])
 </head>
 <body>
     <header class="v-surface-nav p-3 mb-4">

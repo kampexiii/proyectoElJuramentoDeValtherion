@@ -14,11 +14,8 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <!-- Theme (Landing forzado a claro) -->
-    @vite(['resources/css/theme.css', 'resources/css/landing/theme.css'])
+    <!-- CSS landing -->
+    @vite(['resources/css/landing/app.css'])
 </head>
 
 <body>

@@ -8,7 +8,10 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/css/theme.css',
                 'resources/css/landing/theme.css',
-                'resources/js/app.js'
+                'resources/js/app.js',
+                'resources/css/landing/app.css',
+                'resources/css/game/app.css',
+                'resources/js/game/app.js'
             ],
             refresh: true,
         }),

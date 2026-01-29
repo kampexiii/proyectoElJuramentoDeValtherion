@@ -21,10 +21,8 @@
             })();
         </script>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-        @vite(['resources/css/theme.css'])
+        <!-- CSS/JS zona logueada -->
+        @vite(['resources/css/game/app.css', 'resources/js/game/app.js'])
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen">

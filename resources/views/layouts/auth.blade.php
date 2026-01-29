@@ -17,10 +17,8 @@
         })();
     </script>
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    @vite(['resources/css/theme.css'])
+    <!-- CSS/JS zona logueada -->
+    @vite(['resources/css/game/app.css', 'resources/js/game/app.js'])
 </head>
 <body class="antialiased">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
