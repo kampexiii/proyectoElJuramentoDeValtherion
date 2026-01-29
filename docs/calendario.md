@@ -1,5 +1,6 @@
 # Calendario ultra-detalado — El juramento de Valtherion (Laravel 12)
 
+Nota (2026-01-29): Seed de razas y stats base.
 Nota (2026-01-29): Se dejó la sección "Crónica Mensual" en Home con ranking real y fallback ordenado por nombre de raza (opción A).
 
 Regla: 1h diaria. Viernes: 3h.
