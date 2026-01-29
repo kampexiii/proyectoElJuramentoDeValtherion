@@ -219,7 +219,7 @@ class CharacterEquipmentController extends Controller
             ];
         }
 
-        if ($race && $race->name === 'Aldrik Vhar') {
+        if ($race && in_array($race->name, ['Señor Legendario del Caos', 'Aldrik Vhar'], true)) {
             $max = [
                 'fuerza' => max($max['fuerza'] ?? 0, (int) $race->base_strength + ($bonusMontura['fuerza'] ?? 0)),
                 'magia' => max($max['magia'] ?? 0, (int) $race->base_magic + ($bonusMontura['magia'] ?? 0)),

@@ -144,7 +144,7 @@ class RaceSeeder extends Seeder
             ],
             // Admin-only
             [
-                'name' => 'Aldrik Vhar',
+                'name' => 'Señor Legendario del Caos',
                 'min_role' => 'admin',
                 'stat_points_total' => 40,
                 'base_hp' => 9,
@@ -152,11 +152,18 @@ class RaceSeeder extends Seeder
                 'base_magic' => 7,
                 'base_defense' => 9,
                 'base_speed' => 3,
-                'lore' => 'Aldrik Vhar, el Juramentado Negro, es el Elegido de la Grieta y el Caído. Su poder es legendario y solo está disponible para administradores.',
+                'lore' => 'El Señor Legendario del Caos es el Elegido de la Grieta y el Caído. Su poder es legendario y solo está disponible para administradores.',
             ],
         ];
 
         foreach ($races as $race) {
+            if ($race['name'] === 'Señor Legendario del Caos') {
+                $existente = \DB::table('races')->where('name', 'Aldrik Vhar')->first();
+                if ($existente) {
+                    \DB::table('races')->where('id', $existente->id)->update(['name' => $race['name']]);
+                }
+            }
+
             $where = ['name' => $race['name']];
             $data = $race;
             unset($data['name']);

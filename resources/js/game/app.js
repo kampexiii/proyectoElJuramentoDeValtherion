@@ -1,3 +1,5 @@
+import './settings';
+
 // JS general zona logueada (migrado desde layouts si aplica)
 (() => {
     const key = 'valtherion_theme';

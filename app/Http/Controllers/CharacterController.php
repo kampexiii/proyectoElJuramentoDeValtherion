@@ -24,7 +24,7 @@ class CharacterController extends Controller
         $races = Race::orderBy('name')->get()->map(function (Race $race) use ($adminMount) {
             $race->sprite = '/assets/sprites/razas/' . Str::slug($race->name) . '.png';
 
-            if ($adminMount && $race->name === 'Aldrik Vhar') {
+            if ($adminMount && $race->name === 'Señor Legendario del Caos') {
                 $race->base_strength += $adminMount['bonus_strength'];
                 $race->base_magic += $adminMount['bonus_magic'];
                 $race->base_defense += $adminMount['bonus_defense'];
@@ -72,7 +72,7 @@ class CharacterController extends Controller
                     'velocidad' => $race->base_speed,
                 ];
 
-                if ($race->name === 'Aldrik Vhar') {
+                if ($race->name === 'Señor Legendario del Caos') {
                     $adminMount = $this->obtenerMonturaAdmin();
                     if ($adminMount) {
                         $stats = [
@@ -108,6 +108,10 @@ class CharacterController extends Controller
         }
 
         $character = $user->character->load(['race']);
+        if (Schema::hasTable('mounts')) {
+            $character->load(['mount']);
+        }
+        $this->asegurarMonturaAdmin($character, $user);
         if (Schema::hasTable('mounts')) {
             $character->load(['mount']);
         }
@@ -268,7 +272,7 @@ class CharacterController extends Controller
             ];
         }
 
-        if ($race && $race->name === 'Aldrik Vhar') {
+        if ($race && in_array($race->name, ['Señor Legendario del Caos', 'Aldrik Vhar'], true)) {
             $max = [
                 'fuerza' => max($max['fuerza'] ?? 0, (int) $race->base_strength + ($bonusMontura['fuerza'] ?? 0)),
                 'magia' => max($max['magia'] ?? 0, (int) $race->base_magic + ($bonusMontura['magia'] ?? 0)),
@@ -361,6 +365,64 @@ class CharacterController extends Controller
             'defensa' => (int) $mount->bonus_defense,
             'velocidad' => (int) $mount->bonus_speed,
         ];
+    }
+
+    private function asegurarMonturaAdmin(Character $character, $user): void
+    {
+        if (!$user || ($user->role ?? null) !== 'admin') {
+            return;
+        }
+
+        $race = $character->race;
+        if (!$race) {
+            return;
+        }
+
+        if (!in_array($race->name, ['Señor Legendario del Caos', 'Aldrik Vhar'], true)) {
+            return;
+        }
+
+        if (!Schema::hasTable('mounts')) {
+            return;
+        }
+
+        $adminMount = Mount::query()->where('is_admin_fixed', true)->first();
+        if (!$adminMount) {
+            return;
+        }
+
+        $base = $this->statsBase($race);
+        $bonus = [
+            'fuerza' => (int) $adminMount->bonus_strength,
+            'magia' => (int) $adminMount->bonus_magic,
+            'defensa' => (int) $adminMount->bonus_defense,
+            'velocidad' => (int) $adminMount->bonus_speed,
+        ];
+        $maximos = $this->statsMaximos($race, $bonus);
+        $stats = [];
+        foreach ($base as $key => $valor) {
+            $stats[$key] = min($valor + ($bonus[$key] ?? 0), $maximos[$key] ?? ($valor + ($bonus[$key] ?? 0)));
+        }
+
+        $actualizar = false;
+        if ($character->mount_id !== $adminMount->id) {
+            $character->mount_id = $adminMount->id;
+            $actualizar = true;
+        }
+
+        if (Schema::hasColumn('characters', 'has_mount') && !$character->has_mount) {
+            $character->has_mount = true;
+            $actualizar = true;
+        }
+
+        if ($character->stats_json !== $stats) {
+            $character->stats_json = $stats;
+            $actualizar = true;
+        }
+
+        if ($actualizar) {
+            $character->save();
+        }
     }
 
     private function obtenerMonturaAdmin(): ?array

@@ -1,0 +1,55 @@
+.ajustes-viewport {
+    height: 100%;
+}
+
+.ajustes-row {
+    height: 100%;
+}
+
+.ajustes-col {
+    min-height: 0;
+}
+
+.ajustes-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.ajustes-panel-body {
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.ajustes-panel-body .form-control,
+.ajustes-panel-body .form-select,
+.ajustes-panel-body .btn {
+    font-size: 0.9rem;
+}
+
+@media (max-width: 1199.98px) {
+    .ajustes-col {
+        height: 50%;
+    }
+}
+
+body.vth-compact .ajustes-panel-body {
+    gap: 0.5rem;
+}
+
+body.vth-compact .ajustes-panel-body .form-label {
+    font-size: 0.8rem;
+}
+
+body.vth-reduce-motion * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+}
+
+body.vth-sound-off .vth-sound-indicator {
+    opacity: 0.7;
+}
