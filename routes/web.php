@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterEquipmentController;
+use App\Http\Controllers\GameProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
@@ -23,9 +24,8 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
     Route::put('/personaje', [CharacterController::class, 'update'])->name('game.personaje.update');
     Route::delete('/personaje', [CharacterController::class, 'destroy'])->name('game.personaje.destroy');
 
-    Route::get('/perfil', function () {
-        return view('game.perfil');
-    })->name('game.perfil');
+    Route::get('/perfil', [GameProfileController::class, 'show'])->name('game.perfil');
+    Route::get('/perfil/disponibilidad', [GameProfileController::class, 'availability'])->name('game.perfil.disponibilidad');
     Route::get('/ajustes', function () {
         return view('game.ajustes');
     })->name('game.ajustes');

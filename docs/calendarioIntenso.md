@@ -54,6 +54,8 @@ Objetivo principal: **sitio completo (API + web) listo como tarde el lunes 2 de 
 **Hecho hoy**
 - Base de personaje (crear/editar/borrar) y bloqueo de secciones sin personaje.
 - Ajustes funcional: preferencias persistentes y cambio de contraseña.
+- Ajustes compactos y centrados sin scroll en mobile/desktop.
+- Perfil compacto funcional (sin scroll, validación real y disponibilidad).
 
 **Cierre obligatorio**
 - Bitácora del día.

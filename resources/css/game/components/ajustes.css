@@ -1,19 +1,40 @@
 .ajustes-viewport {
     height: 100%;
+    display: flex;
 }
 
 .ajustes-row {
     height: 100%;
+    flex: 1;
+    justify-content: center;
 }
 
 .ajustes-col {
     min-height: 0;
+    width: 100%;
+    height: 50%;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .ajustes-panel {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
+}
+
+.ajustes-header {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.78rem;
+}
+
+.ajustes-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
 }
 
 .ajustes-panel-body {
@@ -22,6 +43,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    justify-content: center;
 }
 
 .ajustes-panel-body .form-control,
@@ -30,11 +52,26 @@
     font-size: 0.9rem;
 }
 
-@media (max-width: 1199.98px) {
-    .ajustes-col {
-        height: 50%;
-    }
+.ajustes-switch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.75rem;
+    background: rgba(0, 0, 0, 0.25);
 }
+
+.ajustes-switch .form-check-input {
+    margin-left: 0;
+}
+
+.ajustes-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 0.75rem;
+}
+
 
 body.vth-compact .ajustes-panel-body {
     gap: 0.5rem;
@@ -42,6 +79,15 @@ body.vth-compact .ajustes-panel-body {
 
 body.vth-compact .ajustes-panel-body .form-label {
     font-size: 0.8rem;
+}
+
+body.vth-compact .ajustes-switch {
+    padding: 0.5rem 0.6rem;
+}
+
+body.vth-compact .ajustes-panel-body .btn {
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
 }
 
 body.vth-reduce-motion * {
