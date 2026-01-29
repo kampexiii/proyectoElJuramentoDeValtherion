@@ -343,6 +343,8 @@ Commit:
 
 [ ] "opciones de mision y progreso entre nodos"
 
+- Tablas `seasons`/`season_race_rankings`/`season_race_winners` + comandos `season:ensure-current` / `season:close` (migraciones añadidas y verificadas localmente)
+
 ---
 
 ### 2026-01-30 (Vie) — 3h — Efectos + Enemigo final + Recompensas
