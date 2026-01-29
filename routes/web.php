@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -16,23 +17,30 @@ Route::get('/', function () {
     $py = (int) $prev->format('Y');
     $pm = (int) $prev->format('n');
 
-    $season = DB::table('seasons')->where('year', $py)->where('month', $pm)->first();
+    $season = null;
+    if (Schema::hasTable('seasons')) {
+        $season = DB::table('seasons')->where('year', $py)->where('month', $pm)->first();
+    }
 
     $rankings = collect();
     $winner = null;
 
     if ($season) {
-        $rankings = DB::table('season_race_rankings')
-            ->where('season_id', $season->id)
-            ->join('races', 'season_race_rankings.race_id', '=', 'races.id')
-            ->select('season_race_rankings.race_id', 'season_race_rankings.points', 'races.name as race_name')
-            ->orderByDesc('season_race_rankings.points')
-            ->limit(10)
-            ->get();
+        if (Schema::hasTable('season_race_rankings') && Schema::hasTable('races')) {
+            $rankings = DB::table('season_race_rankings')
+                ->where('season_id', $season->id)
+                ->join('races', 'season_race_rankings.race_id', '=', 'races.id')
+                ->select('season_race_rankings.race_id', 'season_race_rankings.points', 'races.name as race_name')
+                ->orderByDesc('season_race_rankings.points')
+                ->limit(10)
+                ->get();
+        }
 
-        $winner = DB::table('season_race_winners')->where('season_id', $season->id)->first();
-        if ($winner) {
-            $winner->race_name = DB::table('races')->where('id', $winner->race_id)->value('name');
+        if (Schema::hasTable('season_race_winners')) {
+            $winner = DB::table('season_race_winners')->where('season_id', $season->id)->first();
+            if ($winner && Schema::hasTable('races')) {
+                $winner->race_name = DB::table('races')->where('id', $winner->race_id)->value('name');
+            }
         }
     }
 
@@ -53,23 +61,30 @@ Route::get('/home', function () {
     $py = (int) $prev->format('Y');
     $pm = (int) $prev->format('n');
 
-    $season = DB::table('seasons')->where('year', $py)->where('month', $pm)->first();
+    $season = null;
+    if (Schema::hasTable('seasons')) {
+        $season = DB::table('seasons')->where('year', $py)->where('month', $pm)->first();
+    }
 
     $rankings = collect();
     $winner = null;
 
     if ($season) {
-        $rankings = DB::table('season_race_rankings')
-            ->where('season_id', $season->id)
-            ->join('races', 'season_race_rankings.race_id', '=', 'races.id')
-            ->select('season_race_rankings.race_id', 'season_race_rankings.points', 'races.name as race_name')
-            ->orderByDesc('season_race_rankings.points')
-            ->limit(10)
-            ->get();
+        if (Schema::hasTable('season_race_rankings') && Schema::hasTable('races')) {
+            $rankings = DB::table('season_race_rankings')
+                ->where('season_id', $season->id)
+                ->join('races', 'season_race_rankings.race_id', '=', 'races.id')
+                ->select('season_race_rankings.race_id', 'season_race_rankings.points', 'races.name as race_name')
+                ->orderByDesc('season_race_rankings.points')
+                ->limit(10)
+                ->get();
+        }
 
-        $winner = DB::table('season_race_winners')->where('season_id', $season->id)->first();
-        if ($winner) {
-            $winner->race_name = DB::table('races')->where('id', $winner->race_id)->value('name');
+        if (Schema::hasTable('season_race_winners')) {
+            $winner = DB::table('season_race_winners')->where('season_id', $season->id)->first();
+            if ($winner && Schema::hasTable('races')) {
+                $winner->race_name = DB::table('races')->where('id', $winner->race_id)->value('name');
+            }
         }
     }
 
