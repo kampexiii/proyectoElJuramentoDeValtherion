@@ -54,10 +54,47 @@
             </div>
             <div class="col-12 col-lg-6 d-flex flex-column home-panel hx-min-0">
                 <div class="card bg-zinc-900 border-secondary flex-grow-1 text-white shadow-sm overflow-hidden hx-card-bg">
-                    <div class="card-header border-secondary bg-dark text-center py-2 flex-shrink-0">Tienda semanal</div>
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center p-3 overflow-hidden">
-                        <p class="mb-2">Configura la montura destacada de la semana.</p>
-                        <a href="{{ route('admin.tienda') }}" class="btn btn-outline-light btn-sm">Ir a tienda semanal</a>
+                    <div class="card-header border-secondary bg-dark text-center py-2 flex-shrink-0">Montura en venta</div>
+                    <div class="card-body d-flex flex-column justify-content-center p-3 overflow-hidden">
+                        @if (!$hasShopTable)
+                            <div class="alert alert-warning small mb-0 text-center">Falta ejecutar migraciones para la tienda semanal.</div>
+                        @elseif ($mounts->isEmpty())
+                            <p class="small text-secondary mb-0 text-center">No hay monturas cargadas en la tabla de items.</p>
+                        @else
+                            <div class="small text-secondary mb-2 text-center">{{ $weekLabel }}</div>
+
+                            @if (session('mount-status'))
+                                <div class="alert alert-success small">{{ session('mount-status') }}</div>
+                            @endif
+
+                            @if ($errors->has('item_id'))
+                                <div class="alert alert-danger small">{{ $errors->first('item_id') }}</div>
+                            @endif
+
+                            <form method="POST" action="{{ route('admin.tienda.montura') }}" class="d-grid gap-2">
+                                @csrf
+                                <div>
+                                    <label for="admin_mount_item_id" class="form-label">Montura de la semana</label>
+                                    <select id="admin_mount_item_id" name="item_id" class="form-select form-select-sm" required>
+                                        <option value="">Selecciona una montura</option>
+                                        @foreach ($mounts as $mount)
+                                            <option value="{{ $mount->id }}" @selected(old('item_id') == $mount->id)>
+                                                {{ $mount->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-outline-info btn-sm w-100">Guardar montura</button>
+                            </form>
+
+                            <div class="small text-secondary text-center mt-2">
+                                @if ($currentMount)
+                                    Montura actual: {{ $currentMount->name }}
+                                @else
+                                    Aún no hay montura seleccionada.
+                                @endif
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

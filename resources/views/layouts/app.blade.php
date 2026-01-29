@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <meta name="description" content="El Juramento de Valtherion - Juego de rol estratégico ambientado en el mundo de Warhammer Fantasy. Crea tu personaje, lucha en misiones y domina el campo de batalla.">
+
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->

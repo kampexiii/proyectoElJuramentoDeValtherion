@@ -3,6 +3,7 @@
 @import "./components/ajustes.css";
 @import "./components/perfil.css";
 @import "./components/tienda.css";
+@import "./components/equipamiento.css";
 @import "../shared/components/nav_top.css";
 @import "../shared/components/modal.css";
 @import "../shared/components/dropdown.css";

@@ -7,8 +7,8 @@
         <p class="small text-secondary mb-0">Gestiona tu cuenta y tu personaje.</p>
     </div>
 
-    <div class="row g-2 perfil-row">
-        <div class="col-12 col-xl-6 perfil-col d-flex">
+    <div class="perfil-row d-flex flex-column flex-xl-row g-2">
+        <div class="perfil-col d-flex">
             <section class="card bg-zinc-900 border-secondary text-white shadow-sm perfil-panel" aria-labelledby="perfil-cuenta">
                 <div class="card-header border-secondary bg-dark text-center py-1 perfil-header">
                     <h2 id="perfil-cuenta" class="h6 mb-0">Cuenta</h2>
@@ -72,7 +72,7 @@
             </section>
         </div>
 
-        <div class="col-12 col-xl-6 perfil-col d-flex">
+        <div class="perfil-col d-flex">
             <section class="card bg-zinc-900 border-secondary text-white shadow-sm perfil-panel" aria-labelledby="perfil-juego">
                 <div class="card-header border-secondary bg-dark text-center py-1 perfil-header">
                     <h2 id="perfil-juego" class="h6 mb-0">Juego</h2>
@@ -80,28 +80,64 @@
                 <div class="card-body p-2 perfil-panel-body">
                     <div class="perfil-section-title small text-secondary">Tu personaje</div>
                     @if ($characterSummary)
-                        <div class="perfil-summary">
-                            <div class="perfil-summary-item">
-                                <span>Nombre</span>
-                                <span class="text-truncate">{{ $characterSummary['name'] }}</span>
+                        <div class="perfil-summary row g-1">
+                            <div class="col-6">
+                                <div class="perfil-summary-item">
+                                    <span>Nombre</span>
+                                    <span class="text-truncate">{{ $characterSummary['name'] }}</span>
+                                </div>
                             </div>
-                            <div class="perfil-summary-item">
-                                <span>Raza</span>
-                                <span class="text-truncate">{{ $characterSummary['race'] }}</span>
+                            <div class="col-6">
+                                <div class="perfil-summary-item">
+                                    <span>Raza</span>
+                                    <span class="text-truncate">{{ $characterSummary['race'] }}</span>
+                                </div>
                             </div>
-                            <div class="perfil-summary-item">
-                                <span>Oro</span>
-                                <span class="text-truncate">{{ $characterSummary['gold'] ?? 0 }}</span>
+                            <div class="col-6">
+                                <div class="perfil-summary-item">
+                                    <span>Oro</span>
+                                    <span class="text-truncate">{{ $characterSummary['gold'] ?? 0 }}</span>
+                                </div>
                             </div>
-                            <div class="perfil-summary-item">
-                                <span>Experiencia</span>
-                                <span class="text-truncate">{{ $characterSummary['xp'] ?? 0 }}</span>
+                            <div class="col-6">
+                                <div class="perfil-summary-item">
+                                    <span>Experiencia</span>
+                                    <span class="text-truncate">{{ $characterSummary['xp'] ?? 0 }}</span>
+                                </div>
                             </div>
-                            <div class="perfil-summary-item">
-                                <span>Nivel</span>
-                                <span class="text-truncate">{{ $characterSummary['level'] ?? 1 }}</span>
+                            <div class="col-6">
+                                <div class="perfil-summary-item">
+                                    <span>Nivel</span>
+                                    <span class="text-truncate">{{ $characterSummary['level'] ?? 1 }}</span>
+                                </div>
                             </div>
+                            <div class="col-12">
+                                <div class="perfil-summary-item">
+                                    <span>Vida</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="progress flex-grow-1" style="height: 10px;">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $characterSummary['hp_max'] > 0 ? ($characterSummary['hp_current'] / $characterSummary['hp_max']) * 100 : 0 }}%;" aria-valuenow="{{ $characterSummary['hp_current'] }}" aria-valuemin="0" aria-valuemax="{{ $characterSummary['hp_max'] }}"></div>
+                                        </div>
+                                        <small class="text-nowrap fw-bold">{{ $characterSummary['hp_current'] }}/{{ $characterSummary['hp_max'] }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (!empty($characterSummary['stats']))
+                                <div class="col-12">
+                                    <div class="perfil-summary-item">
+                                        <span>Estadísticas</span>
+                                        <div class="small d-flex flex-wrap gap-2">
+                                            @foreach ($characterSummary['stats'] as $stat => $value)
+                                                <span>{{ ucfirst($stat) }}: <strong>{{ $value }}</strong></span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
+                        @if (Route::has('game.equipamiento.edit'))
+                            <a href="{{ route('game.equipamiento.edit') }}" class="btn btn-outline-light btn-sm w-100">Ir a la armería</a>
+                        @endif
                     @else
                         <div class="perfil-cta small text-secondary">Aún no tienes personaje.</div>
                         @if (Route::has('game.personaje.create'))
@@ -113,4 +149,18 @@
         </div>
     </div>
 </div>
+
+<style>
+.perfil-row .perfil-col:first-child {
+    flex-basis: 25%;
+}
+.perfil-row .perfil-col:last-child {
+    flex-basis: 75%;
+}
+@media (min-width: 1200px) {
+    .perfil-row .perfil-col {
+        flex-basis: 50%;
+    }
+}
+</style>
 @endsection

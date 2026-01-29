@@ -5,13 +5,13 @@ use App\Http\Controllers\Admin\RewardCodeController as AdminRewardCodeController
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterEquipmentController;
+use App\Http\Controllers\Game\EquipamientoController;
 use App\Http\Controllers\Game\ShopController as GameShopController;
 use App\Http\Controllers\GameProfileController;
 use App\Http\Controllers\GameRewardCodeController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PotionController;
 use App\Http\Controllers\WelcomeController;
-use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
@@ -34,6 +34,8 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
         return view('game.ajustes');
     })->name('game.ajustes');
     Route::post('/ajustes/codigo', [GameRewardCodeController::class, 'redeem'])->name('game.ajustes.codigo');
+    Route::get('/equipamiento', [EquipamientoController::class, 'edit'])->name('game.equipamiento.edit');
+    Route::post('/equipamiento', [EquipamientoController::class, 'update'])->name('game.equipamiento.update');
 
     Route::middleware('has.character')->group(function () {
         Route::post('/personaje/equipar', [CharacterEquipmentController::class, 'equip'])->name('game.personaje.equipar');
@@ -52,6 +54,7 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
                 'inventory' => $inventory,
             ]);
         })->name('game.inventario');
+        Route::post('/inventario/pociones/usar/{item}', [PotionController::class, 'usePotion'])->name('game.inventario.pociones.usar');
         Route::get('/misiones', function () {
             return view('game.misiones');
         })->name('game.misiones');

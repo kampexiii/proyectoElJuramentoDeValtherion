@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Item;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class ShopItemsSeeder extends Seeder
@@ -28,6 +29,33 @@ class ShopItemsSeeder extends Seeder
         $hasStackable = Schema::hasColumn('items', 'stackable');
         $hasMaxStack = Schema::hasColumn('items', 'max_stack');
         $hasIsConsumable = Schema::hasColumn('items', 'is_consumable');
+        $hasRarityId = Schema::hasColumn('items', 'rarity_id');
+        $hasRarity = Schema::hasColumn('items', 'rarity');
+
+        $rarityMap = [];
+        if ($hasRarityId) {
+            if (!Schema::hasTable('rarities')) {
+                return;
+            }
+
+            $rarities = [
+                'common' => 'Común',
+                'rare' => 'Rara',
+                'epic' => 'Épica',
+            ];
+
+            foreach ($rarities as $code => $name) {
+                DB::table('rarities')->updateOrInsert(
+                    ['code' => $code],
+                    ['name' => $name, 'updated_at' => now(), 'created_at' => now()]
+                );
+            }
+
+            $rarityMap = DB::table('rarities')
+                ->whereIn('code', array_keys($rarities))
+                ->pluck('id', 'code')
+                ->toArray();
+        }
 
         $items = [
             [
@@ -216,6 +244,95 @@ class ShopItemsSeeder extends Seeder
                     'rarity' => $item['rarity'],
                     'description' => $item['description'],
                 ];
+            }
+
+            if ($hasRarityId && isset($rarityMap[$item['rarity']])) {
+                $data['rarity_id'] = $rarityMap[$item['rarity']];
+            }
+
+            if ($hasRarity) {
+                $data['rarity'] = $item['rarity'];
+            }
+
+            if ($hasBonusStrength) {
+                $data['bonus_strength'] = (int) ($item['bonuses']['strength'] ?? 0);
+            }
+            if ($hasBonusMagic) {
+                $data['bonus_magic'] = (int) ($item['bonuses']['magic'] ?? 0);
+            }
+            if ($hasBonusDefense) {
+                $data['bonus_defense'] = (int) ($item['bonuses']['defense'] ?? 0);
+            }
+            if ($hasBonusSpeed) {
+                $data['bonus_speed'] = (int) ($item['bonuses']['speed'] ?? 0);
+            }
+            if ($hasBonusHp) {
+                $data['bonus_hp'] = (int) ($item['bonuses']['hp'] ?? 0);
+            }
+
+            Item::updateOrCreate($key, $data);
+        }
+
+        // Pociones
+        $potions = [
+            [
+                'name' => 'Poción de Curación',
+                'type' => 'potion',
+                'required_level' => 1,
+                'stackable' => true,
+                'value_gold' => 50,
+                'rarity' => 'common',
+                'bonuses' => [],
+            ],
+            [
+                'name' => 'Poción de Fuerza',
+                'type' => 'potion',
+                'required_level' => 1,
+                'stackable' => true,
+                'value_gold' => 100,
+                'rarity' => 'common',
+                'bonuses' => [],
+            ],
+            [
+                'name' => 'Poción de Magia',
+                'type' => 'potion',
+                'required_level' => 1,
+                'stackable' => true,
+                'value_gold' => 100,
+                'rarity' => 'common',
+                'bonuses' => [],
+            ],
+            [
+                'name' => 'Poción de Defensa',
+                'type' => 'potion',
+                'required_level' => 1,
+                'stackable' => true,
+                'value_gold' => 100,
+                'rarity' => 'common',
+                'bonuses' => [],
+            ],
+            [
+                'name' => 'Poción de Velocidad',
+                'type' => 'potion',
+                'required_level' => 1,
+                'stackable' => true,
+                'value_gold' => 100,
+                'rarity' => 'common',
+                'bonuses' => [],
+            ],
+        ];
+
+        foreach ($potions as $item) {
+            $key = ['name' => $item['name']];
+            $data = $item;
+            unset($data['name'], $data['bonuses'], $data['rarity']);
+
+            if ($hasRarityId && isset($rarityMap[$item['rarity']])) {
+                $data['rarity_id'] = $rarityMap[$item['rarity']];
+            }
+
+            if ($hasRarity) {
+                $data['rarity'] = $item['rarity'];
             }
 
             if ($hasBonusStrength) {

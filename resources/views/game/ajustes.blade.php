@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid ajustes-viewport">
-    <div class="row g-3 ajustes-row">
+    <div class="row g-2 ajustes-row">
         <div class="col-12 ajustes-col d-flex">
             <div class="card bg-zinc-900 border-secondary text-white shadow-sm ajustes-panel">
                 <div class="card-header border-secondary bg-dark text-center py-1 ajustes-header">
@@ -101,7 +101,7 @@
                                 <label for="reward_code" class="form-label">Código de recompensa</label>
                                 <div class="input-group input-group-sm">
                                     <input id="reward_code" name="code" type="text" class="form-control text-uppercase" maxlength="64" autocomplete="off" required>
-                                    <button type="submit" class="btn btn-outline-info">Canjear</button>
+                                    <button type="submit" class="btn btn-outline-info btn-sm">Canjear</button>
                                 </div>
                             </div>
                         </form>

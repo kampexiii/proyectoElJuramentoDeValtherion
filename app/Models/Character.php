@@ -13,6 +13,8 @@ class Character extends Model
         'name',
         'stats_json',
         'has_mount',
+        'hp_max',
+        'hp_current',
     ];
 
     protected $casts = [

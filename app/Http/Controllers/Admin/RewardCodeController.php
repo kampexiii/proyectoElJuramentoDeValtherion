@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Mount;
 use App\Models\RewardCode;
+use App\Models\ShopWeeklyOffer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -17,10 +19,40 @@ class RewardCodeController extends Controller
     {
         [$optionMap, $optionGroups] = $this->buildRewardOptions();
 
+        $mounts = collect();
+        $currentMount = null;
+        $weekLabel = null;
+        $hasShopTable = Schema::hasTable('shop_weekly_offers');
+
+        if (Schema::hasTable('items')) {
+            $mounts = Item::query()
+                ->where(function ($query) {
+                    $query->where('type', 'mount')->orWhere('slot', 'mount');
+                })
+                ->orderBy('name')
+                ->get();
+        }
+
+        if ($hasShopTable) {
+            $date = Carbon::now();
+            $weekLabel = 'Semana ' . $date->isoWeek . ', ' . $date->isoWeekYear;
+
+            $currentMount = ShopWeeklyOffer::query()
+                ->with('item')
+                ->where('week_year', (int) $date->isoWeekYear)
+                ->where('week_number', (int) $date->isoWeek)
+                ->where('category', 'mount')
+                ->first();
+        }
+
         return view('admin.index', [
             'rewardOptionGroups' => $optionGroups,
             'rewardOptionsAvailable' => !empty($optionMap),
             'hasRewardTable' => Schema::hasTable('reward_codes'),
+            'mounts' => $mounts,
+            'currentMount' => $currentMount?->item,
+            'weekLabel' => $weekLabel,
+            'hasShopTable' => $hasShopTable,
         ]);
     }
 

@@ -42,7 +42,11 @@
             <h1 class="h5 mb-0">Tienda semanal</h1>
             <div class="small text-secondary">{{ $weekLabel }} · {{ $weekRange }}</div>
         </div>
-        <a href="{{ route('game.personaje.edit') }}" class="btn btn-outline-light btn-sm">Ver equipo</a>
+        @if (Route::has('game.equipamiento.edit'))
+            <a href="{{ route('game.equipamiento.edit') }}" class="btn btn-outline-light btn-sm">Ver equipo</a>
+        @else
+            <a href="{{ route('game.personaje.edit') }}" class="btn btn-outline-light btn-sm">Ver equipo</a>
+        @endif
     </div>
 
     <div class="shop-rows">
