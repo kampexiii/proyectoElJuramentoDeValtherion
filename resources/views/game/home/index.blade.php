@@ -4,7 +4,7 @@
 <div class="flex-grow-1 d-flex flex-column h-100 overflow-hidden">
     <div class="row g-3 flex-grow-1 overflow-hidden">
         <!-- Bloque Personaje actual -->
-        <div class="col-12 d-flex flex-column" style="min-height: 0;">
+        <div class="col-12 col-lg-6 d-flex flex-column" style="min-height: 0;">
             <div class="card bg-zinc-900 border-secondary flex-grow-1 text-white shadow-sm overflow-hidden" style="background-color: #111;">
                 <div class="card-header border-secondary bg-dark text-center py-2 flex-shrink-0">Estado del Héroe</div>
                 <div class="card-body d-flex flex-column justify-content-center align-items-center text-center p-2 overflow-hidden">
@@ -13,14 +13,12 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Crónica Mensual: clasificación mes anterior -->
-    <div class="row mt-3">
-        <div class="col-12">
-            <div class="card bg-zinc-900 border-secondary text-white shadow-sm">
-                <div class="card-header border-secondary bg-dark text-center py-2">Crónica Mensual (mes anterior)</div>
-                <div class="card-body p-3">
+        <!-- Crónica Mensual: clasificación mes anterior -->
+        <div class="col-12 col-lg-6 d-flex flex-column" style="min-height: 0;">
+            <div class="card bg-zinc-900 border-secondary text-white shadow-sm overflow-hidden" style="background-color: #111;">
+                <div class="card-header border-secondary bg-dark text-center py-2 flex-shrink-0">Crónica Mensual (mes anterior)</div>
+                <div class="card-body p-3 overflow-auto">
                     <div class="text-center mx-auto w-75 mb-3">
                         <h5 class="mb-1">Crónica Mensual</h5>
                         <p class="small mb-0 text-secondary">Relato breve de las gestas del mes pasado, una tabla con las razas mejor valoradas y la posición provisional si no hay datos.</p>
@@ -79,6 +77,5 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 @endsection
