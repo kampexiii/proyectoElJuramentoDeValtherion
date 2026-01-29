@@ -1,7 +1,2 @@
+@import "../theme.css";
 @import "./theme.css";
-@import "./components/portada.css";
-@import "./components/prologo.css";
-@import "./components/razas_grid.css";
-@import "./components/reglas_del_juramento.css";
-@import "./components/cronica_mensual.css";
-@import "../shared/components/site_logo.css";

@@ -1,0 +1,7 @@
+/* CSS para entrar en la historia */
+.entrar_en_la_historia p,
+.entrar_en_la_historia a{
+  color: #654321 !important; /* Marrón oscuro */
+  font-style: italic;
+  text-shadow: none; /* Sin sombra */
+}
