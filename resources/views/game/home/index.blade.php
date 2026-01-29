@@ -30,5 +30,48 @@
             </div>
         </div>
     </div>
+    
+    <!-- Crónica Mensual: clasificación mes anterior -->
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="card bg-zinc-900 border-secondary text-white shadow-sm">
+                <div class="card-header border-secondary bg-dark text-center py-2">Crónica Mensual (mes anterior)</div>
+                <div class="card-body p-3">
+                    @if (!$previousSeason)
+                        <p class="mb-0">Aún no hay datos del mes anterior.</p>
+                    @else
+                        @if ($seasonWinner)
+                            <p class="mb-2"><strong>Raza ganadora del mes:</strong> {{ $seasonWinner->race_name ?? '—' }}</p>
+                        @endif
+
+                        @if ($seasonRankings && $seasonRankings->count() > 0)
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped table-dark mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Posición</th>
+                                            <th>Raza</th>
+                                            <th>Puntos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($seasonRankings as $i => $r)
+                                            <tr>
+                                                <td>{{ $i + 1 }}</td>
+                                                <td>{{ $r->race_name }}</td>
+                                                <td>{{ $r->points }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <p class="mb-0">Aún no hay rankings para ese mes.</p>
+                        @endif
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

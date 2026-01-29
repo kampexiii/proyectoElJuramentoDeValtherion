@@ -31,4 +31,22 @@ class Season extends Model
     {
         return $this->hasMany(SeasonRaceWinner::class);
     }
+
+    // Helper: dado year/month devuelve el season anterior [year, month]
+    public static function previousSeasonFrom(int $year, int $month): array
+    {
+        if ($month === 1) {
+            return ['year' => $year - 1, 'month' => 12];
+        }
+        return ['year' => $year, 'month' => $month - 1];
+    }
+
+    // Helper: devuelve [year, month] del mes anterior respecto a now()
+    public static function previousSeasonFromNow(): array
+    {
+        $now = now();
+        $py = (int) $now->copy()->subMonth()->format('Y');
+        $pm = (int) $now->copy()->subMonth()->format('n');
+        return ['year' => $py, 'month' => $pm];
+    }
 }

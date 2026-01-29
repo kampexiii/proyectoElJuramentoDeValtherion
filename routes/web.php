@@ -14,8 +14,41 @@ Route::get('/', function () {
 // Se removió la ruta dedicada /prologo: el prólogo ahora es una sección
 // incluida directamente en la landing (`guest.sections.prologo`).
 
+use Illuminate\Support\Facades\DB;
+
 Route::get('/home', function () {
-    return view('game.home.index');
+    // Calcular mes anterior
+    $now = now();
+    $prev = $now->copy()->subMonth();
+    $py = (int) $prev->format('Y');
+    $pm = (int) $prev->format('n');
+
+    $season = DB::table('seasons')->where('year', $py)->where('month', $pm)->first();
+
+    $rankings = collect();
+    $winner = null;
+
+    if ($season) {
+        $rankings = DB::table('season_race_rankings')
+            ->where('season_id', $season->id)
+            ->join('races', 'season_race_rankings.race_id', '=', 'races.id')
+            ->select('season_race_rankings.race_id', 'season_race_rankings.points', 'races.name as race_name')
+            ->orderByDesc('season_race_rankings.points')
+            ->limit(10)
+            ->get();
+
+        $winner = DB::table('season_race_winners')->where('season_id', $season->id)->first();
+        if ($winner) {
+            $winner->race_name = DB::table('races')->where('id', $winner->race_id)->value('name');
+        }
+    }
+
+    return view('game.home.index', [
+        'previousSeason' => $season,
+        'seasonRankings' => $rankings,
+        'seasonWinner' => $winner,
+    ]);
+
 })->middleware(['auth', 'verified'])->name('home');
 
 // Rutas del Juego (Placeholders)

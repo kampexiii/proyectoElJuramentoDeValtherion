@@ -150,7 +150,7 @@ Acciones:
 [ ] Definir rutas de creación de personajes
 [ ] Crear public/css/landing-theme.css con tokens claros y componentes
 [ ] Enlazar CSS en layouts/guest.blade.php después de Bootstrap
-[ ] Aplicar clases section-panel y race-* en razas_del_viejo_mundo.blade.php
+[ ] Aplicar clases section-panel y race-\* en razas_del_viejo_mundo.blade.php
 [ ] Implementar sistema de theming dual (claro "Crónica Antigua" + oscuro "Abismo")
 [ ] Actualizar bitácora del día
 [ ] Commit + push
@@ -214,7 +214,6 @@ Bitácora:
 - [x] Se reemplazó/neutralizó el partial legacy `razas_del_viejo_mundo.blade.php` para evitar duplicados.
 - [x] Ajustes de accesibilidad: `alt` en avatars, `aria-label` en badge premium, focus-visible en cards.
 - [x] Cachés limpiadas (`view:clear`, `cache:clear`, `route:clear`, `config:clear`) y assets compilados (`npm run build`).
-
 
 Commit:
 
