@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-12 col-lg-10 col-xl-9">
 
-        <div class="card bg-dark text-light border-secondary rounded-4 shadow-sm overflow-hidden">
+        <div class="card bg-light bg-opacity-50 border-secondary rounded-4 shadow-sm overflow-hidden">
           <div class="card-body p-4 p-md-5">
 
             {{-- Header --}}
@@ -81,26 +81,38 @@
 
                   <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
                     <h4 class="h6 mb-0 section-subtitle-chronicle" style="font-family: serif;">
-                      Clasificación mensual
+                      Clasificación del mes
                     </h4>
                   </div>
 
-                  <div class="rounded-4 overflow-hidden border border-secondary-subtle bg-dark p-3">
+                  <div class="rounded-4 overflow-hidden border border-secondary-subtle bg-light bg-opacity-75 p-3">
                     @if (!empty($fallbackMessage))
-                      <div class="alert alert-warning bg-dark bg-opacity-75 border-0 rounded-4 shadow-sm mb-3" role="alert">
+                      <div class="alert alert-light border rounded-4 shadow-sm mb-3" role="alert">
                         <strong>{{ $fallbackMessage }}</strong>
                       </div>
                     @endif
 
-                    @if (isset($seasonWinner) && $seasonWinner)
-                      <p class="mb-2 text-warning text-center fs-5">
-                        👑 Raza ganadora del mes anterior: <strong>{{ $seasonWinner->race_name ?? '—' }}</strong> 👑
-                      </p>
-                    @endif
+                    {{-- Bloque ganador del mes anterior --}}
+                    <div class="mb-3">
+                      @if (isset($seasonWinner) && $seasonWinner && !empty($seasonWinner->race_name))
+                        <div class="p-2 px-3 rounded-4 bg-white bg-opacity-75 border mb-1 text-center">
+                          <span class="fw-bold">Ganador del mes anterior:</span>
+                          <span class="ms-2">{{ $seasonWinner->race_name }}</span>
+                        </div>
+                      @else
+                        <div class="p-2 px-3 rounded-4 bg-white bg-opacity-75 border mb-1 text-center">
+                          <span class="fw-bold">Ganador del mes anterior:</span>
+                          <span class="ms-2">Aldrik Vhar <span class="text-secondary">(provisional)</span></span>
+                        </div>
+                        <div class="text-center mb-2">
+                          <small class="text-secondary">Aún no hay cierres mensuales registrados. Esto es un marcador temporal.</small>
+                        </div>
+                      @endif
+                    </div>
 
                     @if (isset($seasonRankings) && $seasonRankings->count() > 0)
                       <div class="table-responsive">
-                        <table class="table table-sm table-striped table-dark mb-0 align-middle">
+                        <table class="table table-sm table-borderless align-middle mb-0">
                           <thead>
                             <tr>
                               <th>Posición</th>
@@ -113,13 +125,9 @@
                               <tr>
                                 <td>
                                   @if($i === 0)
-                                    <span class="badge bg-warning text-dark fs-6">🥇</span>
-                                  @elseif($i === 1)
-                                    <span class="badge bg-secondary fs-6">🥈</span>
-                                  @elseif($i === 2)
-                                    <span class="badge bg-brown text-light fs-6" style="background-color:#8B5C2A!important;">🥉</span>
+                                    <span class="badge rounded-pill bg-light text-dark border me-1">{{ $i+1 }} 👑</span>
                                   @else
-                                    <span class="badge bg-dark border border-secondary">{{ $i+1 }}</span>
+                                    <span class="badge rounded-pill bg-light text-dark border">{{ $i+1 }}</span>
                                   @endif
                                 </td>
                                 <td>{{ $r->race_name }}</td>
