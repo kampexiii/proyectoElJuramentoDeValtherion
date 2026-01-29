@@ -5,6 +5,7 @@ Nota (2026-01-29): Modelo Race y seeder de razas verificados.
 Nota (2026-01-29): Se dejó la sección "Crónica Mensual" en Home con ranking real y fallback ordenado por nombre de raza (opción A).
 Nota (2026-01-29): Crónica mensual del landing desde BD y fallback verificados.
 Nota (2026-01-29): Crónica Mensual del landing: 1 sola corona para líder actual, bloque de ganador del mes anterior (fallback Aldrik Vhar), y paleta integrada estilo papiro.
+Nota (2026-01-29): Crónica Mensual en HOME: ganador mes anterior (fallback Aldrik Vhar), 1 sola corona para líder actual, estilo juego (colores HOME).
 
 Regla: 1h diaria. Viernes: 3h.
 Cierre SIEMPRE con bitácora + commit. Sin excusas.

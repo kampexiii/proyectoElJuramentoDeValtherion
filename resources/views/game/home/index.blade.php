@@ -24,17 +24,31 @@
                         <p class="small mb-0 text-secondary">Relato breve de las gestas del mes pasado, una tabla con las razas mejor valoradas y la posición provisional si no hay datos.</p>
                     </div>
 
-                    @if (!empty($fallbackMessage))
-                        <div class="alert alert-warning small mb-2">{{ $fallbackMessage }}</div>
-                    @endif
+                    {{-- Bloque ganador del mes anterior --}}
+                    <div class="mb-3">
+                        @if (isset($seasonWinner) && $seasonWinner && !empty($seasonWinner->race_name))
+                            <div class="p-2 px-3 rounded-4 bg-dark bg-opacity-75 border mb-1 text-center">
+                                <span class="fw-bold text-warning">Ganador del mes anterior:</span>
+                                <span class="ms-2 text-white">{{ $seasonWinner->race_name }}</span>
+                            </div>
+                        @else
+                            <div class="p-2 px-3 rounded-4 bg-dark bg-opacity-75 border mb-1 text-center">
+                                <span class="fw-bold text-warning">Ganador del mes anterior:</span>
+                                <span class="ms-2 text-white">Aldrik Vhar <span class="text-secondary">(provisional)</span></span>
+                            </div>
+                            <div class="text-center mb-2">
+                                <small class="text-secondary">Aún no hay cierres mensuales registrados.</small>
+                            </div>
+                        @endif
+                    </div>
 
-                    @if ($seasonWinner)
-                        <p class="mb-2"><strong>Raza ganadora del mes:</strong> {{ $seasonWinner->race_name ?? ('Raza #' . ($seasonWinner->race_id ?? '—')) }}</p>
+                    @if (!empty($fallbackMessage))
+                        <div class="alert alert-secondary small mb-2">{{ $fallbackMessage }}</div>
                     @endif
 
                     @if ($seasonRankings && $seasonRankings->count() > 0)
                         <div class="table-responsive">
-                            <table class="table table-sm table-dark mb-0">
+                            <table class="table table-sm table-dark mb-0 align-middle">
                                 <thead>
                                     <tr>
                                         <th style="width:80px">Puesto</th>
@@ -52,11 +66,7 @@
                                         <tr>
                                             <td>
                                                 @if($pos == 1)
-                                                    <span class="badge bg-warning text-dark">🥇 {{ $pos }}</span>
-                                                @elseif($pos == 2)
-                                                    <span class="badge bg-secondary">🥈 {{ $pos }}</span>
-                                                @elseif($pos == 3)
-                                                    <span class="badge bg-info">🥉 {{ $pos }}</span>
+                                                    <span class="badge bg-warning text-dark">{{ $pos }} 👑</span>
                                                 @else
                                                     <span class="badge bg-secondary">{{ $pos }}</span>
                                                 @endif
@@ -69,7 +79,7 @@
                             </table>
                         </div>
                         @if(!empty($fallbackUsed) && $fallbackUsed === 'A')
-                            <p class="small text-muted mt-2">Clasificación provisional (orden por nombre, puntos 0).</p>
+                            <p class="small text-secondary mt-2">Clasificación provisional (sin puntos aún)</p>
                         @endif
                     @else
                         <p class="mb-0">Aún no hay rankings para ese mes.</p>
