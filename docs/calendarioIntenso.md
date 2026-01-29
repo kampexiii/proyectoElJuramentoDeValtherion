@@ -56,6 +56,8 @@ Objetivo principal: **sitio completo (API + web) listo como tarde el lunes 2 de 
 - Ajustes funcional: preferencias persistentes y cambio de contraseña.
 - Ajustes compactos y centrados sin scroll en mobile/desktop.
 - Perfil compacto funcional (sin scroll, validación real y disponibilidad).
+- Perfil: mostrar personaje, oro y experiencia.
+- Seed objetos base tienda.
 
 **Cierre obligatorio**
 - Bitácora del día.
