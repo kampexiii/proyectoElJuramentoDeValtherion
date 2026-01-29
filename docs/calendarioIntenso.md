@@ -59,6 +59,8 @@ Objetivo principal: **sitio completo (API + web) listo como tarde el lunes 2 de 
 - Perfil: mostrar personaje, oro y experiencia.
 - Seed objetos base tienda.
 - Códigos de recompensa: creación en admin y canje en ajustes.
+- Equipamiento: pantalla dedicada con selects por slot.
+- Admin: selección de montura semanal desde el panel.
 
 **Cierre obligatorio**
 - Bitácora del día.

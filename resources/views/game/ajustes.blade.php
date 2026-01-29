@@ -101,7 +101,7 @@
                                 <label for="reward_code" class="form-label">Código de recompensa</label>
                                 <div class="input-group input-group-sm">
                                     <input id="reward_code" name="code" type="text" class="form-control text-uppercase" maxlength="64" autocomplete="off" required>
-                                    <button type="submit" class="btn btn-outline-info">Canjear</button>
+                                    <button type="submit" class="btn btn-outline-info btn-sm">Canjear</button>
                                 </div>
                             </div>
                         </form>

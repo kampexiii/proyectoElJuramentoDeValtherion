@@ -102,6 +102,9 @@
                                 <span class="text-truncate">{{ $characterSummary['level'] ?? 1 }}</span>
                             </div>
                         </div>
+                        @if (Route::has('game.equipamiento.edit'))
+                            <a href="{{ route('game.equipamiento.edit') }}" class="btn btn-outline-light btn-sm w-100">Ir a la armería</a>
+                        @endif
                     @else
                         <div class="perfil-cta small text-secondary">Aún no tienes personaje.</div>
                         @if (Route::has('game.personaje.create'))

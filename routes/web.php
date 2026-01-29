@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\RewardCodeController as AdminRewardCodeController
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterEquipmentController;
+use App\Http\Controllers\Game\EquipamientoController;
 use App\Http\Controllers\Game\ShopController as GameShopController;
 use App\Http\Controllers\GameProfileController;
 use App\Http\Controllers\GameRewardCodeController;
@@ -34,6 +35,8 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
         return view('game.ajustes');
     })->name('game.ajustes');
     Route::post('/ajustes/codigo', [GameRewardCodeController::class, 'redeem'])->name('game.ajustes.codigo');
+    Route::get('/equipamiento', [EquipamientoController::class, 'edit'])->name('game.equipamiento.edit');
+    Route::post('/equipamiento', [EquipamientoController::class, 'update'])->name('game.equipamiento.update');
 
     Route::middleware('has.character')->group(function () {
         Route::post('/personaje/equipar', [CharacterEquipmentController::class, 'equip'])->name('game.personaje.equipar');
