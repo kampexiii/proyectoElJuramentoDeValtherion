@@ -5,7 +5,7 @@
     <div class="row g-3 align-items-stretch h-100">
         <div class="col-12 col-xl-6">
             <div class="card bg-zinc-900 border-secondary text-white shadow-sm h-100">
-                <div class="card-header border-secondary bg-dark text-center py-2">Editar personaje</div>
+                <div class="card-header border-secondary bg-dark text-center py-2">Personaje</div>
                 <div class="card-body p-3 d-flex flex-column gap-3">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -17,57 +17,43 @@
                         </div>
                     @endif
 
-                    @php
-                        $stats = $character->stats_json ?? [];
-                    @endphp
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-secondary">Nombre</span>
+                        <span class="fw-semibold">{{ $character->name }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-secondary">Raza</span>
+                        <span class="fw-semibold">{{ $character->race->name ?? 'Pendiente' }}</span>
+                    </div>
+                    <p class="small text-secondary mb-0">El nombre, la raza y los stats no se pueden editar.</p>
 
-                    <form action="{{ route('game.personaje.update') }}" method="POST" class="d-grid gap-3">
-                        @csrf
-                        @method('PUT')
-
-                        <div>
-                            <label for="name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $character->name) }}" required>
+                    <div>
+                        <h6 class="mb-2">Stats actuales</h6>
+                        @php
+                            $labels = [
+                                'fuerza' => 'Fuerza',
+                                'magia' => 'Magia',
+                                'defensa' => 'Defensa',
+                                'velocidad' => 'Velocidad',
+                            ];
+                        @endphp
+                        <div class="d-grid gap-2">
+                            @foreach ($labels as $key => $label)
+                                @php
+                                    $stat = $statsView[$key] ?? ['valor' => 0, 'max' => 1, 'clase' => 'hx-bar-0', 'color' => 'bg-danger'];
+                                @endphp
+                                <div>
+                                    <div class="d-flex justify-content-between small">
+                                        <span>{{ $label }}</span>
+                                        <span>{{ $stat['valor'] }}/{{ $stat['max'] }}</span>
+                                    </div>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar {{ $stat['color'] }} {{ $stat['clase'] }}" role="progressbar"></div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-
-                        <div>
-                            <label for="race_id" class="form-label">Raza</label>
-                            @if ($races->count() > 0)
-                                <select class="form-select" id="race_id" name="race_id">
-                                    <option value="">Selecciona una raza</option>
-                                    @foreach ($races as $race)
-                                        <option value="{{ $race->id }}" @selected(old('race_id', $character->race_id) == $race->id)>{{ $race->name }}</option>
-                                    @endforeach
-                                </select>
-                            @else
-                                <input type="text" class="form-control" value="Pendiente" disabled>
-                            @endif
-                        </div>
-
-                        <div>
-                            <label class="form-label">Stats (temporal)</label>
-                            <div class="row g-2">
-                                <div class="col-6">
-                                    <label for="stat_fuerza" class="form-label small">Fuerza</label>
-                                    <input type="number" class="form-control" id="stat_fuerza" name="stats[fuerza]" value="{{ old('stats.fuerza', $stats['fuerza'] ?? '') }}" min="0" max="999">
-                                </div>
-                                <div class="col-6">
-                                    <label for="stat_magia" class="form-label small">Magia</label>
-                                    <input type="number" class="form-control" id="stat_magia" name="stats[magia]" value="{{ old('stats.magia', $stats['magia'] ?? '') }}" min="0" max="999">
-                                </div>
-                                <div class="col-6">
-                                    <label for="stat_defensa" class="form-label small">Defensa</label>
-                                    <input type="number" class="form-control" id="stat_defensa" name="stats[defensa]" value="{{ old('stats.defensa', $stats['defensa'] ?? '') }}" min="0" max="999">
-                                </div>
-                                <div class="col-6">
-                                    <label for="stat_velocidad" class="form-label small">Velocidad</label>
-                                    <input type="number" class="form-control" id="stat_velocidad" name="stats[velocidad]" value="{{ old('stats.velocidad', $stats['velocidad'] ?? '') }}" min="0" max="999">
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                    </form>
+                    </div>
 
                     <form action="{{ route('game.personaje.destroy') }}" method="POST" class="mt-auto" onsubmit="return confirm('¿Seguro que quieres borrar tu personaje?');">
                         @csrf
@@ -140,10 +126,8 @@
                             @if ($inventory->count() > 6)
                                 <p class="small text-secondary mt-2 mb-0">Ver más (próximamente).</p>
                             @endif
-                        @elseif ($items->count() > 0)
-                            <p class="small text-secondary mb-0">Aún no tienes objetos en inventario.</p>
                         @else
-                            <p class="small text-secondary mb-0">Aún no hay objetos cargados. Cuando estén en la base de datos, podrás equiparlos aquí.</p>
+                            <p class="small text-secondary mb-0">Aún no tienes objetos en inventario.</p>
                         @endif
                     </div>
 
@@ -176,7 +160,7 @@
                                 <button type="submit" class="btn btn-primary">Equipar</button>
                             </form>
                         @else
-                            <div class="alert alert-secondary mb-0">Aún no hay objetos cargados. Cuando estén en la base de datos, podrás equiparlos aquí.</div>
+                            <div class="alert alert-secondary mb-0">Aún no tienes objetos para equipar.</div>
                         @endif
                     </div>
                 </div>
