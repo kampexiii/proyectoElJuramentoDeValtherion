@@ -85,14 +85,39 @@
 
                   </div>
 
-                  <div class="ratio ratio-16x9 rounded-4 overflow-hidden border border-secondary-subtle bg-dark">
-                    {{-- Sustituye esta imagen por tu captura real cuando la tengas --}}
-                    <img
-                      src="{{ asset('assets/images/ejemplo-clasificacion.png') }}"
-                      alt="Ejemplo de clasificación mensual de razas"
-                      class="w-100 h-100"
-                      style="object-fit: cover;"
-                    >
+                  <div class="rounded-4 overflow-hidden border border-secondary-subtle bg-dark p-3">
+                    @if (!isset($previousSeason) || !$previousSeason)
+                      <p class="mb-0 text-light">Aún no hay datos del mes anterior.</p>
+                    @else
+                      @if (isset($seasonWinner) && $seasonWinner)
+                        <p class="mb-2 text-warning"><strong>Raza ganadora del mes:</strong> {{ $seasonWinner->race_name ?? '—' }}</p>
+                      @endif
+
+                      @if (isset($seasonRankings) && $seasonRankings->count() > 0)
+                        <div class="table-responsive">
+                          <table class="table table-sm table-striped table-dark mb-0">
+                            <thead>
+                              <tr>
+                                <th>Posición</th>
+                                <th>Raza</th>
+                                <th>Puntos</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach($seasonRankings as $i => $r)
+                                <tr>
+                                  <td>{{ $i + 1 }}</td>
+                                  <td>{{ $r->race_name }}</td>
+                                  <td>{{ $r->points }}</td>
+                                </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
+                        </div>
+                      @else
+                        <p class="mb-0 text-light">Aún no hay rankings para ese mes.</p>
+                      @endif
+                    @endif
                   </div>
 
                 </div>

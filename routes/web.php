@@ -3,12 +3,44 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('home');
     }
-    return view('guest.welcome');
+
+    // Calcular mes anterior
+    $now = now();
+    $prev = $now->copy()->subMonth();
+    $py = (int) $prev->format('Y');
+    $pm = (int) $prev->format('n');
+
+    $season = DB::table('seasons')->where('year', $py)->where('month', $pm)->first();
+
+    $rankings = collect();
+    $winner = null;
+
+    if ($season) {
+        $rankings = DB::table('season_race_rankings')
+            ->where('season_id', $season->id)
+            ->join('races', 'season_race_rankings.race_id', '=', 'races.id')
+            ->select('season_race_rankings.race_id', 'season_race_rankings.points', 'races.name as race_name')
+            ->orderByDesc('season_race_rankings.points')
+            ->limit(10)
+            ->get();
+
+        $winner = DB::table('season_race_winners')->where('season_id', $season->id)->first();
+        if ($winner) {
+            $winner->race_name = DB::table('races')->where('id', $winner->race_id)->value('name');
+        }
+    }
+
+    return view('guest.welcome', [
+        'previousSeason' => $season,
+        'seasonRankings' => $rankings,
+        'seasonWinner' => $winner,
+    ]);
 });
 
 // Se removió la ruta dedicada /prologo: el prólogo ahora es una sección
@@ -48,18 +80,31 @@ Route::get('/home', function () {
         'seasonRankings' => $rankings,
         'seasonWinner' => $winner,
     ]);
-
 })->middleware(['auth', 'verified'])->name('home');
 
 // Rutas del Juego (Placeholders)
 Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
-    Route::get('/tienda', function () { return view('game.tienda'); })->name('game.tienda');
-    Route::get('/inventario', function () { return view('game.inventario'); })->name('game.inventario');
-    Route::get('/perfil', function () { return view('game.perfil'); })->name('game.perfil');
-    Route::get('/ajustes', function () { return view('game.ajustes'); })->name('game.ajustes');
-    Route::get('/misiones', function () { return view('game.misiones'); })->name('game.misiones');
-    Route::get('/peleas', function () { return view('game.peleas'); })->name('game.peleas');
-    Route::get('/chat', function () { return view('game.chat'); })->name('game.chat');
+    Route::get('/tienda', function () {
+        return view('game.tienda');
+    })->name('game.tienda');
+    Route::get('/inventario', function () {
+        return view('game.inventario');
+    })->name('game.inventario');
+    Route::get('/perfil', function () {
+        return view('game.perfil');
+    })->name('game.perfil');
+    Route::get('/ajustes', function () {
+        return view('game.ajustes');
+    })->name('game.ajustes');
+    Route::get('/misiones', function () {
+        return view('game.misiones');
+    })->name('game.misiones');
+    Route::get('/peleas', function () {
+        return view('game.peleas');
+    })->name('game.peleas');
+    Route::get('/chat', function () {
+        return view('game.chat');
+    })->name('game.chat');
 });
 
 Route::get('/dashboard', function () {
@@ -77,4 +122,4 @@ Route::get('/admin', function () {
     return view('admin.index');
 })->middleware(['auth', 'role:admin'])->name('admin.index');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

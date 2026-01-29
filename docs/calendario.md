@@ -343,6 +343,7 @@ Commit:
 [ ] "opciones de mision y progreso entre nodos"
 
 - Tablas `seasons`/`season_race_rankings`/`season_race_winners` + comandos `season:ensure-current` / `season:close` (migraciones añadidas y verificadas localmente)
+ - Crónica Mensual: la sección del landing (`guest.sections.cronica_mensual`) ahora muestra la clasificación real del mes anterior sacada de la BD y la raza ganadora si existe.
 
 ---
 
