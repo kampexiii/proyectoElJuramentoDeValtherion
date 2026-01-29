@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SeasonRaceRanking extends Model
 {
+    protected $table = 'season_race_rankings';
+
     protected $fillable = [
         'season_id',
         'race_id',
-        'character_id',
         'points',
     ];
 
@@ -22,10 +23,5 @@ class SeasonRaceRanking extends Model
     public function race(): BelongsTo
     {
         return $this->belongsTo(Race::class);
-    }
-
-    public function character(): BelongsTo
-    {
-        return $this->belongsTo(Character::class);
     }
 }

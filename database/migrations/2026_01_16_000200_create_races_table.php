@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('access')->default('free')->index();
-            $table->longText('lore');
+            $table->longText('lore')->nullable();
 
             $table->unsignedInteger('base_hp');
             $table->unsignedInteger('base_strength');

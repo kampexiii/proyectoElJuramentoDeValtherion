@@ -1,0 +1,77 @@
+/* Estilos migrados de portada.blade.php */
+.pt-hero-content {
+  z-index: 2;
+}
+
+/* Hero: make outline-light buttons use a beige text color by default */
+#hero .btn-outline-light{
+  color: var(--beige);
+  border-color: color-mix(in srgb, var(--beige) 22%, rgba(255,255,255,0.12));
+}
+
+#hero .btn-outline-light:hover{
+  color: #fff;
+}
+
+/* HERO: fondo con borde sutil + blur leve */
+.hero-bg-wrap{
+  box-shadow: inset 0 0 0 1px rgba(242,230,207,.22);
+  border: 3px solid #FFD700; /* Borde dorado */
+  border-radius: 12px;
+}
+
+.hero-bg-img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /* Blur MUY leve (~20/100) */
+  filter: blur(2px);
+
+  /* Evita que se vean bordes al aplicar blur */
+  transform: scale(1.02);
+}
+
+/* Overlay para legibilidad */
+.hero-overlay{
+  background: rgba(0,0,0,.62);
+  backdrop-filter: blur(2px);
+}
+
+/* Tipografía del título/subtítulo */
+.hero-title{
+  font-family: serif;
+  text-shadow: 2px 2px 4px #000;
+}
+
+.hero-subtitle{
+  text-shadow: 1px 1px 2px #000;
+}
+
+/* Texto en marrón oscuro desgastado */
+#hero .hero-quote{
+  color: #654321; /* Marrón oscuro */
+  font-style: italic;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8), 0 0 5px rgba(101,67,33,0.5); /* Efecto desgastado más intenso */
+  font-size: 1.1rem;
+}
+
+/* Botón Acceder: fondo negro, borde beige, texto blanco en estado normal para legibilidad */
+#hero .btn.btn-hero-access{
+  background-color: rgba(0,0,0,0.8) !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(242,230,207,.6) !important;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+#hero .btn.btn-hero-access:hover,
+#hero .btn.btn-hero-access:focus{
+  background-color: var(--beige-200, #f2e6cf) !important;
+  color: #0b0f14 !important;
+  border-color: var(--beige-200, #f2e6cf) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}

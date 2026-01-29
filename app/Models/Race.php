@@ -3,28 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Race extends Model
 {
     protected $fillable = [
         'name',
-        'access',
-        'lore',
+        'min_role',
+        'stat_points_total',
         'base_hp',
         'base_strength',
         'base_magic',
         'base_defense',
         'base_speed',
+        'lore',
+        'caps_json',
+        'bonuses_json',
     ];
 
-    public function characters(): HasMany
-    {
-        return $this->hasMany(Character::class);
-    }
-
-    public function heroes(): HasMany
-    {
-        return $this->hasMany(Hero::class);
-    }
+    protected $casts = [
+        'caps_json' => 'array',
+        'bonuses_json' => 'array',
+    ];
 }

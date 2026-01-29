@@ -1,0 +1,8 @@
+/* Estilos migrados de components/modal.blade.php */
+.modal-hidden {
+    display: none;
+}
+
+.modal-visible {
+    display: block;
+}

@@ -1,0 +1,85 @@
+.perfil-viewport {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.perfil-header {
+    flex-shrink: 0;
+}
+
+.perfil-row {
+    flex: 1;
+    min-height: 0;
+}
+
+.perfil-col {
+    min-height: 0;
+    height: calc(50% - 0.25rem);
+}
+
+.perfil-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.perfil-panel-body {
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    justify-content: center;
+}
+
+.perfil-panel-body .form-control,
+.perfil-panel-body .btn {
+    font-size: 0.85rem;
+}
+
+.perfil-section-title {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.perfil-summary {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.perfil-summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.7rem;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.perfil-summary-item span:last-child {
+    font-weight: 600;
+}
+
+.perfil-cta {
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 1199.98px) {
+    .perfil-panel-body {
+        gap: 0.4rem;
+    }
+}
+
+body.vth-compact .perfil-panel-body {
+    gap: 0.35rem;
+}
+
+body.vth-compact .perfil-panel-body .btn {
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+}

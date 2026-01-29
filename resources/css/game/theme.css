@@ -1,0 +1,39 @@
+@import "./components/home_index.css";
+@import "./components/character_create.css";
+@import "./components/ajustes.css";
+@import "./components/perfil.css";
+@import "./components/tienda.css";
+@import "../shared/components/nav_top.css";
+@import "../shared/components/modal.css";
+@import "../shared/components/dropdown.css";
+@import "../shared/components/site_logo.css";
+
+/* Paleta y estilos generales zona logueada */
+html, body {
+    height: 100dvh; /* Usamos dvh para navegadores móviles modernos */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    overflow: hidden; /* Evita scroll absoluto, el contenido debe ajustarse */
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    position: relative;
+}
+
+.navbar-game {
+    flex-shrink: 0;
+    height: 64px;
+    z-index: 1030;
+}

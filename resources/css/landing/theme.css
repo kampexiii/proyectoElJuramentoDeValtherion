@@ -1,0 +1,67 @@
+@import "./components/portada.css";
+@import "./components/prologo.css";
+@import "./components/razas_grid.css";
+@import "./components/reglas_del_juramento.css";
+@import "./components/cronica_mensual.css";
+@import "../shared/components/site_logo.css";
+@import "./components/entrar_en_la_historia.css";
+
+/* =========================================
+   Landing theme — base
+   Nota: variables / fondo / modos están en resources/css/theme.css
+   ========================================= */
+
+/* =========================================================
+     Palette placeholders (fácil de retocar sin romper nada)
+     ========================================================= */
+:root{
+    --bg: var(--bg-app);
+    --card: var(--bg-surface);
+    --text: var(--text-main);
+    --muted: var(--text-muted);
+    --accent: var(--brand-primary);
+    --premium: #f0ad4e;
+    /* avatar / badge sizing variables */
+    --race-avatar-size: 52px;
+    --race-badge-height: 34px;
+    /* hero button accent */
+    --beige: #dccaa6;
+    /* pergamino / prologo */
+    --parchment-base: #f6ecd6;
+    --parchment-stain: #e9d9b2;
+    --parchment-edge: #bfa97a;
+}
+
+/* Contenedores y superficies */
+.section-panel {
+    background: var(--bg-surface);
+    border: var(--border-style);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: var(--shadow-sm, 0 4px 12px rgba(122, 92, 53, 0.3));
+}
+
+.line-clamp-2{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+/* Botones */
+.btn-primary {
+    background-color: var(--brand-primary);
+    color: var(--bg-app);
+    border: var(--border-style);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all 0.15s cubic-bezier(.2,.8,.2,1);
+}
+
+.btn-primary:hover {
+    background-color: var(--text-main);
+    color: var(--bg-app);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm, 0 4px 12px rgba(122, 92, 53, 0.3));
+}

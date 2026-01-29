@@ -1,0 +1,4 @@
+/* Estilos migrados de partials/nav_top.blade.php */
+.nav-top-logo {
+    height: 48px;
+}

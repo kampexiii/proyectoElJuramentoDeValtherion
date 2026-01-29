@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CharacterEquipment extends Model
 {
@@ -11,21 +10,16 @@ class CharacterEquipment extends Model
 
     protected $fillable = [
         'character_id',
-        'slot_id',
+        'slot',
         'item_id',
     ];
 
-    public function character(): BelongsTo
+    public function character()
     {
         return $this->belongsTo(Character::class);
     }
 
-    public function slot(): BelongsTo
-    {
-        return $this->belongsTo(EquipmentSlot::class, 'slot_id');
-    }
-
-    public function item(): BelongsTo
+    public function item()
     {
         return $this->belongsTo(Item::class);
     }

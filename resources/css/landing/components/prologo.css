@@ -1,0 +1,107 @@
+/* Estilos migrados de prologo.blade.php */
+.pr-title {
+  font-family: serif;
+}
+
+.pr-text {
+  max-width: 72ch;
+  line-height: 1.8;
+}
+
+/* =========================================================
+     Reader (Prólogo): excerpt + modal lectura
+     ========================================================= */
+.reader-card{
+    background: color-mix(in srgb, var(--card) 92%, var(--bg));
+    color: var(--text);
+    border: 1px solid color-mix(in srgb, var(--muted) 20%, transparent);
+}
+
+.reader-title{
+    font-family: serif;
+    letter-spacing: .2px;
+}
+
+.reader-badge{
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: var(--text);
+    border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+
+.reader-divider{
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 35%, var(--muted)), transparent);
+}
+
+.reader{
+    max-width: 70ch;
+}
+
+.reader-surface{
+    background: color-mix(in srgb, var(--card) 88%, white);
+    border: 1px solid color-mix(in srgb, var(--muted) 18%, transparent);
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 12px 34px rgba(0,0,0,.12);
+}
+
+.reader-text{
+    font-size: 1.02rem;
+    line-height: 1.75;
+    white-space: pre-line;
+    color: var(--text);
+}
+
+.reader-text.reader-dropcap::first-letter{
+    float: left;
+    font-size: 3.1rem;
+    line-height: 1;
+    font-weight: 800;
+    margin: .1rem .6rem 0 0;
+    color: var(--accent);
+}
+
+/* =========================================================
+   Prólogo — estilo pergamino y tipografía antigua
+   ========================================================= */
+.prologo .card{
+    border-radius: 12px;
+    border: 1px solid color-mix(in srgb, var(--parchment-edge) 22%, transparent);
+    background: linear-gradient(180deg, var(--parchment-base) 0%, var(--parchment-stain) 50%);
+    box-shadow: 0 18px 40px rgba(34,28,20,0.18), inset 0 2px 0 rgba(255,255,255,0.35);
+}
+
+.prologo .card-body{
+    padding: 2.25rem 2rem;
+    background-image: radial-gradient(circle at 10% 10%, rgba(0,0,0,0.02) 0%, transparent 12%),
+                      radial-gradient(circle at 90% 80%, rgba(0,0,0,0.02) 0%, transparent 14%);
+    background-repeat: no-repeat;
+    color: #2b2316;
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.7;
+}
+
+.prologo h2, .prologo .h3{
+    font-family: 'Goudy Old Style', 'IM Fell English', Georgia, serif;
+    font-size: 1.6rem;
+    letter-spacing: .6px;
+    color: #2b1f12;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.25), 0 2px 8px rgba(0,0,0,0.12);
+    margin-bottom: .75rem;
+}
+
+.prologo .card-body p{
+    color: #3a2f22;
+}
+
+.prologo .btn-outline-light{
+    border-color: color-mix(in srgb, var(--parchment-edge) 18%, rgba(255,255,255,0.08));
+    color: var(--parchment-edge);
+}
+
+.prologo .btn-outline-light:hover{
+    color: #fff;
+    background-color: var(--parchment-edge);
+}

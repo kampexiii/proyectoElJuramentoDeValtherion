@@ -1,5 +1,20 @@
 # Calendario ultra-detalado — El juramento de Valtherion (Laravel 12)
 
+Nota (2026-01-29): Seed de razas y stats base.
+Nota (2026-01-29): Modelo Race y seeder de razas verificados.
+Nota (2026-01-29): Se dejó la sección "Crónica Mensual" en Home con ranking real y fallback ordenado por nombre de raza (opción A).
+Nota (2026-01-29): Crónica mensual del landing desde BD y fallback verificados.
+Nota (2026-01-29): Crónica Mensual del landing: 1 sola corona para líder actual, bloque de ganador del mes anterior (fallback Aldrik Vhar), y paleta integrada estilo papiro.
+Nota (2026-01-29): Crónica Mensual en HOME: ganador mes anterior (fallback Aldrik Vhar), 1 sola corona para líder actual, estilo juego (colores HOME).
+Nota (2026-01-29): Home responsive: en mobile los paneles se reparten 50/50 (sin scroll) y el ranking se compacta (top 6 en mobile, top 10 en escritorio).
+Nota (2026-01-29): Landing: CSS por secciones (sin inline) + logo sin inline.
+Nota (2026-01-29): landing/theme.css vuelve a controlar fondo e imports de secciones.
+Nota (2026-01-29): Ajuste auth: sin botón de tema.
+Nota (2026-01-29): Landing: Razas de Valtherion + ancho desktop para cards.
+
+Fix: el landing vuelve a cargar CSS (Vite + entrypoint landing).
+Nota (2026-01-29): Crónica Mensual: título muestra mes actual y el bloque de ganador indica el mes anterior por nombre (sin decir ‘mes anterior’).
+
 Regla: 1h diaria. Viernes: 3h.
 Cierre SIEMPRE con bitácora + commit. Sin excusas.
 
@@ -53,11 +68,11 @@ Repo:
 
 **Hecho:**
 
-- Creación proyecto Laravel 12.
-- Configuración de Git y ramas.
-- Migraciones completas del juego (razas, items, misiones...).
-- Seeders base (Archaon y datos mínimos).
-- Generación de entregable automático (`docs/entregable_db.md`).
+[x] Creación proyecto Laravel 12.
+[x] Configuración de Git y ramas.
+[x] Migraciones completas del juego (razas, items, misiones...).
+[x] Seeders base (Archaon y datos mínimos).
+[x] Generación de entregable automático (`docs/entregable_db.md`).
 
 **Bitácora:** `docs/bitacora/2026-01-16.md`
 
@@ -65,11 +80,11 @@ Repo:
 
 **Hecho:**
 
-- Configuración real de `.env` (SQLite local).
-- `php artisan migrate:fresh --seed` (verificado).
-- Instalación de Laravel Breeze (Blade).
-- Compilación de assets (`npm run build`).
-- Docs operativos: `COMANDOS.md` y `CHECKLIST_ENTREGA.md`.
+[x] Configuración real de `.env` (SQLite local).
+[x] `php artisan migrate:fresh --seed` (verificado).
+[x] Instalación de Laravel Breeze (Blade).
+[x] Compilación de assets (`npm run build`).
+[x] Docs operativos: `COMANDOS.md` y `CHECKLIST_ENTREGA.md`.
 
 **Bitácora:** `docs/bitacora/2026-01-17.md`
 
@@ -77,10 +92,13 @@ Repo:
 
 **Hecho:**
 
-- Instalación de Laravel Reverb (Broadcasting).
-- Documentación del modelo de datos (`docs/MODELO_BD.md`).
-- Preparación carpeta ERD (`docs/ERD/`).
-- Ajuste final Semana 0 en calendario.
+[x] Instalación de Laravel Reverb (Broadcasting).
+[x] Documentación del modelo de datos (`docs/MODELO_BD.md`).
+[x] Preparación carpeta ERD (`docs/ERD/`).
+[x] Estructura base de Welcome público y Home privado modular por secciones (Bootstrap básico).
+[x] Refactor de Welcome/Home: secciones con tono de crónica + estructura para logo en public/assets/brand/.
+[x] Logo dentro del hero + footer welcome + limpieza de secciones no usadas.
+[x] Ajuste final Semana 0 en calendario.
 
 **Bitácora:** `docs/bitacora/2026-01-18.md`
 
@@ -90,409 +108,286 @@ Repo:
 
 ### 2026-01-19 (Lun) — 1h — Roles (admin/free/premium)
 
+**Hecho:**
+
+[x] Trello: "Día 4 — Roles + seed admin"
+[x] revisión de users y SOLO creación de migration si falta el campo
+[x] Seed: crear admin por defecto (email fijo de clase)
+[x] Comandos: migration, seeder, migrate, seed
+[x] Git add, commit, push
+
+**Bitácora:** `docs/bitacora/2026-01-19.md`
+
+**Commit:** "creacion de roles y usuario admin por defecto"
+
+---
+
+### 2026-01-20 (Mar) — 1h — Middleware roles + rutas protegidas + Home Juego Base
+
+**Hecho:**
+
+[x] Middleware para exigir role admin (`EnsureRole`).
+[x] Registro de alias de middleware en `bootstrap/app.php`.
+[x] Creación de ruta `/admin` y panel administrativo mínimo.
+[x] Ajuste estético de Login/Register (Modo oscuro + Logo + Castellano).
+[x] **Home Juego Base**: Estructura fija (no-scroll) con doble navbar (superior e inferior).
+[x] **Navegación**: Implementación de iconos y rutas placeholder para Tienda, Inventario, Perfil, Misiones, Peleas y Chat.
+
+**Bitácora:** `docs/bitacora/2026-01-20.md`
+
+**Commit:** "middleware de roles, acceso a panel de admin y home juego base"
+
+---
+
+### 2026-01-23 (Vie) — 3h — Characters + Stats + Base Items
+
 Trello:
 
-- "Día 4 — Roles + seed admin"
+[ ] "Día 6 — Character base"
+[ ] "Día 7 — Stats y validación personaje"
+[ ] "Día 8 — Items core"
 
-Herramientas:
+Archivos:
 
-- VSCode, Terminal
-
-Archivos a crear/tocar:
-
-- database/migrations/xxxx_add_role_to_users_table.php (crear)
-- database/seeders/DatabaseSeeder.php (tocar)
-- database/seeders/AdminUserSeeder.php (crear)
+[ ] database/migrations/xxxx_create_characters_table.php
+[ ] app/Models/Character.php
+[ ] app/Http/Controllers/CharacterController.php
+[ ] app/Http/Requests/StoreCharacterRequest.php
+[ ] database/migrations/xxxx_create_items_table.php
+[ ] app/Models/Item.php
 
 Acciones:
 
-- Añadir campo role a users
-- Seed: crear admin por defecto (email fijo de clase)
+[ ] Crear modelo Character y su migración
+[ ] Crear controller para gestión de personajes
+[ ] Crear Request para validación de creación (stats_json)
+[ ] Crear tablas base para items
+[ ] Definir rutas de creación de personajes
+[ ] Crear public/css/landing-theme.css con tokens claros y componentes
+[ ] Enlazar CSS en layouts/guest.blade.php después de Bootstrap
+[ ] Aplicar clases section-panel y race-\* en razas_del_viejo_mundo.blade.php
+[ ] Implementar sistema de theming dual (claro "Crónica Antigua" + oscuro "Abismo")
+[ ] Actualizar bitácora del día
+[ ] Commit + push
 
 Comandos:
 
-- php artisan make:migration add_role_to_users_table --table=users
-- php artisan make:seeder AdminUserSeeder
-- php artisan migrate
-- php artisan db:seed
+[ ] php artisan make:model Character -m
+[ ] php artisan make:controller CharacterController
+[ ] php artisan make:request StoreCharacterRequest
+[ ] php artisan make:model Item -m
+[ ] php artisan migrate
+[ ] git add .
+[ ] git commit -m "Landing: paleta clara fija + legibilidad en cards"
+[ ] git push
 
 Bitácora:
 
-- docs/bitacora/2026-01-19.md
+[ ] docs/bitacora/2026-01-23.md
 
 Commit:
 
-- git add .
-- git commit -m "creacion de roles y usuario admin por defecto"
-- git push
+[ ] "modelo de personaje y validacion de estadisticas"
+[ ] "base de datos para items e inventario"
 
 ---
 
-### 2026-01-20 (Mar) — 1h — Middleware roles + rutas protegidas
+### 2026-01-24 (Sáb) — 1h — Inventario + Seed Items
 
 Trello:
 
-- "Día 5 — Middleware roles"
+[ ] "Día 8 — Inventario + seed"
 
 Archivos:
 
-- app/Http/Middleware/EnsureRole.php (crear)
-- app/Http/Kernel.php (tocar) o bootstrap/app.php (según Laravel 12)
-- routes/web.php (tocar)
-
-Acciones:
-
-- Middleware para exigir role admin
-- Crear ruta /admin (pantalla simple)
+[ ] database/migrations/xxxx_create_character_items_table.php
+[ ] app/Models/CharacterItem.php
+[ ] app/Http/Controllers/InventoryController.php
+[ ] database/seeders/ItemSeeder.php
 
 Comandos:
 
-- php artisan make:middleware EnsureRole
+[ ] php artisan make:migration create_character_items_table
+[ ] php artisan make:controller InventoryController
+[ ] php artisan make:seeder ItemSeeder
+[ ] php artisan migrate
+[ ] php artisan db:seed
 
 Views:
 
-- resources/views/admin/index.blade.php (crear)
+[ ] resources/views/game/inventory/index.blade.php
 
 Bitácora:
 
-- docs/bitacora/2026-01-20.md
+[ ] docs/bitacora/2026-01-24.md
+
+**Actualización (2026-01-23, tarde) — Landing: Razas**
+
+- [x] `public/css/landing-theme.css` creado/extendido con tokens y estilos para `race-*`.
+- [x] Partial moderno `resources/views/guest/sections/_razas_grid.blade.php` creado.
+- [x] `resources/views/guest/welcome.blade.php` actualizado para incluir el nuevo partial.
+- [x] Se reemplazó/neutralizó el partial legacy `razas_del_viejo_mundo.blade.php` para evitar duplicados.
+- [x] Ajustes de accesibilidad: `alt` en avatars, `aria-label` en badge premium, focus-visible en cards.
+- [x] Cachés limpiadas (`view:clear`, `cache:clear`, `route:clear`, `config:clear`) y assets compilados (`npm run build`).
 
 Commit:
 
-- git add .
-- git commit -m "middleware de roles y acceso a panel de admin"
-- git push
+[ ] "inventario funcional y seeders de items"
 
 ---
 
-### 2026-01-21 (Mié) — 1h — Characters (tabla + modelo)
+### 2026-01-25 (Dom) — 1h — Base UI pixel + assets
 
 Trello:
 
-- "Día 6 — Character base"
-
-Archivos:
-
-- database/migrations/xxxx_create_characters_table.php (crear)
-- app/Models/Character.php (crear)
-- app/Http/Controllers/CharacterController.php (crear)
-- routes/web.php (tocar)
-
-Comandos:
-
-- php artisan make:model Character -m
-- php artisan make:controller CharacterController
-- php artisan migrate
-
-Views:
-
-- resources/views/game/character/show.blade.php (crear)
-- resources/views/game/character/create.blade.php (crear)
-
-Bitácora:
-
-- docs/bitacora/2026-01-21.md
-
-Commit:
-
-- git add .
-- git commit -m "modelo de personaje y sus primeras pantallas"
-- git push
-
----
-
-### 2026-01-22 (Jue) — 1h — Stats (estructura) + validación
-
-Trello:
-
-- "Día 7 — Stats y validación personaje"
-
-Archivos:
-
-- app/Http/Requests/StoreCharacterRequest.php (crear)
-- app/Http/Controllers/CharacterController.php (tocar)
-- database/migrations/...create_characters_table.php (tocar si falta campo)
-- docs/MODELO_BD.md (tocar: explicar stats_json)
-
-Comandos:
-
-- php artisan make:request StoreCharacterRequest
-
-Bitácora:
-
-- docs/bitacora/2026-01-22.md
-
-Commit:
-
-- git add .
-- git commit -m "validacion de personajes y estructura de estadisticas"
-- git push
-
----
-
-### 2026-01-23 (Vie) — 3h — Items + inventario + seed
-
-Trello:
-
-- "Día 8 — Items + inventario"
-
-Archivos:
-
-- database/migrations/xxxx_create_items_table.php (crear)
-- database/migrations/xxxx_create_character_items_table.php (crear)
-- app/Models/Item.php (crear)
-- app/Models/CharacterItem.php (crear o usar pivot sin modelo)
-- app/Http/Controllers/InventoryController.php (crear)
-- routes/web.php (tocar)
-- database/seeders/ItemSeeder.php (crear)
-- database/seeders/DatabaseSeeder.php (tocar)
-
-Comandos:
-
-- php artisan make:model Item -m
-- php artisan make:migration create_character_items_table
-- php artisan make:controller InventoryController
-- php artisan make:seeder ItemSeeder
-- php artisan migrate
-- php artisan db:seed
-
-Views:
-
-- resources/views/game/inventory/index.blade.php (crear)
-
-Bitácora:
-
-- docs/bitacora/2026-01-23.md
-
-Commits (2–3):
-
-- "creacion de items e inventario"
-- "pantallas de inventario con datos de prueba"
-- git push
-
----
-
-### 2026-01-24 (Sáb) — 1h — Base UI pixel + assets
-
-Trello:
-
-- "Día 9 — UI pixel base"
+[ ] "Día 9 — UI pixel base"
 
 Herramientas:
 
-- Photoshop (carpeta sprites), VSCode
+[ ] Photoshop (carpeta sprites), VSCode
 
 Archivos:
 
-- public/assets/sprites/.gitkeep (crear)
-- public/assets/ui/.gitkeep (crear)
-- resources/css/app.css (tocar: pixel css)
-- resources/views/layouts/game.blade.php (crear)
-- routes/web.php (tocar: usar layout game en pantallas de juego)
+[ ] public/assets/sprites/.gitkeep (crear)
+[ ] public/assets/ui/.gitkeep (crear)
+[ ] resources/css/app.css (tocar: pixel css)
+[ ] resources/views/layouts/game.blade.php (crear)
 
-CSS obligatorio:
+Bitácora:
 
-- image-rendering: pixelated;
+[ ] docs/bitacora/2026-01-25.md
+
+Commit:
+
+[ ] "diseño base del juego y renderizado de pixels"
+
+---
+
+### 2026-01-26 (Lun) — 1h — Dashboard del juego
+
+Trello:
+
+[ ] "Día 10 — Home del juego"
+
+Archivos:
+
+[ ] app/Http/Controllers/GameController.php (crear)
+[ ] routes/web.php (tocar)
+[ ] resources/views/game/dashboard.blade.php (crear)
+
+Bitácora:
+
+[ ] docs/bitacora/2026-01-26.md
+
+Commit:
+
+[ ] "dashboard principal del juego"
+
+---
+
+## Semana 2 — Misiones offline “elige tu destino” (2026-01-27 a 2026-02-02)
+
+### 2026-01-27 (Mar) — 1h — Tablas misiones (core)
+
+Trello:
+
+[ ] "Día 11 — Misiones schema"
+
+Archivos:
+
+[ ] migrations (misiones, nodos, opciones, runs)
+[ ] models (Mission, MissionNode, MissionChoice, MissionRun)
 
 Comandos:
 
-- npm run build
+[ ] php artisan make:model Mission -m
+[ ] php artisan make:model MissionNode -m
+[ ] php artisan make:model MissionChoice -m
+[ ] php artisan make:model MissionRun -m
+[ ] php artisan migrate
 
 Bitácora:
 
-- docs/bitacora/2026-01-24.md
+[ ] docs/bitacora/2026-01-27.md
 
 Commit:
 
-- git add .
-- git commit -m "diseño base del juego y renderizado de pixels"
-- git push
+[ ] "tablas y modelos para misiones offline"
 
 ---
 
-### 2026-01-25 (Dom) — 1h — Dashboard del juego
+### 2026-01-28 (Mié) — 1h — Flujo iniciar misión (run)
 
 Trello:
 
-- "Día 10 — Home del juego"
+[ ] "Día 12 — Iniciar misión"
 
 Archivos:
 
-- app/Http/Controllers/GameController.php (crear)
-- routes/web.php (tocar)
-- resources/views/game/dashboard.blade.php (crear)
+[ ] app/Http/Controllers/MissionRunController.php
+[ ] resources/views/game/missions/index.blade.php
+[ ] resources/views/game/missions/run.blade.php
 
 Bitácora:
 
-- docs/bitacora/2026-01-25.md
+[ ] docs/bitacora/2026-01-28.md
 
 Commit:
 
-- git add .
-- git commit -m "dashboard principal del juego"
-- git push
+[ ] "flujo para empezar una mision"
 
 ---
 
-## Semana 2 — Misiones offline “elige tu destino” (2026-01-26 a 2026-02-01)
-
-### 2026-01-26 (Lun) — 1h — Tablas misiones (core)
+### 2026-01-29 (Jue) — 1h — Pantalla nodo + elegir opción
 
 Trello:
 
-- "Día 11 — Misiones schema"
+[ ] "Día 13 — Opciones y progreso"
 
 Archivos:
 
-- migrations:
-    - create_missions_table.php
-    - create_mission_nodes_table.php
-    - create_mission_choices_table.php
-    - create_mission_runs_table.php
-- models:
-    - Mission.php
-    - MissionNode.php
-    - MissionChoice.php
-    - MissionRun.php
+[ ] MissionRunController.php (lógica avanzar)
+[ ] app/Http/Requests/ChooseMissionOptionRequest.php
+
+Bitácora:
+
+[ ] docs/bitacora/2026-01-29.md
+
+Commit:
+
+[ ] "opciones de mision y progreso entre nodos"
+
+- Tablas `seasons`/`season_race_rankings`/`season_race_winners` + comandos `season:ensure-current` / `season:close` (migraciones añadidas y verificadas localmente)
+- Crónica Mensual: la sección del landing (`guest.sections.cronica_mensual`) ahora muestra la clasificación real del mes anterior sacada de la BD y la raza ganadora si existe.
+
+---
+
+### 2026-01-30 (Vie) — 3h — Efectos + Enemigo final + Recompensas
+
+Trello:
+
+[ ] "Día 14 — Efectos (heridas, veneno...)"
+[ ] "Día 15 — Final misión + rewards"
+
+Archivos:
+
+[ ] database/migrations/create_enemy_templates_table.php
+[ ] app/Models/EnemyTemplate.php
+[ ] app/Services/MissionResolver.php
+[ ] app/Services/RewardService.php
 
 Comandos:
 
-- php artisan make:model Mission -m
-- php artisan make:model MissionNode -m
-- php artisan make:model MissionChoice -m
-- php artisan make:model MissionRun -m
-- php artisan migrate
-
-Docs:
-
-- docs/MODELO_BD.md (tocar)
+[ ] php artisan make:model EnemyTemplate -m
+[ ] php artisan migrate
 
 Bitácora:
 
-- docs/bitacora/2026-01-26.md
+[ ] docs/bitacora/2026-01-30.md
 
 Commit:
 
-- git add .
-- git commit -m "tablas y modelos para misiones offline"
-- git push
-
----
-
-### 2026-01-27 (Mar) — 1h — Flujo iniciar misión (run)
-
-Trello:
-
-- "Día 12 — Iniciar misión"
-
-Archivos:
-
-- app/Http/Controllers/MissionRunController.php (crear)
-- routes/web.php (tocar)
-- resources/views/game/missions/index.blade.php (crear)
-- resources/views/game/missions/run.blade.php (crear)
-
-Comandos:
-
-- php artisan make:controller MissionRunController
-
-Bitácora:
-
-- docs/bitacora/2026-01-27.md
-
-Commit:
-
-- git add .
-- git commit -m "flujo para empezar una mision"
-- git push
-
----
-
-### 2026-01-28 (Mié) — 1h — Pantalla nodo + elegir opción
-
-Trello:
-
-- "Día 13 — Opciones y progreso"
-
-Archivos:
-
-- MissionRunController.php (tocar: elegir choice y avanzar)
-- run.blade.php (tocar)
-- app/Http/Requests/ChooseMissionOptionRequest.php (crear)
-
-Comandos:
-
-- php artisan make:request ChooseMissionOptionRequest
-
-Bitácora:
-
-- docs/bitacora/2026-01-28.md
-
-Commit:
-
-- git add .
-- git commit -m "opciones de mision y progreso entre nodos"
-- git push
-
----
-
-### 2026-01-29 (Jue) — 1h — Efectos por decisión (estado run)
-
-Trello:
-
-- "Día 14 — Efectos (heridas, veneno...)"
-
-Archivos:
-
-- database/migrations/...\_create_mission_runs_table.php (tocar: run_state_json)
-- MissionRun.php (tocar: casts)
-- MissionRunController.php (tocar: aplicar efectos)
-- docs/MODELO_BD.md (tocar)
-
-Bitácora:
-
-- docs/bitacora/2026-01-29.md
-
-Commit:
-
-- git add .
-- git commit -m "efectos de las decisiones guardados en el estado de la partida"
-- git push
-
----
-
-### 2026-01-30 (Vie) — 3h — Enemigo final + resolver misión + recompensa
-
-Trello:
-
-- "Día 15 — Final misión + rewards"
-
-Archivos:
-
-- migrations:
-    - create_enemy_templates_table.php (crear)
-- models:
-    - EnemyTemplate.php (crear)
-- servicios:
-    - app/Services/MissionResolver.php (crear)
-    - app/Services/RewardService.php (crear)
-- MissionRunController.php (tocar: finalizar run)
-- docs/MODELO_BD.md (tocar)
-
-Comandos:
-
-- php artisan make:model EnemyTemplate -m
-- php artisan migrate
-
-Bitácora:
-
-- docs/bitacora/2026-01-30.md
-
-Commits (2–3):
-
-- "esquema para plantillas de enemigos"
-- "sistema para resolver misiones y recompensas"
-- git push
+[ ] "efectos de decisiones y sistema de resolucion de misiones"
 
 ---
 
@@ -500,28 +395,19 @@ Commits (2–3):
 
 Trello:
 
-- "Día 16 — Seed misión demo"
+[ ] "Día 16 — Seed misión demo"
 
 Archivos:
 
-- database/seeders/MissionDemoSeeder.php (crear)
-- DatabaseSeeder.php (tocar)
-- docs/GUIA_USUARIO.md (tocar: cómo jugar esa misión)
-
-Comandos:
-
-- php artisan make:seeder MissionDemoSeeder
-- php artisan db:seed
+[ ] database/seeders/MissionDemoSeeder.php
 
 Bitácora:
 
-- docs/bitacora/2026-01-31.md
+[ ] docs/bitacora/2026-01-31.md
 
 Commit:
 
-- git add .
-- git commit -m "datos de prueba para la mision de ejemplo"
-- git push
+[ ] "datos de prueba para la mision de ejemplo"
 
 ---
 
@@ -529,183 +415,108 @@ Commit:
 
 Trello:
 
-- "Día 17 — Historial misiones"
+[ ] "Día 17 — Historial misiones"
 
 Archivos:
 
-- app/Http/Controllers/MissionHistoryController.php (crear)
-- routes/web.php (tocar)
-- resources/views/game/missions/history.blade.php (crear)
-- resources/views/game/missions/history_show.blade.php (crear)
+[ ] app/Http/Controllers/MissionHistoryController.php
+[ ] resources/views/game/missions/history.blade.php
+
+Bitácora:
+
+[ ] docs/bitacora/2026-02-01.md
 
 Commit:
 
-- git add .
-- git commit -m "pantallas del historial de misiones"
-- git push
-
-Bitácora:
-
-- docs/bitacora/2026-02-01.md
+[ ] "pantallas del historial de misiones"
 
 ---
 
-## Semana 3 — Chat Reverb + Premium A/B/C (2026-02-02 a 2026-02-08)
+## Semana 3 — Chat Reverb + Premium A/B/C (2026-02-03 a 2026-02-09)
 
-### 2026-02-02 (Lun) — 1h — Tablas chat
+### 2026-02-03 (Mar) — 1h — Tablas chat
 
 Trello:
 
-- "Día 18 — Chat schema"
+[ ] "Día 18 — Chat schema"
 
 Archivos:
 
-- migrations:
-    - create_chat_rooms_table.php
-    - create_chat_messages_table.php
-- models:
-    - ChatRoom.php
-    - ChatMessage.php
+[ ] migrations (chat_rooms, chat_messages)
+[ ] models (ChatRoom, ChatMessage)
 
-Comandos:
+Bitácora:
 
-- php artisan make:model ChatRoom -m
-- php artisan make:model ChatMessage -m
-- php artisan migrate
+[ ] docs/bitacora/2026-02-03.md
 
 Commit:
 
-- git add .
-- git commit -m "base de datos para el chat"
-- git push
-
-Bitácora:
-
-- docs/bitacora/2026-02-02.md
+[ ] "base de datos para el chat"
 
 ---
 
-### 2026-02-03 (Mar) — 1h — Evento broadcasting (mensaje enviado)
+### 2026-02-04 (Mié) — 1h — Evento broadcasting (mensaje enviado)
 
 Trello:
 
-- "Día 19 — Evento chat realtime"
+[ ] "Día 19 — Evento chat realtime"
 
 Archivos:
 
-- app/Events/ChatMessageSent.php (crear)
-- routes/channels.php (tocar: canal chat room)
-- app/Http/Controllers/ChatController.php (crear)
+[ ] app/Events/ChatMessageSent.php
+[ ] app/Http/Controllers/ChatController.php
 
-Comandos:
+Bitácora:
 
-- php artisan make:event ChatMessageSent
+[ ] docs/bitacora/2026-02-04.md
 
 Commit:
 
-- git add .
-- git commit -m "envio de mensajes de chat por sala"
-- git push
-
-Bitácora:
-
-- docs/bitacora/2026-02-03.md
+[ ] "envio de mensajes de chat por sala"
 
 ---
 
-### 2026-02-04 (Mié) — 1h — UI chat global (Blade)
+### 2026-02-05 (Jue) — 1h — UI chat global (Blade)
 
 Trello:
 
-- "Día 20 — UI chat global"
+[ ] "Día 20 — UI chat global"
 
 Archivos:
 
-- resources/views/game/chat/index.blade.php (crear)
-- resources/js/echo.js o resources/js/bootstrap.js (tocar: Echo config)
-- resources/js/app.js (tocar si hace falta)
-- routes/web.php (tocar)
+[ ] resources/views/game/chat/index.blade.php
+[ ] resources/js/echo.js
 
-Comandos:
+Bitácora:
 
-- npm run build
+[ ] docs/bitacora/2026-02-05.md
 
 Commit:
 
-- git add .
-- git commit -m "interfaz del chat global con reverb"
-- git push
-
-Bitácora:
-
-- docs/bitacora/2026-02-04.md
+[ ] "interfaz del chat global con reverb"
 
 ---
 
-### 2026-02-05 (Jue) — 1h — Premium A: admin cambia role
+### 2026-02-06 (Vie) — 3h — Premium A/B/C + Ranking
 
 Trello:
 
-- "Día 21 — Premium manual"
+[ ] "Día 21 — Premium manual"
+[ ] "Día 22 — Premium por códigos + Ranking mensual"
 
 Archivos:
 
-- app/Http/Controllers/Admin/UserAdminController.php (crear)
-- resources/views/admin/users/index.blade.php (crear)
-- resources/views/admin/users/edit.blade.php (crear)
-- routes/web.php (tocar: grupo /admin/users)
-- app/Http/Middleware/EnsureRole.php (tocar si falta)
+[ ] app/Models/RedeemCode.php
+[ ] app/Console/Commands/CloseSeason.php
+[ ] app/Services/SeasonService.php
+
+Bitácora:
+
+[ ] docs/bitacora/2026-02-06.md
 
 Commit:
 
-- git add .
-- git commit -m "admin puede cambiar roles de usuario a mano"
-- git push
-
-Bitácora:
-
-- docs/bitacora/2026-02-05.md
-
----
-
-### 2026-02-06 (Vie) — 3h — Premium B+C (códigos + pagos)
-
-Trello:
-
-- "Día 22 — Códigos + pagos"
-
-Parte B (códigos):
-Archivos:
-
-- database/migrations/create_redeem_codes_table.php (crear)
-- app/Models/RedeemCode.php (crear)
-- app/Http/Controllers/RedeemCodeController.php (crear)
-- resources/views/game/profile/redeem.blade.php (crear)
-- routes/web.php (tocar)
-
-Parte C (pagos):
-Archivos (mínimo para dejarlo funcional):
-
-- database/migrations/create_payments_table.php (crear)
-- app/Models/Payment.php (crear)
-- app/Http/Controllers/PaymentController.php (crear)
-- resources/views/game/profile/payments.blade.php (crear)
-- docs/GUIA_INSTALACION.md (tocar: variables .env de pago en modo test)
-
-Comandos:
-
-- php artisan migrate
-- npm run build
-
-Commits (2–4):
-
-- "flujo de codigos para ser premium"
-- "flujo de pagos de prueba para premium"
-- git push
-
-Bitácora:
-
-- docs/bitacora/2026-02-06.md
+[ ] "sistema premium y ranking mensual con cofres"
 
 ---
 
@@ -713,23 +524,20 @@ Bitácora:
 
 Trello:
 
-- "Día 23 — Navegación + perfil"
+[ ] "Día 23 — Navegación + perfil"
 
 Archivos:
 
-- resources/views/layouts/game.blade.php (tocar navbar)
-- resources/views/game/profile/index.blade.php (crear)
-- routes/web.php (tocar)
-
-Commit:
-
-- git add .
-- git commit -m "menu de navegacion y area de perfil"
-- git push
+[ ] resources/views/layouts/game.blade.php
+[ ] resources/views/game/profile/index.blade.php
 
 Bitácora:
 
-- docs/bitacora/2026-02-07.md
+[ ] docs/bitacora/2026-02-07.md
+
+Commit:
+
+[ ] "menu de navegacion y area de perfil"
 
 ---
 
@@ -737,26 +545,20 @@ Bitácora:
 
 Trello:
 
-- "Día 24 — Tests 1"
+[ ] "Día 24 — Tests 1"
 
 Archivos:
 
-- tests/Feature/AuthAccessTest.php (crear)
-- tests/Feature/AdminRoleTest.php (crear)
-
-Comandos:
-
-- php artisan test
-
-Commit:
-
-- git add .
-- git commit -m "tests basicos de login y roles"
-- git push
+[ ] tests/Feature/AuthAccessTest.php
+[ ] tests/Feature/AdminRoleTest.php
 
 Bitácora:
 
-- docs/bitacora/2026-02-08.md
+[ ] docs/bitacora/2026-02-08.md
+
+Commit:
+
+[ ] "tests basicos de login y roles"
 
 ---
 
@@ -766,33 +568,20 @@ Bitácora:
 
 Trello:
 
-- "Día 25 — Party schema"
+[ ] "Día 25 — Party schema"
 
 Archivos:
 
-- migrations:
-    - create_parties_table.php
-    - create_party_members_table.php
-    - create_party_invites_table.php
-- models:
-    - Party.php, PartyMember.php, PartyInvite.php
-
-Comandos:
-
-- php artisan make:model Party -m
-- php artisan make:model PartyMember -m
-- php artisan make:model PartyInvite -m
-- php artisan migrate
-
-Commit:
-
-- git add .
-- git commit -m "tablas para grupos de 2 jugadores"
-- git push
+[ ] migrations (parties, members, invites)
+[ ] models (Party, PartyMember, PartyInvite)
 
 Bitácora:
 
-- docs/bitacora/2026-02-09.md
+[ ] docs/bitacora/2026-02-09.md
+
+Commit:
+
+[ ] "tablas para grupos de 2 jugadores"
 
 ---
 
@@ -800,49 +589,41 @@ Bitácora:
 
 Trello:
 
-- "Día 26 — Crear party + invitar"
+[ ] "Día 26 — Crear party + invitar"
 
 Archivos:
 
-- app/Http/Controllers/PartyController.php (crear)
-- routes/web.php (tocar)
-- resources/views/game/party/index.blade.php (crear)
-- resources/views/game/party/show.blade.php (crear)
-
-Commit:
-
-- git add .
-- git commit -m "crear grupo e invitar a gente"
-- git push
+[ ] app/Http/Controllers/PartyController.php
+[ ] resources/views/game/party/index.blade.php
 
 Bitácora:
 
-- docs/bitacora/2026-02-10.md
+[ ] docs/bitacora/2026-02-10.md
+
+Commit:
+
+[ ] "crear grupo e invitar a gente"
 
 ---
 
-### 2026-02-11 (Mié) — 1h — Aceptar invitación + sala party + chat room party
+### 2026-02-11 (Mié) — 1h — Aceptar invitación + sala party
 
 Trello:
 
-- "Día 27 — Aceptar + chat party"
+[ ] "Día 27 — Aceptar + chat party"
 
 Archivos:
 
-- PartyController.php (tocar)
-- ChatController.php (tocar: room por party)
-- migrations (si hace falta party_chat_room_id en parties)
-- resources/views/game/party/show.blade.php (tocar)
-
-Commit:
-
-- git add .
-- git commit -m "aceptar invitacion y chat de grupo"
-- git push
+[ ] ChatController.php (room por party)
+[ ] resources/views/game/party/show.blade.php
 
 Bitácora:
 
-- docs/bitacora/2026-02-11.md
+[ ] docs/bitacora/2026-02-11.md
+
+Commit:
+
+[ ] "aceptar invitacion y chat de grupo"
 
 ---
 
@@ -850,25 +631,20 @@ Bitácora:
 
 Trello:
 
-- "Día 28 — Run misión dúo"
+[ ] "Día 28 — Run misión dúo"
 
 Archivos:
 
-- database/migrations/create_party_mission_runs_table.php (crear)
-- app/Models/PartyMissionRun.php (crear)
-- app/Http/Controllers/PartyMissionController.php (crear)
-- resources/views/game/party/missions/run.blade.php (crear)
-- app/Services/MissionResolver.php (tocar para modo party)
-
-Commit:
-
-- git add .
-- git commit -m "estructura para jugar misiones en grupo"
-- git push
+[ ] app/Models/PartyMissionRun.php
+[ ] app/Http/Controllers/PartyMissionController.php
 
 Bitácora:
 
-- docs/bitacora/2026-02-12.md
+[ ] docs/bitacora/2026-02-12.md
+
+Commit:
+
+[ ] "estructura para jugar misiones en grupo"
 
 ---
 
@@ -876,27 +652,20 @@ Bitácora:
 
 Trello:
 
-- "Día 29 — Party misión completa"
+[ ] "Día 29 — Party misión completa"
 
 Archivos:
 
-- PartyMissionController.php (tocar)
-- RewardService.php (tocar)
-- tests/Feature/PartyFlowTest.php (crear)
-
-Comandos:
-
-- php artisan test
-
-Commits:
-
-- "recompensas y reglas de misiones en grupo"
-- "tests de crear e invitar al grupo"
-- git push
+[ ] RewardService.php (modo party)
+[ ] tests/Feature/PartyFlowTest.php
 
 Bitácora:
 
-- docs/bitacora/2026-02-13.md
+[ ] docs/bitacora/2026-02-13.md
+
+Commit:
+
+[ ] "recompensas y reglas de misiones en grupo con tests"
 
 ---
 
@@ -904,23 +673,15 @@ Bitácora:
 
 Trello:
 
-- "Día 30 — UI party limpia"
-
-Archivos:
-
-- resources/views/game/party/index.blade.php (tocar)
-- resources/views/game/party/show.blade.php (tocar)
-- resources/css/app.css (tocar si hace falta)
-
-Commit:
-
-- git add .
-- git commit -m "retoques en la interfaz del grupo"
-- git push
+[ ] "Día 30 — UI party limpia"
 
 Bitácora:
 
-- docs/bitacora/2026-02-14.md
+[ ] docs/bitacora/2026-02-14.md
+
+Commit:
+
+[ ] "retoques en la interfaz del grupo"
 
 ---
 
@@ -928,22 +689,15 @@ Bitácora:
 
 Trello:
 
-- "Día 31 — Seed misión dúo"
-
-Archivos:
-
-- database/seeders/PartyMissionDemoSeeder.php (crear) (si hace falta)
-- docs/GUIA_USUARIO.md (tocar: cómo jugar dúo)
-
-Commit:
-
-- git add .
-- git commit -m "contenido de prueba para mision en pareja"
-- git push
+[ ] "Día 31 — Seed misión dúo"
 
 Bitácora:
 
-- docs/bitacora/2026-02-15.md
+[ ] docs/bitacora/2026-02-15.md
+
+Commit:
+
+[ ] "contenido de prueba para mision en pareja"
 
 ---
 
@@ -953,27 +707,20 @@ Bitácora:
 
 Trello:
 
-- "Día 32 — Duels schema"
+[ ] "Día 32 — Duels schema"
 
 Archivos:
 
-- database/migrations/create_duels_table.php (crear)
-- app/Models/Duel.php (crear)
-
-Comandos:
-
-- php artisan make:model Duel -m
-- php artisan migrate
-
-Commit:
-
-- git add .
-- git commit -m "tablas para el sistema de duelos"
-- git push
+[ ] migrations (duels)
+[ ] models (Duel)
 
 Bitácora:
 
-- docs/bitacora/2026-02-16.md
+[ ] docs/bitacora/2026-02-16.md
+
+Commit:
+
+[ ] "tablas para el sistema de duelos"
 
 ---
 
@@ -981,24 +728,20 @@ Bitácora:
 
 Trello:
 
-- "Día 33 — Desafiar"
+[ ] "Día 33 — Desafiar"
 
 Archivos:
 
-- app/Http/Controllers/DuelController.php (crear)
-- routes/web.php (tocar)
-- resources/views/game/duels/index.blade.php (crear)
-- resources/views/game/duels/challenges.blade.php (crear)
-
-Commit:
-
-- git add .
-- git commit -m "flujo para desafiar a otros jugadores"
-- git push
+[ ] app/Http/Controllers/DuelController.php
+[ ] resources/views/game/duels/index.blade.php
 
 Bitácora:
 
-- docs/bitacora/2026-02-17.md
+[ ] docs/bitacora/2026-02-17.md
+
+Commit:
+
+[ ] "flujo para desafiar a otros jugadores"
 
 ---
 
@@ -1006,48 +749,40 @@ Bitácora:
 
 Trello:
 
-- "Día 34 — Pantalla combate"
+[ ] "Día 34 — Pantalla combate"
 
 Archivos:
 
-- resources/views/game/duels/fight.blade.php (crear)
-- DuelController.php (tocar: aceptar y entrar)
-- app/Services/DuelEngine.php (crear)
-
-Commit:
-
-- git add .
-- git commit -m "pantalla de combate y motor de duelos"
-- git push
+[ ] resources/views/game/duels/fight.blade.php
+[ ] app/Services/DuelEngine.php
 
 Bitácora:
 
-- docs/bitacora/2026-02-18.md
+[ ] docs/bitacora/2026-02-18.md
+
+Commit:
+
+[ ] "pantalla de combate y motor de duelos"
 
 ---
 
-### 2026-02-19 (Jue) — 1h — Resolver turnos (fisico/magia/guardia) + resultado
+### 2026-02-19 (Jue) — 1h — Resolver turnos + resultado
 
 Trello:
 
-- "Día 35 — Resolver duelo"
+[ ] "Día 35 — Resolver duelo"
 
 Archivos:
 
-- DuelEngine.php (tocar)
-- Duel.php (tocar: casts result_json)
-- DuelController.php (tocar: ejecutar acción)
-- migrations (si falta campo status/winner_id)
-
-Commit:
-
-- git add .
-- git commit -m "resolucion de duelos y guardar resultado final"
-- git push
+[ ] DuelEngine.php (lógica turnos)
 
 Bitácora:
 
-- docs/bitacora/2026-02-19.md
+[ ] docs/bitacora/2026-02-19.md
+
+Commit:
+
+[ ] "resolucion de duelos y guardar resultado final"
 
 ---
 
@@ -1055,27 +790,20 @@ Bitácora:
 
 Trello:
 
-- "Día 36 — Historial duelos + tests"
+[ ] "Día 36 — Historial duelos + tests"
 
 Archivos:
 
-- resources/views/game/duels/history.blade.php (crear)
-- DuelController.php (tocar)
-- tests/Feature/DuelFlowTest.php (crear)
-
-Comandos:
-
-- php artisan test
-
-Commits:
-
-- "pantallas de historial de duelos"
-- "tests de desafios y resultados de duelos"
-- git push
+[ ] resources/views/game/duels/history.blade.php
+[ ] tests/Feature/DuelFlowTest.php
 
 Bitácora:
 
-- docs/bitacora/2026-02-20.md
+[ ] docs/bitacora/2026-02-20.md
+
+Commit:
+
+[ ] "historial de duelos y tests de combate"
 
 ---
 
@@ -1116,215 +844,113 @@ Trello:
 Acciones:
 
 - Revisar misiones/chat/party/duels
-- Arreglar 2–4 bugs máximo
+  [ ] Arreglar 2–4 bugs máximo
 
 Commit:
 
-- git add .
-- git commit -m "arreglos generales de estabilidad"
-- git push
+[ ] "arreglos generales de estabilidad"
 
 Bitácora:
 
-- docs/bitacora/2026-02-22.md
+[ ] docs/bitacora/2026-02-22.md
 
 ---
 
 ## Semana 6 — Admin + Arte + Memoria + Entrega (2026-02-23 a 2026-02-28)
 
-### 2026-02-23 (Lun) — 1h — Admin CRUD misiones (mínimo real)
+### 2026-02-23 (Lun) — 1h — Admin CRUD misiones
 
 Trello:
 
-- "Día 39 — Admin misiones"
-
-Archivos:
-
-- app/Http/Controllers/Admin/MissionAdminController.php (crear)
-- resources/views/admin/missions/index.blade.php (crear)
-- resources/views/admin/missions/edit.blade.php (crear)
-- routes/web.php (tocar)
-
-Commit:
-
-- git add .
-- git commit -m "panel de admin para misiones"
-- git push
+[ ] "Día 39 — Admin misiones"
 
 Bitácora:
 
-- docs/bitacora/2026-02-23.md
-
----
-
-### 2026-02-24 (Mar) — 1h — Admin enemies + items + códigos
-
-Trello:
-
-- "Día 40 — Admin contenido"
-
-Archivos:
-
-- app/Http/Controllers/Admin/EnemyAdminController.php (crear)
-- app/Http/Controllers/Admin/ItemAdminController.php (crear)
-- app/Http/Controllers/Admin/RedeemCodeAdminController.php (crear)
-- views admin correspondientes (crear)
+[ ] docs/bitacora/2026-02-23.md
 
 Commit:
 
-- git add .
-- git commit -m "panel de admin para enemigos e items"
-- git push
-
-Bitácora:
-
-- docs/bitacora/2026-02-24.md
+[ ] "panel de admin para misiones"
 
 ---
 
-### 2026-02-25 (Mié) — 1h — Pixel pack 1 (6 sprites) + optimización
+### 2026-02-24 (Mar) — 1h — Admin contenido (enemies, items)
 
 Trello:
 
-- "Día 41 — Sprite pack 1"
+[ ] "Día 40 — Admin contenido"
 
-Herramientas:
+Bitácora:
 
-- Photoshop, Squoosh
-
-Archivos:
-
-- public/assets/sprites/hero/
-    - idle.png
-    - atk_physical.png
-    - atk_magic.png
-    - guard.png
-    - hit.png
-    - defeated.png
-- docs/GUIA_USUARIO.md (tocar: capturas)
+[ ] docs/bitacora/2026-02-24.md
 
 Commit:
 
-- git add .
-- git commit -m "primer pack de sprites del heroe"
-- git push
-
-Bitácora:
-
-- docs/bitacora/2026-02-25.md
+[ ] "panel de admin para enemigos e items"
 
 ---
 
-### 2026-02-26 (Jue) — 1h — Documentación (casi final)
+### 2026-02-25 (Mié) — 1h — Pixel pack 1
 
 Trello:
 
-- "Día 42 — Memoria armada"
+[ ] "Día 41 — Sprite pack 1"
 
-Archivos:
+Bitácora:
 
-- docs/GUIA_INSTALACION.md (tocar completo)
-- docs/GUIA_USUARIO.md (tocar completo)
-- docs/COMANDOS.md (repasar)
-- docs/MODELO_BD.md (repasar)
-- docs/CHECKLIST_ENTREGA.md (repasar)
+[ ] docs/bitacora/2026-02-25.md
 
 Commit:
 
-- git add .
-- git commit -m "guias de instalacion y usuario terminadas"
-- git push
-
-Bitácora:
-
-- docs/bitacora/2026-02-26.md
+[ ] "primer pack de sprites del heroe"
 
 ---
 
-### 2026-02-27 (Vie) — 3h — Export SQL + revisión + ZIP final
+### 2026-02-26 (Jue) — 1h — Memoria (borrador)
 
 Trello:
 
-- "Día 43 — Export + entrega"
+[ ] "Día 42 — Memoria armada"
 
-Herramientas:
+Bitácora:
 
-- DBeaver, VSCode
+[ ] docs/bitacora/2026-02-26.md
+
+Commit:
+
+[ ] "guias de instalacion y usuario terminadas"
+
+---
+
+### 2026-02-27 (Vie) — 3h — Entrega Final (Export SQL + Revisión + ZIP)
+
+Trello:
+
+[ ] "Día 43 — Export + entrega"
 
 Acciones:
 
-1. Export SQL (DBeaver):
-
-- Exportar: estructura + datos
-- Guardar como: bd_proyecto_alumno.sql (en raíz del repo o carpeta entrega)
-
-2. Revisión total:
-
-- Login/registro
-- Roles admin/free/premium
-- Misión offline demo
-- Party dúo
-- Chat global y party
-- Duelo desafiar + resultado + historial
-
-3. Preparar carpeta entrega:
-
-- entrega/
-    - proyecto/ (zip o carpeta)
-    - bd_proyecto_alumno.sql
-    - memoria_proyecto.pdf (aquí luego)
-
-Archivos a crear:
-
-- entrega/README_ENTREGA.md (explica qué hay)
-- bd_proyecto_alumno.sql (export)
-- docs/ERD/erd_final.png (export de DBeaver)
-- docs/ERD/erd_final.sql_notes.md (opcional)
-
-Commits (2–4):
-
-- "esquema ER final de la base de datos"
-- "exportacion de la base de datos para entrega"
-- "preparacion de carpetas para la entrega"
-- git push
+[ ] Export SQL con estructura y datos
+[ ] Revisión total de flujos
+[ ] Preparar carpeta entrega
 
 Bitácora:
 
-- docs/bitacora/2026-02-27.md
+[ ] docs/bitacora/2026-02-27.md
 
 ---
 
-### 2026-02-28 (Sáb) — 1h — Capturas + cerrar PDF memoria
+### 2026-02-28 (Sáb) — 1h — Memoria PDF final
 
 Trello:
 
-- "Día 44 — Memoria PDF final"
-
-Herramientas:
-
-- navegador + capturas, editor PDF
+[ ] "Día 44 — Memoria PDF final"
 
 Acciones:
 
-- Capturas:
-    - /login
-    - dashboard juego
-    - personaje
-    - inventario
-    - misión offline
-    - chat
-    - party
-    - duelos
-    - admin
-- Cerrar memoria_proyecto.pdf
+[ ] Capturas de todas las secciones
+[ ] Cerrar PDF oficial
 
-Archivos:
+Bitácora:
 
-- entrega/memoria_proyecto.pdf (añadir)
-- docs/bitacora/2026-02-28.md
-
-Commit:
-
-- git add .
-- git commit -m "memoria final en pdf y capturas"
-- git push
+[ ] docs/bitacora/2026-02-28.md
