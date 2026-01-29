@@ -1,5 +1,7 @@
 # Calendario ultra-detalado — El juramento de Valtherion (Laravel 12)
 
+Nota (2026-01-29): Se dejó la sección "Crónica Mensual" en Home con ranking real y fallback ordenado por nombre de raza (opción A).
+
 Regla: 1h diaria. Viernes: 3h.
 Cierre SIEMPRE con bitácora + commit. Sin excusas.
 
@@ -343,7 +345,7 @@ Commit:
 [ ] "opciones de mision y progreso entre nodos"
 
 - Tablas `seasons`/`season_race_rankings`/`season_race_winners` + comandos `season:ensure-current` / `season:close` (migraciones añadidas y verificadas localmente)
- - Crónica Mensual: la sección del landing (`guest.sections.cronica_mensual`) ahora muestra la clasificación real del mes anterior sacada de la BD y la raza ganadora si existe.
+- Crónica Mensual: la sección del landing (`guest.sections.cronica_mensual`) ahora muestra la clasificación real del mes anterior sacada de la BD y la raza ganadora si existe.
 
 ---
 

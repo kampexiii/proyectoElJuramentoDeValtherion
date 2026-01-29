@@ -44,10 +44,33 @@ Route::get('/', function () {
         }
     }
 
+    // Fallback estable: si no hay rankings, usar orden por nombre de raza (A). Si no existe 'races', mostrar mensaje (C).
+    $fallbackUsed = null;
+    $fallbackMessage = null;
+    if ($rankings->isEmpty()) {
+        if (Schema::hasTable('races')) {
+            $races = DB::table('races')->select('id', 'name')->orderBy('name', 'asc')->limit(10)->get();
+            $rankings = $races->values()->map(function ($r, $i) {
+                return (object) [
+                    'race_id' => $r->id,
+                    'race_name' => $r->name ?? ('Raza #' . $r->id),
+                    'points' => 0,
+                    'place' => $i + 1,
+                ];
+            });
+            $fallbackUsed = 'A';
+        } else {
+            $fallbackMessage = 'Aún no hay clasificación registrada. Falta cargar razas en la base de datos.';
+            $fallbackUsed = 'C';
+        }
+    }
+
     return view('guest.welcome', [
         'previousSeason' => $season,
         'seasonRankings' => $rankings,
         'seasonWinner' => $winner,
+        'fallbackUsed' => $fallbackUsed,
+        'fallbackMessage' => $fallbackMessage,
     ]);
 });
 
@@ -88,10 +111,33 @@ Route::get('/home', function () {
         }
     }
 
+    // Fallback estable: si no hay rankings, usar orden por nombre de raza (A). Si no existe 'races', mostrar mensaje (C).
+    $fallbackUsed = null;
+    $fallbackMessage = null;
+    if ($rankings->isEmpty()) {
+        if (Schema::hasTable('races')) {
+            $races = DB::table('races')->select('id', 'name')->orderBy('name', 'asc')->limit(10)->get();
+            $rankings = $races->values()->map(function ($r, $i) {
+                return (object) [
+                    'race_id' => $r->id,
+                    'race_name' => $r->name ?? ('Raza #' . $r->id),
+                    'points' => 0,
+                    'place' => $i + 1,
+                ];
+            });
+            $fallbackUsed = 'A';
+        } else {
+            $fallbackMessage = 'Aún no hay clasificación registrada. Falta cargar razas en la base de datos.';
+            $fallbackUsed = 'C';
+        }
+    }
+
     return view('game.home.index', [
         'previousSeason' => $season,
         'seasonRankings' => $rankings,
         'seasonWinner' => $winner,
+        'fallbackUsed' => $fallbackUsed,
+        'fallbackMessage' => $fallbackMessage,
     ]);
 })->middleware(['auth', 'verified'])->name('home');
 
