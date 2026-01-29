@@ -191,8 +191,8 @@ class WeeklyShopService
     {
         return Item::query()
             ->where(function ($query) {
-                $query->where('type', 'armor')
-                    ->orWhereIn('slot', ['head', 'chest', 'helmet', 'armor']);
+                $query->whereIn('type', ['armor', 'armadura', 'casco'])
+                    ->orWhereIn('slot', ['head', 'chest', 'helmet', 'armor', 'casco', 'armadura']);
             })
             ->orderBy('code')
             ->orderBy('id')
@@ -203,8 +203,8 @@ class WeeklyShopService
     {
         return Item::query()
             ->where(function ($query) {
-                $query->where('type', 'weapon')
-                    ->orWhere('slot', 'weapon');
+                $query->whereIn('type', ['weapon', 'arma'])
+                    ->orWhereIn('slot', ['weapon', 'arma']);
             })
             ->orderBy('code')
             ->orderBy('id')
@@ -215,8 +215,8 @@ class WeeklyShopService
     {
         return Item::query()
             ->where(function ($query) {
-                $query->where('type', 'accessory')
-                    ->orWhereIn('slot', ['ring', 'amulet']);
+                $query->whereIn('type', ['accessory', 'accesorio'])
+                    ->orWhereIn('slot', ['ring', 'amulet', 'anillo', 'colgante', 'talisman']);
             })
             ->orderBy('code')
             ->orderBy('id')
@@ -227,8 +227,8 @@ class WeeklyShopService
     {
         return Item::query()
             ->where(function ($query) {
-                $query->where('type', 'mount')
-                    ->orWhere('slot', 'mount');
+                $query->whereIn('type', ['mount', 'montura'])
+                    ->orWhereIn('slot', ['mount', 'montura']);
             })
             ->orderBy('code')
             ->orderBy('id')

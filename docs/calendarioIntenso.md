@@ -94,6 +94,7 @@ Objetivo principal: **sitio completo (API + web) listo como tarde el lunes 2 de 
 **Hecho hoy**
 - Equipamiento base (equipar/desequipar), inventario y montura (admin fija).
 - Tienda semanal con rotación estable y montura elegida en admin.
+- Tienda: diagnóstico de filtros y ajustes mobile compactos en Ajustes.
 
 **Cierre obligatorio**
 - Bitácora del día.

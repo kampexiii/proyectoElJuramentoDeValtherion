@@ -7,6 +7,7 @@
     height: 100%;
     flex: 1;
     justify-content: center;
+    row-gap: 0.4rem;
 }
 
 .ajustes-col {
@@ -69,6 +70,25 @@
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 0.75rem;
     background: rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 991.98px) {
+    .ajustes-col {
+        height: calc(50% - 0.2rem);
+    }
+
+    .ajustes-panel-body {
+        gap: 0.35rem;
+    }
+
+    .ajustes-switch {
+        padding: 0.45rem 0.55rem;
+    }
+
+    .ajustes-panel-body .btn {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+    }
 }
 
 .ajustes-switch .form-check-input {
