@@ -9,11 +9,28 @@ class MonthlyChronicleService
 {
     public function previousMonth(): array
     {
-        // Calcular mes anterior
+        // Helper para meses en español
+        $meses = [
+            1 => 'Enero',
+            2 => 'Febrero',
+            3 => 'Marzo',
+            4 => 'Abril',
+            5 => 'Mayo',
+            6 => 'Junio',
+            7 => 'Julio',
+            8 => 'Agosto',
+            9 => 'Septiembre',
+            10 => 'Octubre',
+            11 => 'Noviembre',
+            12 => 'Diciembre'
+        ];
+
         $now = now();
         $prev = $now->copy()->subMonth();
         $py = (int) $prev->format('Y');
         $pm = (int) $prev->format('n');
+        $cy = (int) $now->format('Y');
+        $cm = (int) $now->format('n');
 
         $season = null;
         if (Schema::hasTable('seasons')) {
@@ -63,12 +80,20 @@ class MonthlyChronicleService
             }
         }
 
+        // Etiquetas de mes
+        $chronicleTitle = 'Crónica del mes: ' . $meses[$cm] . ' ' . $cy;
+        $winnerLabel = 'Ganador del mes: ' . $meses[$pm] . ' ' . $py;
+        $winnerName = ($winner && !empty($winner->race_name)) ? $winner->race_name : 'Aldrik Vhar (provisional)';
+
         return [
             'previousSeason' => $season,
             'seasonRankings' => $rankings,
             'seasonWinner' => $winner,
             'fallbackUsed' => $fallbackUsed,
             'fallbackMessage' => $fallbackMessage,
+            'chronicleTitle' => $chronicleTitle,
+            'winnerLabel' => $winnerLabel,
+            'winnerName' => $winnerName,
         ];
     }
 }

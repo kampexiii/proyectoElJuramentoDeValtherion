@@ -67,29 +67,17 @@
         <!-- Crónica Mensual: clasificación mes anterior -->
         <div class="col-12 col-lg-6 d-flex flex-column home-panel" style="min-height: 0;">
             <div class="card bg-zinc-900 border-secondary text-white shadow-sm overflow-hidden" style="background-color: #111;">
-                <div class="card-header border-secondary bg-dark text-center py-2 flex-shrink-0">Crónica Mensual (mes anterior)</div>
                 <div class="card-body p-3 overflow-auto">
                     <div class="text-center mx-auto w-75 mb-3">
-                        <h5 class="mb-1">Crónica Mensual</h5>
-                        <p class="small mb-0 text-secondary d-none d-md-block">Relato breve de las gestas del mes pasado, una tabla con las razas mejor valoradas y la posición provisional si no hay datos.</p>
+                        <h5 class="mb-1">{{ $chronicleTitle ?? 'Crónica Mensual' }}</h5>
                     </div>
 
                     {{-- Bloque ganador del mes anterior --}}
                     <div class="mb-3">
-                        @if (isset($seasonWinner) && $seasonWinner && !empty($seasonWinner->race_name))
-                            <div class="p-2 px-3 rounded-4 bg-dark bg-opacity-75 border mb-1 text-center">
-                                <span class="fw-bold text-warning">Ganador del mes anterior:</span>
-                                <span class="ms-2 text-white">{{ $seasonWinner->race_name }}</span>
-                            </div>
-                        @else
-                            <div class="p-2 px-3 rounded-4 bg-dark bg-opacity-75 border mb-1 text-center">
-                                <span class="fw-bold text-warning">Ganador del mes anterior:</span>
-                                <span class="ms-2 text-white">Aldrik Vhar <span class="text-secondary">(provisional)</span></span>
-                            </div>
-                            <div class="text-center mb-2">
-                                <small class="text-secondary">Aún no hay cierres mensuales registrados.</small>
-                            </div>
-                        @endif
+                        <div class="p-2 px-3 rounded-4 bg-dark bg-opacity-75 border mb-1 text-center">
+                            <span class="fw-bold text-warning">{{ $winnerLabel ?? 'Ganador del mes:' }}</span>
+                            <span class="ms-2 text-white">{{ $winnerName ?? '' }}</span>
+                        </div>
                     </div>
 
                     @if (!empty($fallbackMessage))
