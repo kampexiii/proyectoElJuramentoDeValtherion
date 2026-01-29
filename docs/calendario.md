@@ -6,6 +6,7 @@ Nota (2026-01-29): Se dejó la sección "Crónica Mensual" en Home con ranking r
 Nota (2026-01-29): Crónica mensual del landing desde BD y fallback verificados.
 Nota (2026-01-29): Crónica Mensual del landing: 1 sola corona para líder actual, bloque de ganador del mes anterior (fallback Aldrik Vhar), y paleta integrada estilo papiro.
 Nota (2026-01-29): Crónica Mensual en HOME: ganador mes anterior (fallback Aldrik Vhar), 1 sola corona para líder actual, estilo juego (colores HOME).
+Nota (2026-01-29): Home responsive: en mobile los paneles se reparten 50/50 (sin scroll) y el ranking se compacta (top 6 en mobile, top 10 en escritorio).
 
 Regla: 1h diaria. Viernes: 3h.
 Cierre SIEMPRE con bitácora + commit. Sin excusas.
