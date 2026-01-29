@@ -1,1 +1,9 @@
 /* Estilos migrados de _razas_grid.blade.php */
+.rg-title {
+  font-family: serif;
+  font-size: 2.5rem;
+}
+
+.rg-description {
+  color: #654321;
+}

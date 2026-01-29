@@ -1,9 +1,7 @@
 @import "./theme.css";
-@import "./components/cronica_mensual.css";
-@import "./components/reglas_del_juramento.css";
-@import "./components/razas_grid.css";
 @import "./components/portada.css";
 @import "./components/prologo.css";
-@import "../shared/components/modal.css";
-@import "../shared/components/dropdown.css";
+@import "./components/razas_grid.css";
+@import "./components/reglas_del_juramento.css";
+@import "./components/cronica_mensual.css";
 @import "../shared/components/site_logo.css";

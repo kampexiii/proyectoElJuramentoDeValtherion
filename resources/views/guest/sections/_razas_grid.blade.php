@@ -105,12 +105,12 @@
             {{-- Header --}}
             <div class="d-flex flex-wrap align-items-start justify-content-center gap-3">
               <div class="text-center">
-                <h2 class="mb-3 section-title-races" style="font-family: serif; font-size: 2.5rem;">
+                <h2 class="mb-3 section-title-races rg-title">
                   Razas del Viejo Mundo
                 </h2>
-                <p class="text-center mb-4 section-description-races" style="color: #654321;">
+                <p class="text-center mb-4 section-description-races rg-description">
                     Cada raza carga un legado… y una deuda. Al jurar, heredas su gloria y su condena:</p>
-                <p class="text-center mb-4 section-description-races" style="color: #654321;">El Juramento te marcará para siempre.</p>
+                <p class="text-center mb-4 section-description-races rg-description">El Juramento te marcará para siempre.</p>
               </div>
             </div>
 

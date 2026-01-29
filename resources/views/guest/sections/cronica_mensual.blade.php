@@ -9,10 +9,10 @@
             {{-- Header --}}
 
             <div class="text-center">
-              <h2 class="mb-2 section-title-chronicle" style="font-family: serif; font-size: 2.5rem;">
+              <h2 class="mb-2 section-title-chronicle cm-title">
                 {{ $chronicleTitle ?? 'Crónica Mensual' }}
               </h2>
-              <p class="text-secondary mb-3 text-center" style="max-width: 80ch; margin-left:auto; margin-right:auto;">
+              <p class="text-secondary mb-3 text-center cm-lead">
                 Cada mes, las razas compiten por el dominio del Viejo Mundo. La facción ganadora recibe un
                 <span class="fw-semibold chronicle-accent">cofre con 3 objetos de poder</span>.
               </p>
@@ -27,12 +27,12 @@
               {{-- Explicación + cómo sumar puntos --}}
               <div class="col-12 col-lg-6 text-start">
                 <div class="p-3 p-md-4 rounded-4 bg-black bg-opacity-25 border border-secondary-subtle h-100">
-                  <p class="mb-3 text-light" style="line-height: 1.8;">
+                  <p class="mb-3 text-light cm-body">
                     La clasificación se alimenta de <span class="fw-semibold">Puntos de Raza</span>. Cada acción importante suma
                     presencia a tu facción. El ranking se reinicia al inicio de cada mes, pero la historia de la victoria queda marcada.
                   </p>
 
-                  <h4 class="h6 mb-3 section-subtitle-chronicle" style="font-family: serif;">
+                  <h4 class="h6 mb-3 section-subtitle-chronicle cm-subtitle">
                     Cómo conseguir Puntos de Raza
                   </h4>
 
@@ -41,7 +41,7 @@
                       <div class="d-flex gap-3 align-items-start p-3 rounded-4 border border-secondary-subtle bg-dark bg-opacity-25">
                         <span class="badge rounded-pill chronicle-step">+P</span>
                         <div>
-                          <p class="mb-1 fw-semibold" style="color: #654321;">Victorias en combates</p>
+                          <p class="mb-1 fw-semibold cm-step-title">Victorias en combates</p>
                           <small class="text-secondary">Duelos, batallas y enfrentamientos suman puntos según dificultad.</small>
                         </div>
                       </div>
@@ -51,7 +51,7 @@
                       <div class="d-flex gap-3 align-items-start p-3 rounded-4 border border-secondary-subtle bg-dark bg-opacity-25">
                         <span class="badge rounded-pill chronicle-step">+P</span>
                         <div>
-                          <p class="mb-1 fw-semibold" style="color: #654321;">Misiones completadas</p>
+                          <p class="mb-1 fw-semibold cm-step-title">Misiones completadas</p>
                           <small class="text-secondary">Cada misión aporta puntos. Las de mayor rango aportan más.</small>
                         </div>
                       </div>
@@ -61,7 +61,7 @@
                       <div class="d-flex gap-3 align-items-start p-3 rounded-4 border border-secondary-subtle bg-dark bg-opacity-25">
                         <span class="badge rounded-pill chronicle-step">+P</span>
                         <div>
-                          <p class="mb-1 fw-semibold" style="color: #654321;">Logros y hitos</p>
+                          <p class="mb-1 fw-semibold cm-step-title">Logros y hitos</p>
                           <small class="text-secondary">Subidas de nivel, objetivos especiales y eventos del mes.</small>
                         </div>
                       </div>
@@ -77,7 +77,7 @@
                 <div class="p-3 p-md-4 rounded-4 bg-black bg-opacity-25 border border-secondary-subtle h-100">
 
                   <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
-                    <h4 class="h6 mb-0 section-subtitle-chronicle" style="font-family: serif;">
+                    <h4 class="h6 mb-0 section-subtitle-chronicle cm-subtitle">
                       Clasificación del mes
                     </h4>
                   </div>
@@ -145,4 +145,3 @@
     </div>
   </div>
 </section>
-

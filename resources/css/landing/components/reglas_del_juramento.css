@@ -1,1 +1,13 @@
 /* Estilos migrados de reglas_del_juramento.blade.php */
+.rj-title {
+  font-family: serif;
+  font-size: 2.5rem;
+}
+
+.rj-lead {
+  max-width: 80ch;
+}
+
+.rj-rule-title {
+  color: #654321;
+}

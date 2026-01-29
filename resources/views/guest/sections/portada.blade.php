@@ -14,7 +14,7 @@
     <div class="position-absolute top-0 start-0 w-100 h-100 hero-overlay" aria-hidden="true"></div>
 
     {{-- Contenido --}}
-    <div class="position-relative container" style="z-index: 2;">
+    <div class="position-relative container pt-hero-content">
         @include('partials.site_logo')
 
         <h1 class="display-5 display-md-4 text-white fw-bold hero-title">
@@ -36,4 +36,3 @@
         </div>
     </div>
 </section>
-

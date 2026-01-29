@@ -13,10 +13,10 @@
       <div class="col-12 col-lg-10">
         <div class="card bg-transparent border-0">
           <div class="card-body p-4 p-md-5">
-            <h2 class="h3 mb-3 text-light" style="font-family: serif;">{{ $title }}</h2>
+            <h2 class="h3 mb-3 text-light pr-title">{{ $title }}</h2>
 
             @foreach($teaser as $p)
-              <p class="text-muted mb-3" style="max-width: 72ch; line-height: 1.8;">{{ $p }}</p>
+              <p class="text-muted mb-3 pr-text">{{ $p }}</p>
             @endforeach
 
           </div>

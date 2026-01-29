@@ -7,6 +7,7 @@ Nota (2026-01-29): Crónica mensual del landing desde BD y fallback verificados.
 Nota (2026-01-29): Crónica Mensual del landing: 1 sola corona para líder actual, bloque de ganador del mes anterior (fallback Aldrik Vhar), y paleta integrada estilo papiro.
 Nota (2026-01-29): Crónica Mensual en HOME: ganador mes anterior (fallback Aldrik Vhar), 1 sola corona para líder actual, estilo juego (colores HOME).
 Nota (2026-01-29): Home responsive: en mobile los paneles se reparten 50/50 (sin scroll) y el ranking se compacta (top 6 en mobile, top 10 en escritorio).
+Nota (2026-01-29): Landing: CSS por secciones (sin inline) + logo sin inline.
 
 Fix: el landing vuelve a cargar CSS (Vite + entrypoint landing).
 Nota (2026-01-29): Crónica Mensual: título muestra mes actual y el bloque de ganador indica el mes anterior por nombre (sin decir ‘mes anterior’).

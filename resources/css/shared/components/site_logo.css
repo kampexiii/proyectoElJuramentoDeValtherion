@@ -1,1 +1,5 @@
 /* Estilos migrados de partials/site_logo.blade.php */
+.logo-img {
+  max-height: 90px;
+  border-radius: 8px;
+}
