@@ -49,7 +49,7 @@ Route::get('/', function () {
     $fallbackMessage = null;
     if ($rankings->isEmpty()) {
         if (Schema::hasTable('races')) {
-            $races = DB::table('races')->select('id', 'name')->orderBy('name', 'asc')->limit(10)->get();
+            $races = DB::table('races')->select('id', 'name')->orderBy('name', 'asc')->get();
             $rankings = $races->values()->map(function ($r, $i) {
                 return (object) [
                     'race_id' => $r->id,
@@ -116,7 +116,7 @@ Route::get('/home', function () {
     $fallbackMessage = null;
     if ($rankings->isEmpty()) {
         if (Schema::hasTable('races')) {
-            $races = DB::table('races')->select('id', 'name')->orderBy('name', 'asc')->limit(10)->get();
+            $races = DB::table('races')->select('id', 'name')->orderBy('name', 'asc')->get();
             $rankings = $races->values()->map(function ($r, $i) {
                 return (object) [
                     'race_id' => $r->id,
