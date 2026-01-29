@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Item;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class ShopItemsSeeder extends Seeder
@@ -28,6 +29,33 @@ class ShopItemsSeeder extends Seeder
         $hasStackable = Schema::hasColumn('items', 'stackable');
         $hasMaxStack = Schema::hasColumn('items', 'max_stack');
         $hasIsConsumable = Schema::hasColumn('items', 'is_consumable');
+        $hasRarityId = Schema::hasColumn('items', 'rarity_id');
+        $hasRarity = Schema::hasColumn('items', 'rarity');
+
+        $rarityMap = [];
+        if ($hasRarityId) {
+            if (!Schema::hasTable('rarities')) {
+                return;
+            }
+
+            $rarities = [
+                'common' => 'Común',
+                'rare' => 'Rara',
+                'epic' => 'Épica',
+            ];
+
+            foreach ($rarities as $code => $name) {
+                DB::table('rarities')->updateOrInsert(
+                    ['code' => $code],
+                    ['name' => $name, 'updated_at' => now(), 'created_at' => now()]
+                );
+            }
+
+            $rarityMap = DB::table('rarities')
+                ->whereIn('code', array_keys($rarities))
+                ->pluck('id', 'code')
+                ->toArray();
+        }
 
         $items = [
             [
@@ -216,6 +244,14 @@ class ShopItemsSeeder extends Seeder
                     'rarity' => $item['rarity'],
                     'description' => $item['description'],
                 ];
+            }
+
+            if ($hasRarityId && isset($rarityMap[$item['rarity']])) {
+                $data['rarity_id'] = $rarityMap[$item['rarity']];
+            }
+
+            if ($hasRarity) {
+                $data['rarity'] = $item['rarity'];
             }
 
             if ($hasBonusStrength) {

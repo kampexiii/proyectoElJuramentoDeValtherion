@@ -78,7 +78,7 @@
     }
 
     .ajustes-panel-body {
-        gap: 0.35rem;
+        gap: 0.3rem;
     }
 
     .ajustes-switch {
@@ -88,6 +88,16 @@
     .ajustes-panel-body .btn {
         padding-top: 0.25rem;
         padding-bottom: 0.25rem;
+    }
+
+    .ajustes-panel-body .form-control,
+    .ajustes-panel-body .form-select,
+    .ajustes-panel-body .btn {
+        font-size: 0.8rem;
+    }
+
+    .ajustes-panel-body .form-label {
+        font-size: 0.72rem;
     }
 }
 
