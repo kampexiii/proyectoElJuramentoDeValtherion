@@ -83,6 +83,9 @@ Objetivo principal: **sitio completo (API + web) listo como tarde el lunes 2 de 
 - Cards/tabla con truncado correcto.
 - Navbars visibles.
 
+**Hecho hoy**
+- Equipamiento base (equipar/desequipar), inventario y montura (admin fija).
+
 **Cierre obligatorio**
 - Bitácora del día.
 - Commit/push.

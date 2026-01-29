@@ -1,0 +1,28 @@
+.character-sprite-frame {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.character-sprite {
+    max-height: 220px;
+    width: 100%;
+    object-fit: contain;
+}
+
+.progress-sm {
+    height: 0.5rem;
+}
+
+.hx-bar-0 { width: 0%; }
+.hx-bar-10 { width: 10%; }
+.hx-bar-20 { width: 20%; }
+.hx-bar-30 { width: 30%; }
+.hx-bar-40 { width: 40%; }
+.hx-bar-50 { width: 50%; }
+.hx-bar-60 { width: 60%; }
+.hx-bar-70 { width: 70%; }
+.hx-bar-80 { width: 80%; }
+.hx-bar-90 { width: 90%; }
+.hx-bar-100 { width: 100%; }

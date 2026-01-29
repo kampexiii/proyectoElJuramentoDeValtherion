@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
 
         // Seed de razas
         $this->call(\Database\Seeders\RaceSeeder::class);
+        $this->call(\Database\Seeders\MountSeeder::class);
     }
 }

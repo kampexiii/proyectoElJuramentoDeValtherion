@@ -9,6 +9,7 @@ class Character extends Model
     protected $fillable = [
         'user_id',
         'race_id',
+        'mount_id',
         'name',
         'stats_json',
         'has_mount',
@@ -27,5 +28,20 @@ class Character extends Model
     public function race()
     {
         return $this->belongsTo(Race::class);
+    }
+
+    public function mount()
+    {
+        return $this->belongsTo(Mount::class);
+    }
+
+    public function equipment()
+    {
+        return $this->hasMany(CharacterEquipment::class);
+    }
+
+    public function inventory()
+    {
+        return $this->hasMany(CharacterItem::class);
     }
 }

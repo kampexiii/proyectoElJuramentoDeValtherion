@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\CharacterEquipmentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
@@ -30,11 +31,30 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
     })->name('game.ajustes');
 
     Route::middleware('has.character')->group(function () {
+        Route::post('/personaje/equipar', [CharacterEquipmentController::class, 'equip'])->name('game.personaje.equipar');
+        Route::post('/personaje/desequipar', [CharacterEquipmentController::class, 'unequip'])->name('game.personaje.desequipar');
+
         Route::get('/tienda', function () {
-            return view('game.tienda');
+            $items = collect();
+            if (\Illuminate\Support\Facades\Schema::hasTable('items')) {
+                $items = \App\Models\Item::query()->orderBy('name')->get();
+            }
+
+            return view('game.tienda', [
+                'items' => $items,
+            ]);
         })->name('game.tienda');
         Route::get('/inventario', function () {
-            return view('game.inventario');
+            $inventory = collect();
+            $character = request()->user()?->character;
+
+            if ($character && \Illuminate\Support\Facades\Schema::hasTable('character_items')) {
+                $inventory = $character->inventory()->with('item')->get();
+            }
+
+            return view('game.inventario', [
+                'inventory' => $inventory,
+            ]);
         })->name('game.inventario');
         Route::get('/misiones', function () {
             return view('game.misiones');

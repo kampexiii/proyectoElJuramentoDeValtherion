@@ -1,4 +1,5 @@
 @import "./components/home_index.css";
+@import "./components/character_create.css";
 @import "../shared/components/nav_top.css";
 @import "../shared/components/modal.css";
 @import "../shared/components/dropdown.css";
