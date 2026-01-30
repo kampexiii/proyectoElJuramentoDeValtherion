@@ -19,6 +19,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 5,
                 'base_defense' => 5,
                 'base_speed' => 5,
+                'sprite' => 'Human.png',
             ],
             [
                 'name' => 'Enanos',
@@ -29,6 +30,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 1,
                 'base_defense' => 9,
                 'base_speed' => 3,
+                'sprite' => 'Dwarf.png',
             ],
             [
                 'name' => 'Altos Elfos',
@@ -39,6 +41,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 8,
                 'base_defense' => 3,
                 'base_speed' => 7,
+                'sprite' => 'HighElf.png',
             ],
             [
                 'name' => 'Elfos Silvanos',
@@ -49,6 +52,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 5,
                 'base_defense' => 2,
                 'base_speed' => 10,
+                'sprite' => 'WoodElf.png',
             ],
             [
                 'name' => 'Elfos Oscuros',
@@ -59,6 +63,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 4,
                 'base_defense' => 2,
                 'base_speed' => 9,
+                'sprite' => 'DarkElf.png',
             ],
             [
                 'name' => 'Orcos',
@@ -69,6 +74,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 0,
                 'base_defense' => 5,
                 'base_speed' => 5,
+                'sprite' => 'Orc.png',
             ],
             [
                 'name' => 'Skaven',
@@ -79,6 +85,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 3,
                 'base_defense' => 2,
                 'base_speed' => 13,
+                'sprite' => 'Skaven.png',
             ],
             [
                 'name' => 'Hombres Bestia',
@@ -89,6 +96,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 1,
                 'base_defense' => 4,
                 'base_speed' => 8,
+                'sprite' => 'Beastmen.png',
             ],
             [
                 'name' => 'Condes Vampiro',
@@ -99,6 +107,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 7,
                 'base_defense' => 2,
                 'base_speed' => 8,
+                'sprite' => 'VampireCounts.png',
             ],
             [
                 'name' => 'Reyes Funerarios',
@@ -109,6 +118,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 5,
                 'base_defense' => 4,
                 'base_speed' => 7,
+                'sprite' => 'TombKings.png',
             ],
             [
                 'name' => 'Hombres Lagarto',
@@ -119,6 +129,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 2,
                 'base_defense' => 7,
                 'base_speed' => 5,
+                'sprite' => 'Lizardmen.png',
             ],
             [
                 'name' => 'Enanos del Caos',
@@ -129,6 +140,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 2,
                 'base_defense' => 8,
                 'base_speed' => 3,
+                'sprite' => 'ChaosDwarf.png',
             ],
             // Premium
             [
@@ -140,6 +152,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 10,
                 'base_defense' => 5,
                 'base_speed' => 4,
+                'sprite' => 'ChaosDaemon.png',
             ],
             // Admin-only
             [
