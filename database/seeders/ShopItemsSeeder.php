@@ -59,6 +59,19 @@ class ShopItemsSeeder extends Seeder
 
         $items = [
             [
+                'code' => 'mount_legendario_caos',
+                'name' => 'Montura del Señor Legendario del Caos',
+                'type' => 'mount',
+                'slot' => 'mount',
+                'rarity' => 'epic',
+                'required_level' => 20,
+                'price' => 0,
+                'bonuses' => ['speed' => 5, 'defense' => 5, 'strength' => 5, 'magic' => 5],
+                'description' => 'Montura legendaria exclusiva del Señor Legendario del Caos.',
+                'hidden_in_shop' => true,
+                'bonuses_json' => ['mode' => 'max_stats'],
+            ],
+            [
                 'code' => 'armor_head_vigia_paramo',
                 'name' => 'Casco del Vigía del Páramo',
                 'type' => 'armor',
@@ -204,6 +217,10 @@ class ShopItemsSeeder extends Seeder
         ];
 
         foreach ($items as $item) {
+            if (!empty($item['hidden_in_shop'])) {
+                // No crear ni actualizar este item si es para uso exclusivo/código
+                continue;
+            }
             $key = $hasCode ? ['code' => $item['code']] : ['name' => $item['name']];
             $data = [
                 'name' => $item['name'],

@@ -43,7 +43,12 @@
                     <select id="{{ $data['field'] }}" name="{{ $data['field'] }}" class="form-select form-select-sm">
                         <option value="">{{ $data['empty'] }}</option>
                         @foreach ($items as $item)
-                            <option value="{{ $item->id }}" @selected($currentId == $item->id)>{{ $item->name }}</option>
+                            <option value="{{ $item->id }}" @selected($currentId == $item->id)>
+                                {{ $item->name }}
+                                @if(isset($item->is_admin_fixed) && $item->is_admin_fixed)
+                                    (Montura real)
+                                @endif
+                            </option>
                         @endforeach
                     </select>
                     @error($data['field'])

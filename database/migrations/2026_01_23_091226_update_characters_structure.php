@@ -13,26 +13,22 @@ return new class extends Migration
                 Schema::table('characters', function (Blueprint $table) {
                     // Attempt to drop non-unique index (may not exist)
                     $table->dropIndex('characters_user_id_index');
-                    $table->unique('user_id');
+                    // $table->unique('user_id'); // Eliminado: ya existe en la migración de creación
 
                     $table->foreignId('game_class_id')->nullable()->after('race_id')->constrained('game_classes')->restrictOnDelete();
-                    $table->json('stats_json')->nullable()->after('game_class_id');
+                    // $table->json('stats_json')->nullable()->after('game_class_id'); // Eliminado: ya existe en la migración de creación
                 });
             } catch (\Throwable $e) {
-                // Fallback: try to add the new constraints/columns where possible
+                // Fallback: solo intentar agregar las columnas nuevas, nunca el índice unique
                 Schema::table('characters', function (Blueprint $table) {
-                    try {
-                        $table->unique('user_id');
-                    } catch (\Throwable $_) {
-                    }
                     try {
                         $table->foreignId('game_class_id')->nullable()->after('race_id')->constrained('game_classes')->restrictOnDelete();
                     } catch (\Throwable $_) {
                     }
-                    try {
-                        $table->json('stats_json')->nullable()->after('game_class_id');
-                    } catch (\Throwable $_) {
-                    }
+                    // try {
+                    //     $table->json('stats_json')->nullable()->after('game_class_id');
+                    // } catch (\Throwable $_) {
+                    // }
                 });
             }
         }

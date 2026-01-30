@@ -42,13 +42,21 @@ class EquipamientoController extends Controller
 
         $inventoryItems = $inventoryRows->pluck('item')->filter();
 
+        $mountOptions = $this->optionsForSlot($inventoryItems, 'mount');
+        // Si el personaje tiene montura real, añadirla como opción extra (si no está ya)
+        if ($character && $character->mount_id && Schema::hasTable('mounts')) {
+            $realMount = Mount::find($character->mount_id);
+            if ($realMount && !$mountOptions->contains('id', $realMount->id)) {
+                $mountOptions = $mountOptions->push($realMount);
+            }
+        }
         $options = [
             'helmet' => $this->optionsForSlot($inventoryItems, 'helmet'),
             'armor' => $this->optionsForSlot($inventoryItems, 'armor'),
             'weapon' => $this->optionsForSlot($inventoryItems, 'weapon'),
             'ring' => $this->optionsForSlot($inventoryItems, 'ring'),
             'amulet' => $this->optionsForSlot($inventoryItems, 'amulet'),
-            'mount' => $this->optionsForSlot($inventoryItems, 'mount'),
+            'mount' => $mountOptions,
         ];
 
         $equipment = collect();
@@ -99,12 +107,21 @@ class EquipamientoController extends Controller
             return back()->withErrors(['mount_item_id' => 'La montura fija no se puede cambiar.'])->withInput();
         }
 
+
         $inventoryRows = CharacterItem::query()
             ->with('item')
             ->where('character_id', $character->id)
             ->get();
 
         $inventoryItems = $inventoryRows->pluck('item')->filter()->keyBy('id');
+
+        // Si el personaje tiene montura real, añadirla como opción extra (si no está ya)
+        if ($character && $character->mount_id && Schema::hasTable('mounts')) {
+            $realMount = Mount::find($character->mount_id);
+            if ($realMount && !$inventoryItems->has($realMount->id)) {
+                $inventoryItems->put($realMount->id, $realMount);
+            }
+        }
 
         $selected = [];
         $slotMap = [
@@ -125,7 +142,12 @@ class EquipamientoController extends Controller
 
             $item = $inventoryItems->get((int) $itemId);
             if (!$item) {
-                return back()->withErrors([$field => 'No posees ese objeto.'])->withInput();
+                // Permitir equipar la montura real aunque no esté en inventario
+                if ($slot === 'mount' && $character->mount_id && (int)$itemId === (int)$character->mount_id) {
+                    $item = Mount::find($character->mount_id);
+                } else {
+                    return back()->withErrors([$field => 'No posees ese objeto.'])->withInput();
+                }
             }
 
             if (!$this->itemMatchesSlot($item, $slot)) {

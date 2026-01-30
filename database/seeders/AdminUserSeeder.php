@@ -36,7 +36,16 @@ class AdminUserSeeder extends Seeder
         $admin->name = 'kampeXIII';
         $admin->plan = 'premium';
         $admin->role = 'admin';
-        
         $admin->save();
+
+        // Quitar montura fija del personaje admin si existe
+        $character = $admin->character;
+        if ($character) {
+            $character->mount_id = null;
+            if (isset($character->has_mount)) {
+                $character->has_mount = false;
+            }
+            $character->save();
+        }
     }
 }

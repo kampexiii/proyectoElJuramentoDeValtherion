@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\Admin\RewardCodeController as AdminRewardCodeController;
@@ -12,6 +13,8 @@ use App\Http\Controllers\GameRewardCodeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PotionController;
 use App\Http\Controllers\WelcomeController;
+
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
@@ -42,18 +45,7 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
         Route::post('/personaje/desequipar', [CharacterEquipmentController::class, 'unequip'])->name('game.personaje.desequipar');
 
         Route::get('/tienda', [GameShopController::class, 'index'])->name('game.tienda');
-        Route::get('/inventario', function () {
-            $inventory = collect();
-            $character = request()->user()?->character;
-
-            if ($character && \Illuminate\Support\Facades\Schema::hasTable('character_items')) {
-                $inventory = $character->inventory()->with('item')->get();
-            }
-
-            return view('game.inventario', [
-                'inventory' => $inventory,
-            ]);
-        })->name('game.inventario');
+        Route::get('/inventario', [\App\Http\Controllers\Game\InventoryController::class, 'index'])->name('game.inventario');
         Route::post('/inventario/pociones/usar/{item}', [PotionController::class, 'usePotion'])->name('game.inventario.pociones.usar');
         Route::get('/misiones', function () {
             return view('game.misiones');

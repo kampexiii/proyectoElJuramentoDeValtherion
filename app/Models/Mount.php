@@ -12,10 +12,5 @@ class Mount extends Model
         'bonus_magic',
         'bonus_defense',
         'bonus_speed',
-        'is_admin_fixed',
-    ];
-
-    protected $casts = [
-        'is_admin_fixed' => 'boolean',
     ];
 }
