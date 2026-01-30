@@ -69,12 +69,11 @@
 }
 
 .home-sprite-img {
-    width: 96px;
-    height: 96px;
+    width: 192px;
+    height: 192px;
     object-fit: contain;
-    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0.5rem;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: transparent;
 }
 
 .home-sprite-placeholder {
@@ -92,4 +91,43 @@
 
 .home-sprite-placeholder::before {
     content: "Sprite";
+}
+
+.edit-sprite-img {
+    width: 128px;
+    height: 128px;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    background-color: transparent;
+}
+
+@media (min-width: 1200px) {
+    .edit-sprite-img {
+        width: 384px;
+        height: 384px;
+    }
+}
+
+.edit-row {
+    height: 100%;
+}
+
+.edit-card {
+    height: 100%;
+}
+
+@media (max-width: 1199.98px) {
+    .edit-row {
+        height: auto;
+    }
+    .edit-card {
+        height: auto;
+        min-height: 0;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .home-panel:nth-child(2) .card-body {
+        overflow: hidden;
+    }
 }

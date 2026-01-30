@@ -151,6 +151,7 @@ class RaceSeeder extends Seeder
                 'base_magic' => 7,
                 'base_defense' => 9,
                 'base_speed' => 3,
+                'sprite' => 'assets/sprites/razas/Aldrik.png',
                 'lore' => 'El Señor Legendario del Caos es el Elegido de la Grieta y el Caído. Su poder es legendario y solo está disponible para administradores.',
             ],
         ];

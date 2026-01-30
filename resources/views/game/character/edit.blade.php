@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container-fluid h-100">
-    <div class="row g-3 align-items-stretch h-100">
+    <div class="row g-3 align-items-stretch edit-row">
         <div class="col-12 col-xl-6">
-            <div class="card bg-zinc-900 border-secondary text-white shadow-sm h-100">
+            <div class="card bg-zinc-900 border-secondary text-white shadow-sm edit-card">
                 <div class="card-header border-secondary bg-dark text-center py-2">Personaje</div>
                 <div class="card-body p-3 d-flex flex-column gap-3">
                     @if ($errors->any())
@@ -25,7 +25,7 @@
                         <span class="text-secondary">Raza</span>
                         <span class="fw-semibold">{{ $character->race->name ?? 'Pendiente' }}</span>
                     </div>
-                    <p class="small text-secondary mb-0">El nombre, la raza y los stats no se pueden editar.</p>
+
 
                     <div>
                         <h6 class="mb-2">Stats actuales</h6>
@@ -52,8 +52,24 @@
                                     </div>
                                 </div>
                             @endforeach
+                            <!-- HP Bar -->
+                            <div>
+                                <div class="d-flex justify-content-between small">
+                                    <span>HP</span>
+                                    <span>{{ $character->hp_current }}/{{ $character->hp_max }}</span>
+                                </div>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-success hx-bar-{{ (int) round(($character->hp_current / max($character->hp_max, 1)) * 100) }}" role="progressbar"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    @if($spriteUrl)
+                        <div class="text-center d-none d-xl-block">
+                            <img src="{{ $spriteUrl }}" alt="Sprite del personaje" class="edit-sprite-img">
+                        </div>
+                    @endif
 
                     <form action="{{ route('game.personaje.destroy') }}" method="POST" class="mt-auto" onsubmit="return confirm('¿Seguro que quieres borrar tu personaje?');">
                         @csrf
@@ -65,7 +81,7 @@
         </div>
 
         <div class="col-12 col-xl-6">
-            <div class="card bg-zinc-900 border-secondary text-white shadow-sm h-100">
+            <div class="card bg-zinc-900 border-secondary text-white shadow-sm edit-card">
                 <div class="card-header border-secondary bg-dark text-center py-2">Equipo e inventario</div>
                 <div class="card-body p-3 d-flex flex-column gap-3">
                     @if (session('status'))
@@ -88,7 +104,6 @@
                                         <div class="d-flex align-items-center gap-2">
                                             @if ($slotKey === 'mount' && $character->mount)
                                                 <span class="text-truncate">{{ $character->mount->name }}</span>
-                                                <span class="badge bg-warning text-dark">Fija</span>
                                             @elseif ($equipped && $equipped->item)
                                                 <span class="text-truncate">{{ $equipped->item->name }}</span>
                                                 <form action="{{ route('game.personaje.desequipar') }}" method="POST">
@@ -106,7 +121,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="d-none d-xl-block">
                         <h6 class="mb-2">Inventario rápido</h6>
                         @if ($inventory->count() > 0)
                             <div class="row g-2">
@@ -131,7 +146,7 @@
                         @endif
                     </div>
 
-                    <div>
+                    <div class="d-none d-xl-block">
                         <h6 class="mb-2">Equipar objeto</h6>
                         @if ($items->count() > 0)
                             <form action="{{ route('game.personaje.equipar') }}" method="POST" class="d-grid gap-2">

@@ -14,9 +14,20 @@ class HomeController extends Controller
 
         $spriteUrl = null;
         if ($data['character']) {
+            // Primero intentar sprite personal
             $candidate = public_path("assets/characters/{$data['character']->id}.png");
             if (file_exists($candidate)) {
                 $spriteUrl = asset("assets/characters/{$data['character']->id}.png");
+            } else {
+                // Usar sprite de raza
+                $raceSprite = $data['character']->race->sprite ?? null;
+                if ($raceSprite) {
+                    $raceSpritePath = str_replace('/assets/', 'assets/', $raceSprite);
+                    $candidate = public_path($raceSpritePath);
+                    if (file_exists($candidate)) {
+                        $spriteUrl = asset($raceSpritePath);
+                    }
+                }
             }
         }
         $data['spriteUrl'] = $spriteUrl;

@@ -22,7 +22,7 @@ class CharacterController extends Controller
         $adminMount = $this->obtenerMonturaAdmin();
 
         $races = Race::orderBy('name')->get()->map(function (Race $race) use ($adminMount) {
-            $race->sprite = '/assets/sprites/razas/' . Str::slug($race->name) . '.png';
+            $race->sprite = '/assets/sprites/razas/' . ($race->sprite ?? Str::slug($race->name) . '.png');
 
             if ($adminMount && $race->name === 'Señor Legendario del Caos') {
                 $race->base_strength += $adminMount['bonus_strength'];
@@ -134,6 +134,25 @@ class CharacterController extends Controller
 
         $statsView = $this->statsVista($character, $equipment);
 
+        $spriteUrl = null;
+        if ($character) {
+            // Primero intentar sprite personal
+            $candidate = public_path("assets/characters/{$character->id}.png");
+            if (file_exists($candidate)) {
+                $spriteUrl = asset("assets/characters/{$character->id}.png");
+            } else {
+                // Usar sprite de raza
+                $raceSprite = $character->race->sprite ?? null;
+                if ($raceSprite) {
+                    $raceSpritePath = str_replace('/assets/', 'assets/', $raceSprite);
+                    $candidate = public_path($raceSpritePath);
+                    if (file_exists($candidate)) {
+                        $spriteUrl = asset($raceSpritePath);
+                    }
+                }
+            }
+        }
+
         $slots = [
             'weapon' => 'Arma',
             'helmet' => 'Casco',
@@ -150,6 +169,7 @@ class CharacterController extends Controller
             'inventory' => $inventory,
             'slots' => $slots,
             'statsView' => $statsView,
+            'spriteUrl' => $spriteUrl,
         ]);
     }
 

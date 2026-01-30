@@ -18,6 +18,7 @@ class Race extends Model
         'lore',
         'caps_json',
         'bonuses_json',
+        'sprite',
     ];
 
     protected $casts = [
