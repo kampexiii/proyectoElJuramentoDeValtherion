@@ -32,6 +32,10 @@ class HomeController extends Controller
         }
         $data['spriteUrl'] = $spriteUrl;
 
-        return view('game.home.index', $data);
+            // Pasar el modelo completo para que effectiveStats() esté disponible en la vista
+            return view('game.home.index', [
+                'character' => $data['character'],
+                'spriteUrl' => $spriteUrl,
+            ]);
     }
 }

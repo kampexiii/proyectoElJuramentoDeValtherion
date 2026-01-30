@@ -45,9 +45,7 @@
                         @foreach ($items as $item)
                             <option value="{{ $item->id }}" @selected($currentId == $item->id)>
                                 {{ $item->name }}
-                                @if(isset($item->is_admin_fixed) && $item->is_admin_fixed)
-                                    (Montura real)
-                                @endif
+                                {{-- Montura real eliminado: ahora todas son equipables --}}
                             </option>
                         @endforeach
                     </select>

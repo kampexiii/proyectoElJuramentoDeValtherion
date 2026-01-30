@@ -15,6 +15,12 @@
                     @else
                         <p class="mb-2 text-truncate w-100">Nombre: {{ $character->name }}</p>
                         <p class="mb-2 text-truncate w-100">Raza: {{ $character->race->name ?? 'Pendiente' }}</p>
+                        @php $stats = method_exists($character, 'effectiveStats') ? $character->effectiveStats() : ($character->stats_json ?? []); @endphp
+                        <div class="mb-2 small text-secondary">
+                            @foreach($stats as $stat => $valor)
+                                <span class="me-2">{{ ucfirst($stat) }}: <strong>{{ $valor }}</strong></span>
+                            @endforeach
+                        </div>
                         <a href="{{ route('game.personaje.edit') }}" class="btn btn-outline-light btn-sm">Editar personaje</a>
                         @if($spriteUrl)
                             <img src="{{ $spriteUrl }}" alt="Sprite del personaje" class="home-sprite-img mt-2">

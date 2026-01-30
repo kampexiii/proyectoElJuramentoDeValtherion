@@ -48,10 +48,8 @@ class GameProfileController extends Controller
                     $hp_current = (int) ($character->hp_current ?? 100);
                 }
 
-                $stats = [];
-                if (Schema::hasColumn('characters', 'stats_json')) {
-                    $stats = $character->stats_json ?? [];
-                }
+                // Stats efectivas dinámicas
+                $stats = method_exists($character, 'effectiveStats') ? $character->effectiveStats() : ($character->stats_json ?? []);
 
                 $characterSummary = [
                     'name' => $character->name,
