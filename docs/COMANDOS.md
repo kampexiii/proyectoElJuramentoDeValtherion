@@ -54,3 +54,14 @@ npm run build
 php artisan reverb:start
 php artisan serve
 ```
+
+## 2026-02-03 (Martes)
+
+```powershell
+# Reverb + Laravel (local)
+php artisan reverb:start --host=127.0.0.1 --port=8080
+php artisan serve --host=127.0.0.1 --port=8000
+
+# Comprobar puerto WS (PowerShell)
+Get-NetTCPConnection -LocalPort 8080 -State Listen
+```
