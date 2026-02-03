@@ -283,7 +283,7 @@ Objetivo principal: **sitio completo (API + web) listo como tarde el lunes 2 de 
 - [ ] Main completo en Inventario.
 - [ ] Main completo en Misiones + Recompensas (tab interna).
 - [ ] Main completo en Peleas.
-- [ ] Main completo en Chat.
+- [x] Main completo en Chat.
 - [ ] Main completo en Perfil.
 - [ ] Main completo en Ajustes.
 - [ ] Admin con bloque visible de sesiones/cookies.

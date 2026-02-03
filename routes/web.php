@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\Admin\RewardCodeController as AdminRewardCodeController;
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterEquipmentController;
 use App\Http\Controllers\Game\EquipamientoController;
@@ -39,6 +40,7 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
     Route::post('/ajustes/codigo', [GameRewardCodeController::class, 'redeem'])->name('game.ajustes.codigo');
     Route::get('/equipamiento', [EquipamientoController::class, 'edit'])->name('game.equipamiento.edit');
     Route::post('/equipamiento', [EquipamientoController::class, 'update'])->name('game.equipamiento.update');
+    Route::post('/equipamiento/stats-preview', [EquipamientoController::class, 'statsPreview'])->middleware('auth');
 
     Route::middleware('has.character')->group(function () {
         Route::post('/personaje/equipar', [CharacterEquipmentController::class, 'equip'])->name('game.personaje.equipar');
@@ -53,9 +55,8 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
         Route::get('/peleas', function () {
             return view('game.peleas');
         })->name('game.peleas');
-        Route::get('/chat', function () {
-            return view('game.chat');
-        })->name('game.chat');
+        Route::get('/chat', [ChatController::class, 'index'])->name('game.chat');
+        Route::post('/chat/{room}/mensajes', [ChatController::class, 'store'])->name('game.chat.store');
     });
 });
 

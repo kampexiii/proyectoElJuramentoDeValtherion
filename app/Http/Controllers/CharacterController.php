@@ -20,11 +20,15 @@ class CharacterController extends Controller
         }
 
         $races = Race::orderBy('name')->get()->map(function (Race $race) {
-            $race->sprite = '/assets/sprites/razas/' . ($race->sprite ?? Str::slug($race->name) . '.png');
+            $race->spriteUrl = $race->sprite_url;
             return $race;
         });
 
+        // Sprite por defecto para el primer render
+        $defaultSpriteUrl = $races->firstWhere('id', old('race_id'))?->spriteUrl ?? asset('assets/sprites/razas/human.png');
+
         $statMax = [
+            'hp' => max((int) $races->max('base_hp'), 1),
             'fuerza' => max((int) $races->max('base_strength'), 1),
             'magia' => max((int) $races->max('base_magic'), 1),
             'defensa' => max((int) $races->max('base_defense'), 1),
@@ -34,6 +38,7 @@ class CharacterController extends Controller
         return view('game.character.create', [
             'races' => $races,
             'statMax' => $statMax,
+            'defaultSpriteUrl' => $defaultSpriteUrl,
         ]);
     }
 
@@ -107,7 +112,8 @@ class CharacterController extends Controller
             $items = $inventory->pluck('item')->filter()->unique('id')->values();
         }
 
-        $statsView = $this->statsVista($character, $equipment);
+        // Stats actuales usando el sistema centralizado
+        $stats = method_exists($character, 'effectiveStats') ? $character->effectiveStats() : ($character->stats_json ?? []);
 
         $spriteUrl = null;
         if ($character) {
@@ -117,16 +123,14 @@ class CharacterController extends Controller
                 $spriteUrl = asset("assets/characters/{$character->id}.png");
             } else {
                 // Usar sprite de raza
-                $raceSprite = $character->race->sprite ?? null;
-                if ($raceSprite) {
-                    $raceSpritePath = str_replace('/assets/', 'assets/', $raceSprite);
-                    $candidate = public_path($raceSpritePath);
-                    if (file_exists($candidate)) {
-                        $spriteUrl = asset($raceSpritePath);
-                    }
-                }
+                $spriteUrl = $character->race?->sprite_url;
             }
         }
+        if (!$spriteUrl) {
+            $spriteUrl = asset('assets/sprites/razas/human.png');
+        }
+
+        $statsView = $this->statsVista($character, $equipment);
 
         $slots = [
             'weapon' => 'Arma',
@@ -143,6 +147,7 @@ class CharacterController extends Controller
             'equipment' => $equipment,
             'inventory' => $inventory,
             'slots' => $slots,
+            'stats' => $stats,
             'statsView' => $statsView,
             'spriteUrl' => $spriteUrl,
         ]);
@@ -226,15 +231,11 @@ class CharacterController extends Controller
 
     private function colorPorcentaje(float $ratio): string
     {
-        if ($ratio >= 0.75) {
+        if ($ratio >= 0.66) {
             return 'bg-success';
         }
 
-        if ($ratio >= 0.5) {
-            return 'bg-info';
-        }
-
-        if ($ratio >= 0.25) {
+        if ($ratio >= 0.33) {
             return 'bg-warning';
         }
 

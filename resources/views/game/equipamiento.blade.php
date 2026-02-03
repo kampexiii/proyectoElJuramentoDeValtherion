@@ -13,6 +13,18 @@
 @endphp
 
 <div class="equipamiento-viewport">
+    <div class="mb-3">
+        <h2 class="h6">Stats actuales</h2>
+        <div id="stats-preview" class="mb-2 small text-secondary">
+            @php $stats = method_exists(auth()->user()?->character, 'effectiveStats') ? auth()->user()->character->effectiveStats() : []; @endphp
+            @foreach($stats as $stat => $valor)
+                <span class="me-2">{{ ucfirst($stat) }}: <strong>{{ $valor }}</strong></span>
+            @endforeach
+        </div>
+    </div>
+    @push('scripts')
+    <script src="{{ asset('js/equipamiento-stats-preview.js') }}"></script>
+    @endpush
     <div class="equipamiento-header">
         <div>
             <h1 class="h5 mb-0">Armería</h1>

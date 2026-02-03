@@ -16,17 +16,65 @@ use Illuminate\Support\Str;
 
 class EquipamientoController extends Controller
 {
+    /**
+     * Devuelve los stats calculados en tiempo real según la selección de equipo enviada por AJAX.
+     */
+    public function statsPreview(Request $request)
+    {
+        $user = $request->user();
+        $character = $user?->character;
+        if (!$character) {
+            return response()->json(['stats' => []]);
+        }
+
+        $slotMap = [
+            'helmet_item_id' => 'helmet',
+            'armor_item_id' => 'armor',
+            'weapon_item_id' => 'weapon',
+            'ring_item_id' => 'ring',
+            'amulet_item_id' => 'amulet',
+            'mount_item_id' => 'mount',
+        ];
+
+        $selected = [];
+        foreach ($slotMap as $field => $slot) {
+            $itemId = $request->input($field);
+            if ($itemId) {
+                if ($slot === 'mount') {
+                    $item = \App\Models\Mount::find($itemId);
+                } else {
+                    $item = \App\Models\Item::find($itemId);
+                }
+                if ($item) {
+                    $selected[$slot] = $item;
+                }
+            } else {
+                $selected[$slot] = null;
+            }
+        }
+
+        // Simular equipo temporal
+        $equipment = collect();
+        foreach ($selected as $slot => $item) {
+            $equipment[$slot] = (object) ['item' => $item];
+        }
+
+        // Usar el servicio de stats centralizado
+        $service = app(\App\Services\StatCalculatorService::class);
+        $stats = $service->effectiveStatsForPreview($character, $equipment);
+
+        return response()->json(['stats' => $stats]);
+    }
+
     public function edit(Request $request)
     {
         $user = $request->user();
         $character = $user?->character;
-
         if (!$character) {
             return redirect()
                 ->route('game.personaje.create')
                 ->with('status', 'Necesitas un personaje para equiparte.');
         }
-
         if (!Schema::hasTable('items') || !Schema::hasTable('character_items')) {
             return view('game.equipamiento', [
                 'options' => $this->emptyOptions(),
@@ -178,6 +226,7 @@ class EquipamientoController extends Controller
             if ($slot === 'mount' && $character->mount_id) {
                 continue;
             }
+            // Si el usuario selecciona "Sin montura" (null), guardar item_id null
             CharacterEquipment::updateOrCreate(
                 ['character_id' => $character->id, 'slot' => $slot],
                 ['item_id' => $item?->id]
@@ -186,9 +235,7 @@ class EquipamientoController extends Controller
 
         if (Schema::hasColumn('characters', 'has_mount')) {
             $tieneMontura = $character->mount_id !== null;
-            if (!$tieneMontura && !empty($selected['mount'])) {
-                $tieneMontura = true;
-            }
+            // Si no hay montura fija y no hay ninguna equipada, debe ser false
             if (!$tieneMontura) {
                 $tieneMontura = CharacterEquipment::query()
                     ->where('character_id', $character->id)

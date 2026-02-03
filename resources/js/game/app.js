@@ -1,5 +1,7 @@
+import '../echo';
 import './settings';
 import './profile';
+import './chat';
 
 // JS general zona logueada (migrado desde layouts si aplica)
 (() => {

@@ -34,7 +34,7 @@
                                         <option
                                             value="{{ $race->id }}"
                                             @selected(old('race_id') == $race->id)
-                                            data-sprite="{{ $race->sprite }}"
+                                            data-sprite="{{ $race->spriteUrl }}"
                                             data-hp="{{ $race->base_hp }}"
                                             data-fuerza="{{ $race->base_strength }}"
                                             data-magia="{{ $race->base_magic }}"
@@ -52,6 +52,7 @@
 
                         <div
                             class="character-preview"
+                            data-max-hp="{{ $statMax['hp'] ?? 1 }}"
                             data-max-fuerza="{{ $statMax['fuerza'] ?? 1 }}"
                             data-max-magia="{{ $statMax['magia'] ?? 1 }}"
                             data-max-defensa="{{ $statMax['defensa'] ?? 1 }}"
@@ -61,10 +62,11 @@
                                 <div class="col-12 col-md-5 text-center">
                                     <div class="character-sprite-frame">
                                         <img
-                                            src="/assets/sprites/razas/humanos.png"
+                                            src="{{ $defaultSpriteUrl }}"
                                             class="img-fluid character-sprite opacity-50"
                                             alt="Sprite de raza"
                                             id="race-sprite"
+                                            onerror="this.onerror=null;this.src='{{ asset('assets/sprites/razas/human.png') }}';"
                                         >
                                     </div>
                                     <p class="small text-secondary mb-0" id="race-name">Selecciona una raza</p>
@@ -133,6 +135,7 @@
     (function () {
         const select = document.getElementById('race_id');
         const sprite = document.getElementById('race-sprite');
+        const fallbackSprite = "{{ asset('assets/sprites/razas/human.png') }}";
         const nameLabel = document.getElementById('race-name');
         const preview = document.querySelector('.character-preview');
 
@@ -153,7 +156,7 @@
         };
 
         const max = {
-            hp: 100, // Asumir max HP para preview
+            hp: parseInt(preview.dataset.maxHp || '1', 10),
             fuerza: parseInt(preview.dataset.maxFuerza || '1', 10),
             magia: parseInt(preview.dataset.maxMagia || '1', 10),
             defensa: parseInt(preview.dataset.maxDefensa || '1', 10),
@@ -165,16 +168,13 @@
             'hx-bar-50', 'hx-bar-60', 'hx-bar-70', 'hx-bar-80', 'hx-bar-90', 'hx-bar-100',
         ];
 
-        const colorClasses = ['bg-danger', 'bg-warning', 'bg-info', 'bg-success'];
+        const colorClasses = ['bg-danger', 'bg-warning', 'bg-success'];
 
         function colorPorcentaje(ratio) {
-            if (ratio >= 0.75) {
+            if (ratio >= 0.66) {
                 return 'bg-success';
             }
-            if (ratio >= 0.5) {
-                return 'bg-info';
-            }
-            if (ratio >= 0.25) {
+            if (ratio >= 0.33) {
                 return 'bg-warning';
             }
             return 'bg-danger';
@@ -213,14 +213,14 @@
             const spritePath = option ? option.dataset.sprite : '';
 
             if (!option || !option.value) {
-                sprite.src = '/assets/sprites/razas/humanos.png';
+                sprite.src = fallbackSprite;
                 sprite.classList.add('opacity-50');
                 nameLabel.textContent = 'Selecciona una raza';
                 resetBars();
                 return;
             }
 
-            sprite.src = spritePath || '/assets/sprites/razas/humanos.png';
+            sprite.src = spritePath || fallbackSprite;
             sprite.classList.remove('opacity-50');
             nameLabel.textContent = raceName;
 
@@ -237,7 +237,7 @@
 
         if (sprite) {
             sprite.addEventListener('error', function () {
-                sprite.src = '/assets/sprites/razas/humanos.png';
+                sprite.src = fallbackSprite;
             });
         }
 

@@ -59,7 +59,20 @@
                                     <span>{{ $character->hp_current }}/{{ $character->hp_max }}</span>
                                 </div>
                                 <div class="progress progress-sm">
-                                    <div class="progress-bar bg-success hx-bar-{{ (int) round(($character->hp_current / max($character->hp_max, 1)) * 100) }}" role="progressbar"></div>
+                                    @php
+                                        $hpRatio = ($character->hp_current / max($character->hp_max, 1));
+                                        $hpPercent = $hpRatio * 100;
+                                        $hpStep = (int) (round($hpPercent / 10) * 10);
+                                        $hpStep = max(0, min(100, $hpStep));
+                                        if ($hpRatio >= 0.66) {
+                                            $hpColor = 'bg-success';
+                                        } elseif ($hpRatio >= 0.33) {
+                                            $hpColor = 'bg-warning';
+                                        } else {
+                                            $hpColor = 'bg-danger';
+                                        }
+                                    @endphp
+                                    <div class="progress-bar {{ $hpColor }} hx-bar-{{ $hpStep }}" role="progressbar"></div>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +80,7 @@
 
                     @if($spriteUrl)
                         <div class="text-center d-none d-xl-block">
-                            <img src="{{ $spriteUrl }}" alt="Sprite del personaje" class="edit-sprite-img">
+                            <img src="{{ $spriteUrl }}" alt="Sprite del personaje" class="edit-sprite-img" onerror="this.onerror=null;this.src='{{ asset('assets/sprites/razas/human.png') }}';">
                         </div>
                     @endif
 

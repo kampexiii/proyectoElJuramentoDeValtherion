@@ -9,6 +9,68 @@ use App\Models\Mount;
 class StatCalculatorService
 {
     /**
+     * Calcula los stats efectivos para un personaje, usando un equipo simulado (preview).
+     */
+    public function effectiveStatsForPreview($character, $equipment): array
+    {
+        $base = $character->stats_json ?? [];
+        $race = $character->race;
+        $stats = [
+            'fuerza' => (int)($base['fuerza'] ?? $race->base_strength ?? 0),
+            'magia' => (int)($base['magia'] ?? $race->base_magic ?? 0),
+            'defensa' => (int)($base['defensa'] ?? $race->base_defense ?? 0),
+            'velocidad' => (int)($base['velocidad'] ?? $race->base_speed ?? 0),
+        ];
+
+        // Bonificadores de equipo simulado
+        $bonus = [
+            'fuerza' => 0,
+            'magia' => 0,
+            'defensa' => 0,
+            'velocidad' => 0,
+        ];
+        foreach ($equipment as $slot => $entry) {
+            $item = $entry->item ?? null;
+            if ($item) {
+                if ($slot === 'mount' && $item instanceof \App\Models\Mount) {
+                    $bonus = $this->sumBonuses($bonus, $this->getMountBonuses($item));
+                } elseif ($item instanceof \App\Models\Item) {
+                    $bonus = $this->sumBonuses($bonus, $this->getItemBonuses($item));
+                }
+            }
+        }
+
+        // Si hay montura especial "max stats" equipada
+        $maxStats = false;
+        foreach ($equipment as $slot => $entry) {
+            $item = $entry->item ?? null;
+            if ($item && $slot === 'mount' && ($item->code ?? null) === 'mount_legendario_caos') {
+                $maxStats = true;
+                break;
+            }
+            if ($item && $slot === 'mount' && ($item->bonuses_json['mode'] ?? null) === 'max_stats') {
+                $maxStats = true;
+                break;
+            }
+        }
+        if ($maxStats && $race && is_array($race->caps_json) && count($race->caps_json) > 0) {
+            return [
+                'fuerza' => (int)($race->caps_json['fuerza'] ?? $race->caps_json['strength'] ?? $race->base_strength ?? 0),
+                'magia' => (int)($race->caps_json['magia'] ?? $race->caps_json['magic'] ?? $race->base_magic ?? 0),
+                'defensa' => (int)($race->caps_json['defensa'] ?? $race->caps_json['defense'] ?? $race->base_defense ?? 0),
+                'velocidad' => (int)($race->caps_json['velocidad'] ?? $race->caps_json['speed'] ?? $race->base_speed ?? 0),
+            ];
+        }
+        // Suma base + bonus
+        return [
+            'fuerza' => $stats['fuerza'] + $bonus['fuerza'],
+            'magia' => $stats['magia'] + $bonus['magia'],
+            'defensa' => $stats['defensa'] + $bonus['defensa'],
+            'velocidad' => $stats['velocidad'] + $bonus['velocidad'],
+        ];
+    }
+
+    /**
      * Calcula los stats efectivos de un personaje según su equipo y montura.
      * @param Character $character
      * @return array

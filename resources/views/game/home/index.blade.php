@@ -23,7 +23,7 @@
                         </div>
                         <a href="{{ route('game.personaje.edit') }}" class="btn btn-outline-light btn-sm">Editar personaje</a>
                         @if($spriteUrl)
-                            <img src="{{ $spriteUrl }}" alt="Sprite del personaje" class="home-sprite-img mt-2">
+                            <img src="{{ $spriteUrl }}" alt="Sprite del personaje" class="home-sprite-img mt-2" onerror="this.onerror=null;this.src='{{ asset('assets/sprites/razas/human.png') }}';">
                         @else
                             <div class="home-sprite-placeholder mt-2"></div>
                         @endif
@@ -52,6 +52,7 @@
                         <div class="alert alert-secondary small mb-2">{{ $fallbackMessage }}</div>
                     @endif
 
+                    @php if (!isset($seasonRankings)) { $seasonRankings = collect(); } @endphp
                     @if ($seasonRankings && $seasonRankings->count() > 0)
                         <div class="table-responsive">
                             <table class="table table-sm table-dark mb-0 align-middle">

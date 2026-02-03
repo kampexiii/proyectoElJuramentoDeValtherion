@@ -438,16 +438,16 @@ Commit:
 
 Trello:
 
-[ ] "Día 18 — Chat schema"
+[x] "Día 18 — Chat schema"
 
 Archivos:
 
-[ ] migrations (chat_rooms, chat_messages)
-[ ] models (ChatRoom, ChatMessage)
+[x] migrations (chat_rooms, chat_messages)
+[x] models (ChatRoom, ChatMessage)
 
 Bitácora:
 
-[ ] docs/bitacora/2026-02-03.md
+[x] docs/bitacora/2026-02-03.md
 
 Commit:
 
@@ -459,16 +459,16 @@ Commit:
 
 Trello:
 
-[ ] "Día 19 — Evento chat realtime"
+[x] "Día 19 — Evento chat realtime"
 
 Archivos:
 
-[ ] app/Events/ChatMessageSent.php
-[ ] app/Http/Controllers/ChatController.php
+[x] app/Events/ChatMessageSent.php
+[x] app/Http/Controllers/ChatController.php
 
 Bitácora:
 
-[ ] docs/bitacora/2026-02-04.md
+[x] docs/bitacora/2026-02-04.md
 
 Commit:
 
@@ -480,16 +480,16 @@ Commit:
 
 Trello:
 
-[ ] "Día 20 — UI chat global"
+[x] "Día 20 — UI chat global"
 
 Archivos:
 
-[ ] resources/views/game/chat/index.blade.php
-[ ] resources/js/echo.js
+[x] resources/views/game/chat.blade.php
+[x] resources/js/echo.js
 
 Bitácora:
 
-[ ] docs/bitacora/2026-02-05.md
+[x] docs/bitacora/2026-02-05.md
 
 Commit:
 
