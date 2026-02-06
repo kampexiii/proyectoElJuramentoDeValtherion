@@ -47,6 +47,12 @@ class AdminAuthenticatedSessionController extends Controller
             ])->onlyInput('email');
         }
 
-        return redirect()->intended(route('admin.index', absolute: false));
+        $response = redirect()->intended(route('admin.index', absolute: false));
+
+        if ($request->cookie('vth_cookie_consent') !== 'accepted' && $request->boolean('accept_cookies') && $request->boolean('accept_terms')) {
+            $response->withCookie(\Illuminate\Support\Facades\Cookie::forever('vth_cookie_consent', 'accepted'));
+        }
+
+        return $response;
     }
 }

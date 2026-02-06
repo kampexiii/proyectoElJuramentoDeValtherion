@@ -44,6 +44,14 @@ class CharacterEquipmentController extends Controller
             return back()->withErrors(['item_id' => 'El objeto no existe.']);
         }
 
+        $requiredLevel = (int) ($item->required_level ?? 1);
+        if (Schema::hasColumn('characters', 'level')) {
+            $characterLevel = (int) ($character->level ?? 1);
+            if ($requiredLevel > $characterLevel) {
+                return back()->withErrors(['item_id' => 'Necesitas nivel ' . $requiredLevel . ' para equipar este objeto.']);
+            }
+        }
+
         if ($character->mount_id && $slot === 'mount') {
             return back()->withErrors(['slot' => 'La montura fija no se puede cambiar.']);
         }
@@ -64,18 +72,6 @@ class CharacterEquipmentController extends Controller
 
         if (!$tieneItem) {
             return back()->withErrors(['item_id' => 'El objeto no está en tu inventario.']);
-        }
-
-        $equipment = CharacterEquipment::query()
-            ->where('character_id', $character->id)
-            ->with('item')
-            ->get()
-            ->keyBy('slot');
-
-        $equipment[$slot] = (object) ['item' => $item];
-
-        if ($this->superaMaximos($character, $equipment)) {
-            return back()->withErrors(['item_id' => 'Ese equipo supera el máximo permitido para tus stats.']);
         }
 
         CharacterEquipment::updateOrCreate(

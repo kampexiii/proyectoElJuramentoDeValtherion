@@ -1,12 +1,12 @@
 @extends('layouts.game.app')
 
 @section('content')
-<div class="container-fluid h-100">
-    <div class="row justify-content-center align-items-center h-100">
-        <div class="col-12 col-lg-6">
+<div class="container-fluid character-create-viewport game-viewport">
+    <div class="row justify-content-center align-items-start">
+        <div class="col-12 col-lg-6 col-xl-5">
             <div class="card bg-zinc-900 border-secondary text-white shadow-sm">
-                <div class="card-header border-secondary bg-dark text-center py-2">Crear personaje</div>
-                <div class="card-body p-3">
+                <div class="card-header border-secondary bg-dark text-center py-1">Crear personaje</div>
+                <div class="card-body p-2">
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul class="mb-0">
@@ -17,18 +17,18 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('game.personaje.store') }}" method="POST" class="d-grid gap-3">
+                    <form action="{{ route('game.personaje.store') }}" method="POST" class="d-grid gap-2">
                         @csrf
 
                         <div>
                             <label for="name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
+                            <input type="text" class="form-control form-control-sm" id="name" name="name" value="{{ old('name') }}" required>
                         </div>
 
                         <div>
                             <label for="race_id" class="form-label">Raza</label>
                             @if ($races->count() > 0)
-                                <select class="form-select" id="race_id" name="race_id">
+                                <select class="form-select form-select-sm" id="race_id" name="race_id">
                                     <option value="">Selecciona una raza</option>
                                     @foreach ($races as $race)
                                         <option
@@ -58,7 +58,7 @@
                             data-max-defensa="{{ $statMax['defensa'] ?? 1 }}"
                             data-max-velocidad="{{ $statMax['velocidad'] ?? 1 }}"
                         >
-                            <div class="row g-3 align-items-center">
+                            <div class="row g-2 align-items-center">
                                 <div class="col-12 col-md-5 text-center">
                                     <div class="character-sprite-frame">
                                         <img
@@ -72,7 +72,7 @@
                                     <p class="small text-secondary mb-0" id="race-name">Selecciona una raza</p>
                                 </div>
                                 <div class="col-12 col-md-7">
-                                    <div class="d-grid gap-2">
+                                    <div class="d-grid gap-1">
                                         <div>
                                             <div class="d-flex justify-content-between small">
                                                 <span>Vida</span>
@@ -123,7 +123,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Guardar personaje</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Guardar personaje</button>
                     </form>
                 </div>
             </div>

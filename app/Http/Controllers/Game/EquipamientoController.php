@@ -211,6 +211,14 @@ class EquipamientoController extends Controller
                 return back()->withErrors([$field => 'Ese objeto no corresponde a este hueco.'])->withInput();
             }
 
+            if ($item instanceof Item && Schema::hasColumn('characters', 'level')) {
+                $requiredLevel = (int) ($item->required_level ?? 1);
+                $characterLevel = (int) ($character->level ?? 1);
+                if ($requiredLevel > $characterLevel) {
+                    return back()->withErrors([$field => 'Necesitas nivel ' . $requiredLevel . ' para equipar este objeto.'])->withInput();
+                }
+            }
+
             $selected[$slot] = $item;
         }
 

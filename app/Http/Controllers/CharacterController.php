@@ -19,7 +19,15 @@ class CharacterController extends Controller
             return redirect()->route('game.personaje.edit');
         }
 
-        $races = Race::orderBy('name')->get()->map(function (Race $race) {
+        $allowedRoles = $this->allowedRaceRoles($user);
+        $raceQuery = Race::query()->orderBy('name');
+        if (Schema::hasColumn('races', 'min_role')) {
+            $raceQuery->whereIn('min_role', $allowedRoles);
+        } elseif (Schema::hasColumn('races', 'access')) {
+            $raceQuery->whereIn('access', $allowedRoles);
+        }
+
+        $races = $raceQuery->get()->map(function (Race $race) {
             $race->spriteUrl = $race->sprite_url;
             return $race;
         });
@@ -61,6 +69,12 @@ class CharacterController extends Controller
         if (!empty($validated['race_id'])) {
             $race = Race::find($validated['race_id']);
             if ($race) {
+                $allowedRoles = $this->allowedRaceRoles($user);
+                $raceRole = $race->min_role ?? $race->access ?? 'user';
+                if (!in_array($raceRole, $allowedRoles, true)) {
+                    return back()->withErrors(['race_id' => 'No tienes acceso a esa raza.'])->withInput();
+                }
+
                 $stats = [
                     'fuerza' => $race->base_strength,
                     'magia' => $race->base_magic,
@@ -365,6 +379,22 @@ class CharacterController extends Controller
             'defensa' => (int) $mount->bonus_defense,
             'velocidad' => (int) $mount->bonus_speed,
         ];
+    }
+
+    private function allowedRaceRoles($user): array
+    {
+        $role = $user?->role ?? 'user';
+        $plan = $user?->plan ?? 'free';
+
+        if ($role === 'admin') {
+            return ['user', 'premium', 'admin'];
+        }
+
+        if ($role === 'premium' || $plan === 'premium') {
+            return ['user', 'premium'];
+        }
+
+        return ['user'];
     }
 
     // ...existing code...

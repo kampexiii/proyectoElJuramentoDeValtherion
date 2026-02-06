@@ -31,8 +31,22 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'regex:/^[^@\s]+@[^@\s]+\.[^@\s]+$/', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'accept_cookies' => ['accepted'],
+            'accept_terms' => ['accepted'],
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.max' => 'El nombre no puede exceder 255 caracteres.',
+            'email.required' => 'El correo es obligatorio.',
+            'email.email' => 'El correo debe tener un formato valido.',
+            'email.regex' => 'El correo debe tener formato usuario@dominio.com.',
+            'email.max' => 'El correo no puede exceder 255 caracteres.',
+            'email.unique' => 'Ese correo ya esta registrado.',
+            'password.required' => 'La contrasena es obligatoria.',
+            'password.confirmed' => 'Las contrasenas no coinciden.',
+            'accept_cookies.accepted' => 'Debes aceptar las cookies para registrarte.',
+            'accept_terms.accepted' => 'Debes aceptar los terminos y condiciones para registrarte.',
         ]);
 
         $user = User::create([
@@ -45,6 +59,8 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        $cookie = \Illuminate\Support\Facades\Cookie::forever('vth_cookie_consent', 'accepted');
+
+        return redirect(route('dashboard', absolute: false))->withCookie($cookie);
     }
 }

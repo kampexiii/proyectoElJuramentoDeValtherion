@@ -3,6 +3,9 @@
 @section('content')
 <div class="home-viewport">
     <div class="home-content flex-grow-1">
+        <div class="d-flex justify-content-end mb-2">
+            <a href="{{ route('admin.users') }}" class="btn btn-outline-light btn-sm">Gestionar usuarios</a>
+        </div>
         <div class="row g-0 flex-grow-1 h-100">
             <div class="col-12 col-lg-6 d-flex flex-column home-panel hx-min-0">
                 <div class="card bg-zinc-900 border-secondary flex-grow-1 text-white shadow-sm overflow-hidden hx-card-bg">

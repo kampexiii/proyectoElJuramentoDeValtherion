@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Character;
 use App\Models\Item;
 use App\Models\Mount;
+use App\Models\Race;
+use Illuminate\Support\Facades\Schema;
 
 class StatCalculatorService
 {
@@ -62,12 +64,14 @@ class StatCalculatorService
             ];
         }
         // Suma base + bonus
-        return [
+        $raw = [
             'fuerza' => $stats['fuerza'] + $bonus['fuerza'],
             'magia' => $stats['magia'] + $bonus['magia'],
             'defensa' => $stats['defensa'] + $bonus['defensa'],
             'velocidad' => $stats['velocidad'] + $bonus['velocidad'],
         ];
+
+        return $this->clampToCaps($raw, $race);
     }
 
     /**
@@ -137,12 +141,60 @@ class StatCalculatorService
             ];
         }
         // Suma base + bonus
-        return [
+        $raw = [
             'fuerza' => $stats['fuerza'] + $bonus['fuerza'],
             'magia' => $stats['magia'] + $bonus['magia'],
             'defensa' => $stats['defensa'] + $bonus['defensa'],
             'velocidad' => $stats['velocidad'] + $bonus['velocidad'],
         ];
+
+        return $this->clampToCaps($raw, $race);
+    }
+
+    private function clampToCaps(array $stats, ?Race $race): array
+    {
+        if (!$race) {
+            return $stats;
+        }
+
+        $caps = is_array($race->caps_json ?? null) ? $race->caps_json : [];
+        $max = [
+            'fuerza' => $this->capDe($caps, 'fuerza', 'strength'),
+            'magia' => $this->capDe($caps, 'magia', 'magic'),
+            'defensa' => $this->capDe($caps, 'defensa', 'defense'),
+            'velocidad' => $this->capDe($caps, 'velocidad', 'speed'),
+        ];
+
+        $tieneCaps = collect($max)->filter()->count() > 0;
+        if (!$tieneCaps && Schema::hasTable('races')) {
+            $max = [
+                'fuerza' => (int) Race::max('base_strength'),
+                'magia' => (int) Race::max('base_magic'),
+                'defensa' => (int) Race::max('base_defense'),
+                'velocidad' => (int) Race::max('base_speed'),
+            ];
+        }
+
+        $clamped = [];
+        foreach ($stats as $key => $value) {
+            $limit = $max[$key] ?? $value;
+            $clamped[$key] = min((int) $value, (int) $limit);
+        }
+
+        return $clamped;
+    }
+
+    private function capDe(array $caps, string $es, string $en): ?int
+    {
+        if (array_key_exists($es, $caps)) {
+            return (int) $caps[$es];
+        }
+
+        if (array_key_exists($en, $caps)) {
+            return (int) $caps[$en];
+        }
+
+        return null;
     }
 
     private function sumBonuses(array $a, array $b): array

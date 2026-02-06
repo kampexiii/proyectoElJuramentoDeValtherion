@@ -44,6 +44,13 @@
         padding: 0.5rem !important;
         font-size: 0.95rem;
     }
+    .home-panel .form-select {
+        width: 100%;
+        max-width: 100%;
+        max-width: 100vw;
+        min-width: 0;
+        box-sizing: border-box;
+    }
     .home-panel .table {
         font-size: 0.95rem;
     }

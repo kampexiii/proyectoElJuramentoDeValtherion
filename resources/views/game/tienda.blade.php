@@ -57,6 +57,14 @@
 @endphp
 
 <main class="shop-viewport game-viewport shop-ui">
+    @if ($errors->has('shop'))
+        <div class="alert alert-danger small mb-2">{{ $errors->first('shop') }}</div>
+    @endif
+
+    @if (session('shop-status'))
+        <div class="alert alert-success small mb-2">{{ session('shop-status') }}</div>
+    @endif
+
     <div class="shop-rows">
         @php // Secciones fijas, misma estructura en tablet/portátil/desktop. @endphp
         <section class="shop-section">
@@ -83,7 +91,11 @@
                             </div>
                             <div class="shop-card-footer min-w-0">
                                 <div class="shop-card-price shop-price">Precio: {{ $price }}</div>
-                                <button type="button" class="btn btn-primary btn-sm shop-btn">Comprar</button>
+                                <form method="POST" action="{{ route('game.tienda.comprar') }}">
+                                    @csrf
+                                    <input type="hidden" name="item_id" value="{{ $item->id }}">
+                                    <button type="submit" class="btn btn-primary btn-sm shop-btn">Comprar</button>
+                                </form>
                             </div>
                         </article>
                     @else
@@ -119,7 +131,11 @@
                             </div>
                             <div class="shop-card-footer min-w-0">
                                 <div class="shop-card-price shop-price">Precio: {{ $price }}</div>
-                                <button type="button" class="btn btn-primary btn-sm shop-btn">Comprar</button>
+                                <form method="POST" action="{{ route('game.tienda.comprar') }}">
+                                    @csrf
+                                    <input type="hidden" name="item_id" value="{{ $item->id }}">
+                                    <button type="submit" class="btn btn-primary btn-sm shop-btn">Comprar</button>
+                                </form>
                             </div>
                         </article>
                     @else
@@ -155,7 +171,11 @@
                             </div>
                             <div class="shop-card-footer min-w-0">
                                 <div class="shop-card-price shop-price">Precio: {{ $price }}</div>
-                                <button type="button" class="btn btn-primary btn-sm shop-btn">Comprar</button>
+                                <form method="POST" action="{{ route('game.tienda.comprar') }}">
+                                    @csrf
+                                    <input type="hidden" name="item_id" value="{{ $item->id }}">
+                                    <button type="submit" class="btn btn-primary btn-sm shop-btn">Comprar</button>
+                                </form>
                             </div>
                         </article>
                     @else
@@ -189,7 +209,11 @@
                         </div>
                         <div class="shop-card-footer min-w-0">
                             <div class="shop-card-price shop-price">Precio: {{ $price }}</div>
-                            <button type="button" class="btn btn-primary btn-sm shop-btn">Comprar</button>
+                            <form method="POST" action="{{ route('game.tienda.comprar') }}">
+                                @csrf
+                                <input type="hidden" name="item_id" value="{{ $offerMount->id }}">
+                                <button type="submit" class="btn btn-primary btn-sm shop-btn">Comprar</button>
+                            </form>
                         </div>
                     </article>
                 @else

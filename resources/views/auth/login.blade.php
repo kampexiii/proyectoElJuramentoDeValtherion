@@ -2,13 +2,28 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    @php
+        $needsConsent = request()->cookie('vth_cookie_consent') !== 'accepted';
+    @endphp
+
     <form method="POST" action="{{ route('login') }}" class="auth-form">
         @csrf
 
         <!-- Email Address -->
         <div>
             <x-input-label for="email" value="Correo Electrónico" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-text-input
+                id="email"
+                class="block mt-1 w-full"
+                type="email"
+                name="email"
+                :value="old('email')"
+                required
+                autofocus
+                autocomplete="username"
+                pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+                title="El correo debe tener formato usuario@dominio.com"
+            />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
@@ -32,6 +47,30 @@
             </label>
         </div>
 
+        @if ($needsConsent)
+            <div class="mt-4">
+                <label class="inline-flex items-start gap-2 text-sm text-zinc-400">
+                    <input name="accept_cookies" type="checkbox" class="rounded border-zinc-700 bg-zinc-950 text-zinc-600 shadow-sm focus:ring-zinc-500" required>
+                    <span>
+                        Acepto el uso de cookies.
+                        <a href="{{ route('legal.cookies') }}" class="underline text-zinc-300 hover:text-white">Ver cookies</a>
+                    </span>
+                </label>
+                <x-input-error :messages="$errors->get('accept_cookies')" class="mt-2" />
+            </div>
+
+            <div class="mt-2">
+                <label class="inline-flex items-start gap-2 text-sm text-zinc-400">
+                    <input name="accept_terms" type="checkbox" class="rounded border-zinc-700 bg-zinc-950 text-zinc-600 shadow-sm focus:ring-zinc-500" required>
+                    <span>
+                        Acepto los terminos y condiciones.
+                        <a href="{{ route('legal.terms') }}" class="underline text-zinc-300 hover:text-white">Ver terminos</a>
+                    </span>
+                </label>
+                <x-input-error :messages="$errors->get('accept_terms')" class="mt-2" />
+            </div>
+        @endif
+
         <div class="flex items-center justify-end mt-4 auth-actions auth-actions--between">
             @if (Route::has('password.request'))
                 <a class="underline text-sm text-zinc-400 hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500" href="{{ route('password.request') }}">
@@ -39,9 +78,17 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3 auth-btn">
-                Iniciar Sesión
-            </x-primary-button>
+            <div class="flex items-center gap-3">
+                @if (Route::has('register'))
+                    <a class="underline text-sm text-zinc-400 hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500" href="{{ route('register') }}">
+                        ¿No tienes cuenta? Regístrate
+                    </a>
+                @endif
+
+                <x-primary-button class="auth-btn">
+                    Iniciar Sesión
+                </x-primary-button>
+            </div>
         </div>
     </form>
 </x-auth-layout>

@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\EnsureRole::class,
             'has.character' => \App\Http\Middleware\EnsureHasCharacter::class,
+            'cookie.consent' => \App\Http\Middleware\EnsureCookieConsent::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

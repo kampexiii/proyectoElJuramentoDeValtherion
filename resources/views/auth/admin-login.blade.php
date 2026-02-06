@@ -6,6 +6,10 @@
 
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    @php
+        $needsConsent = request()->cookie('vth_cookie_consent') !== 'accepted';
+    @endphp
+
     <form method="POST" action="{{ route('admin.login.store') }}" class="auth-form">
         @csrf
 
@@ -32,6 +36,30 @@
                 <span class="ms-2 text-sm text-zinc-400">Recordarme</span>
             </label>
         </div>
+
+        @if ($needsConsent)
+            <div class="mt-4">
+                <label class="inline-flex items-start gap-2 text-sm text-zinc-400">
+                    <input name="accept_cookies" type="checkbox" class="rounded border-zinc-700 bg-zinc-950 text-zinc-600 shadow-sm focus:ring-zinc-500" required>
+                    <span>
+                        Acepto el uso de cookies.
+                        <a href="{{ route('legal.cookies') }}" class="underline text-zinc-300 hover:text-white">Ver cookies</a>
+                    </span>
+                </label>
+                <x-input-error :messages="$errors->get('accept_cookies')" class="mt-2" />
+            </div>
+
+            <div class="mt-2">
+                <label class="inline-flex items-start gap-2 text-sm text-zinc-400">
+                    <input name="accept_terms" type="checkbox" class="rounded border-zinc-700 bg-zinc-950 text-zinc-600 shadow-sm focus:ring-zinc-500" required>
+                    <span>
+                        Acepto los terminos y condiciones.
+                        <a href="{{ route('legal.terms') }}" class="underline text-zinc-300 hover:text-white">Ver terminos</a>
+                    </span>
+                </label>
+                <x-input-error :messages="$errors->get('accept_terms')" class="mt-2" />
+            </div>
+        @endif
 
         <div class="flex items-center justify-end mt-4 auth-actions">
             <x-primary-button class="ms-3 auth-btn">

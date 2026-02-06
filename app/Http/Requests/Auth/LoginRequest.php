@@ -26,9 +26,34 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'email' => ['required', 'string', 'email'],
+        $rules = [
+            'email' => ['required', 'string', 'email', 'max:255', 'regex:/^[^@\s]+@[^@\s]+\.[^@\s]+$/'],
             'password' => ['required', 'string'],
+        ];
+
+        if ($this->cookie('vth_cookie_consent') !== 'accepted') {
+            $rules['accept_cookies'] = ['accepted'];
+            $rules['accept_terms'] = ['accepted'];
+        }
+
+        return $rules;
+    }
+
+    /**
+     * Mensajes personalizados para validacion en login.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'El correo es obligatorio.',
+            'email.email' => 'El correo debe tener un formato valido.',
+            'email.regex' => 'El correo debe tener formato usuario@dominio.com.',
+            'email.max' => 'El correo no puede exceder 255 caracteres.',
+            'password.required' => 'La contrasena es obligatoria.',
+            'accept_cookies.accepted' => 'Debes aceptar las cookies para continuar.',
+            'accept_terms.accepted' => 'Debes aceptar los terminos y condiciones para continuar.',
         ];
     }
 

@@ -10,12 +10,14 @@
             <div class="col-md-4 mb-4">
                 <h6 class="text-warning fw-bold mb-3 text-uppercase">Enlaces</h6>
                 <ul class="list-unstyled">
-                   
                     <li><a href="#hero" class="text-light text-decoration-none border-bottom border-secondary pb-1">Inicio</a></li>
                     <li><a href="#razas" class="text-light text-decoration-none border-bottom border-secondary pb-1">Razas</a></li>
-                    <li><a href="#" class="text-light text-decoration-none border-bottom border-secondary pb-1">Legales</a></li>
+                    <li><a href="{{ route('legal.index') }}" class="text-light text-decoration-none border-bottom border-secondary pb-1">Legales</a></li>
+                    <li><a href="{{ route('legal.cookies') }}" class="text-light text-decoration-none border-bottom border-secondary pb-1">Cookies</a></li>
+                    <li><a href="{{ route('legal.terms') }}" class="text-light text-decoration-none border-bottom border-secondary pb-1">Terminos</a></li>
+                    <li><a href="{{ route('legal.privacy') }}" class="text-light text-decoration-none border-bottom border-secondary pb-1">Privacidad</a></li>
                     <li><a href="https://amazon.com" class="text-light text-decoration-none border-bottom border-secondary pb-1">Libro</a></li>
-                    <li><a href="#" class="text-light text-decoration-none border-bottom border-secondary pb-1">Lore</a></li>
+                    <li><a href="{{ route('legal.lore') }}" class="text-light text-decoration-none border-bottom border-secondary pb-1">Lore</a></li>
                 </ul>
             </div>
             <!-- Redes sociales -->

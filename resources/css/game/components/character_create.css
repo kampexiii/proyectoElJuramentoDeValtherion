@@ -1,3 +1,28 @@
+.character-create-viewport {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.character-create-viewport .card-body {
+    padding: 0.75rem;
+}
+
+.character-create-viewport .form-label,
+.character-create-viewport .small {
+    font-size: 0.85rem;
+}
+
+.character-create-viewport .progress-sm {
+    height: 0.4rem;
+}
+
+.character-create-viewport .character-sprite-frame {
+    padding: 0.5rem;
+}
+
+.character-create-viewport .character-sprite {
+    max-height: 180px;
+}
 .character-sprite-frame {
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;

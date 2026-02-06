@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\Admin\RewardCodeController as AdminRewardCodeController;
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterEquipmentController;
@@ -18,6 +19,12 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', [WelcomeController::class, 'index']);
+
+Route::view('/legales', 'guest.legal.index')->name('legal.index');
+Route::view('/cookies', 'guest.legal.cookies')->name('legal.cookies');
+Route::view('/terminos', 'guest.legal.terms')->name('legal.terms');
+Route::view('/privacidad', 'guest.legal.privacy')->name('legal.privacy');
+Route::view('/lore', 'guest.lore')->name('legal.lore');
 
 // Se removió la ruta dedicada /prologo: el prólogo ahora es una sección
 // incluida directamente en la landing (`guest.sections.prologo`).
@@ -47,6 +54,7 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
         Route::post('/personaje/desequipar', [CharacterEquipmentController::class, 'unequip'])->name('game.personaje.desequipar');
 
         Route::get('/tienda', [GameShopController::class, 'index'])->name('game.tienda');
+        Route::post('/tienda/comprar', [GameShopController::class, 'buy'])->name('game.tienda.comprar');
         // Inventario ahora redirige a la armería.
         Route::get('/inventario', function () {
             return redirect()->route('game.equipamiento.edit');
@@ -84,6 +92,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::post('/codigos', [AdminRewardCodeController::class, 'store'])->name('admin.codigos.store');
     Route::get('/tienda', [AdminShopController::class, 'index'])->name('admin.tienda');
     Route::post('/tienda/montura', [AdminShopController::class, 'storeMount'])->name('admin.tienda.montura');
+    Route::get('/usuarios', [AdminUserController::class, 'index'])->name('admin.users');
+    Route::post('/usuarios', [AdminUserController::class, 'store'])->name('admin.users.store');
+    Route::patch('/usuarios/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/usuarios/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
 });
 
 require __DIR__ . '/auth.php';
