@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Character;
+use App\Models\CharacterPotionEffect;
 use App\Models\Item;
 use App\Models\Mount;
 use App\Models\Race;
@@ -41,6 +42,8 @@ class StatCalculatorService
                 }
             }
         }
+
+        $bonus = $this->sumBonuses($bonus, $this->getPotionBonuses($character));
 
         // Si hay montura especial "max stats" equipada
         $maxStats = false;
@@ -105,6 +108,8 @@ class StatCalculatorService
                 }
             }
         }
+
+        $bonus = $this->sumBonuses($bonus, $this->getPotionBonuses($character));
 
         // Bonificador de montura (si existe tabla character_mount_equipment)
         if (method_exists($character, 'mount')) {
@@ -227,5 +232,47 @@ class StatCalculatorService
             'defensa' => (int)($b['defensa'] ?? $b['defense'] ?? $mount->bonus_defense ?? 0),
             'velocidad' => (int)($b['velocidad'] ?? $b['speed'] ?? $mount->bonus_speed ?? 0),
         ];
+    }
+
+    private function getPotionBonuses(Character $character): array
+    {
+        $bonus = [
+            'fuerza' => 0,
+            'magia' => 0,
+            'defensa' => 0,
+            'velocidad' => 0,
+        ];
+
+        $effects = CharacterPotionEffect::query()
+            ->where('character_id', $character->id)
+            ->where('effect_type', 'stat_boost')
+            ->where('remaining_missions', '>', 0)
+            ->get();
+
+        foreach ($effects as $effect) {
+            $stat = strtolower((string) ($effect->stat ?? ''));
+            $amount = (int) ($effect->bonus ?? 0);
+
+            switch ($stat) {
+                case 'strength':
+                case 'fuerza':
+                    $bonus['fuerza'] += $amount;
+                    break;
+                case 'magic':
+                case 'magia':
+                    $bonus['magia'] += $amount;
+                    break;
+                case 'defense':
+                case 'defensa':
+                    $bonus['defensa'] += $amount;
+                    break;
+                case 'speed':
+                case 'velocidad':
+                    $bonus['velocidad'] += $amount;
+                    break;
+            }
+        }
+
+        return $bonus;
     }
 }

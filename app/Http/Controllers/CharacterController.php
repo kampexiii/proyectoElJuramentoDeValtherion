@@ -209,15 +209,15 @@ class CharacterController extends Controller
     private function statsVista(Character $character, $equipment): array
     {
         $race = $character->race;
-        $base = $this->statsBase($race);
-        $bonusEquipo = $this->bonusesFromEquipment($equipment);
         $bonusMontura = $this->bonusMonturaFija($character);
         $maximos = $this->statsMaximos($race, $bonusMontura);
+        $service = app(\App\Services\StatCalculatorService::class);
+        $actualRaw = $service->effectiveStatsFor($character);
 
         $actual = [];
-        foreach ($base as $key => $valor) {
-            $suma = $valor + ($bonusEquipo[$key] ?? 0) + ($bonusMontura[$key] ?? 0);
-            $actual[$key] = min($suma, $maximos[$key] ?? $suma);
+        foreach ($maximos as $key => $maximo) {
+            $valor = (int) ($actualRaw[$key] ?? 0);
+            $actual[$key] = min($valor, $maximo ?? $valor);
         }
 
         return $this->formatoBarras($actual, $maximos);
