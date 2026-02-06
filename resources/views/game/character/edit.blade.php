@@ -1,9 +1,11 @@
 @extends('layouts.game.app')
 
 @section('content')
-<div class="container-fluid h-100">
-    <div class="row g-3 align-items-stretch edit-row">
-        <div class="col-12 col-xl-6">
+<!-- // Layout base compartido (tienda pattern) -->
+<div class="app-main character-edit-viewport game-viewport">
+    <!-- // Grilla responsive 2/1 sin scroll interno -->
+    <div class="character-edit-grid align-items-stretch">
+        <div class="character-edit-panel">
             <div class="card bg-zinc-900 border-secondary text-white shadow-sm edit-card">
                 <div class="card-header border-secondary bg-dark text-center py-2">Personaje</div>
                 <div class="card-body p-3 d-flex flex-column gap-3">
@@ -93,7 +95,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-xl-6">
+        <div class="character-edit-panel">
             <div class="card bg-zinc-900 border-secondary text-white shadow-sm edit-card">
                 <div class="card-header border-secondary bg-dark text-center py-2">Equipo e inventario</div>
                 <div class="card-body p-3 d-flex flex-column gap-3">
@@ -134,9 +136,9 @@
                         </div>
                     </div>
 
-                    <div class="d-none d-xl-block">
-                        <h6 class="mb-2">Inventario rápido</h6>
-                        @if ($inventory->count() > 0)
+                    @if ($inventory->count() > 0)
+                        <div class="d-none d-xl-block">
+                            <h6 class="mb-2">Inventario rápido</h6>
                             <div class="row g-2">
                                 @foreach ($inventory->take(6) as $inv)
                                     <div class="col-6">
@@ -154,14 +156,12 @@
                             @if ($inventory->count() > 6)
                                 <p class="small text-secondary mt-2 mb-0">Ver más (próximamente).</p>
                             @endif
-                        @else
-                            <p class="small text-secondary mb-0">Aún no tienes objetos en inventario.</p>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
 
-                    <div class="d-none d-xl-block">
-                        <h6 class="mb-2">Equipar objeto</h6>
-                        @if ($items->count() > 0)
+                    @if ($items->count() > 0)
+                        <div class="d-none d-xl-block">
+                            <h6 class="mb-2">Equipar objeto</h6>
                             <form action="{{ route('game.personaje.equipar') }}" method="POST" class="d-grid gap-2">
                                 @csrf
                                 <div>
@@ -187,10 +187,8 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Equipar</button>
                             </form>
-                        @else
-                            <div class="alert alert-secondary mb-0">Aún no tienes objetos para equipar.</div>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

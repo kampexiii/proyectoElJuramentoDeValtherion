@@ -1,3 +1,60 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	@media (min-width: 40rem) {
+		.shop-ui {
+			/* // Factor de escala: objetivo ~0.67 (como zoom out 67%) */
+			--shop-scale: 0.67;
+			font-size: calc(1rem * var(--shop-scale));
+		}
+
+		.shop-card {
+			container-type: inline-size;
+			padding: 1.1em;
+			border-radius: 1.1em;
+		}
+
+		.shop-title {
+			font-size: 1.15em;
+			line-height: 1.15;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
+		}
+
+		.shop-meta {
+			font-size: 0.95em;
+			line-height: 1.2;
+		}
+
+		.shop-price {
+			font-size: 1em;
+			line-height: 1.2;
+		}
+
+		.shop-btn {
+			font-size: 0.95em;
+			padding: 0.45em 1em;
+			border-radius: 0.7em;
+		}
+
+		@container (max-width: 22rem) {
+			.shop-card { padding: 0.95em; }
+			.shop-title { font-size: 1.05em; -webkit-line-clamp: 1; }
+			.shop-meta { font-size: 0.9em; }
+			.shop-price { font-size: 0.95em; }
+			.shop-btn { font-size: 0.9em; padding: 0.4em 0.9em; }
+		}
+
+		@container (max-width: 18rem) {
+			.shop-card { padding: 0.85em; }
+			.shop-title { font-size: 1em; }
+			.shop-meta { font-size: 0.85em; }
+			.shop-price { font-size: 0.9em; }
+			.shop-btn { font-size: 0.85em; padding: 0.35em 0.8em; }
+		}
+	}
+}

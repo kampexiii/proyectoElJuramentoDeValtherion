@@ -1,7 +1,7 @@
 @extends('layouts.game.app')
 
 @section('content')
-<div class="container-fluid perfil-viewport">
+<div class="container-fluid perfil-viewport game-viewport">
     <div class="perfil-header">
         <h1 class="h4 mb-1">Perfil</h1>
         <p class="small text-secondary mb-0">Gestiona tu cuenta y tu personaje.</p>
@@ -150,17 +150,4 @@
     </div>
 </div>
 
-<style>
-.perfil-row .perfil-col:first-child {
-    flex-basis: 25%;
-}
-.perfil-row .perfil-col:last-child {
-    flex-basis: 75%;
-}
-@media (min-width: 1200px) {
-    .perfil-row .perfil-col {
-        flex-basis: 50%;
-    }
-}
-</style>
 @endsection

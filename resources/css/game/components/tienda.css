@@ -1,6 +1,6 @@
 /* // Escalado fluido y layout sin scroll para tienda semanal */
 main {
-    height: calc(100dvh - var(--topbar-h, 0px) - var(--bottombar-h, 0px));
+    height: calc(100dvh - var(--topbar-h, 0) - var(--bottombar-h, 0));
     overflow: hidden;
 }
 
@@ -24,6 +24,103 @@ main {
     flex-direction: column;
     min-height: 0;
 }
+
+@media (min-width: 40rem) {
+    .shop-ui {
+        /* // Base fluida para escalar toda la tienda (no móvil) */
+        font-size: clamp(0.75rem, 1.05vmin, 1rem);
+        --shop-title: 1.05em;
+        --shop-meta: 0.9em;
+        --shop-price: 0.95em;
+        --shop-btn: 0.9em;
+        --shop-gap: 0.9em;
+        --shop-pad: 0.9em;
+        --shop-btn-pad-y: 0.45em;
+        --shop-btn-pad-x: 0.9em;
+    }
+
+    .shop-ui .shop-grid {
+        gap: var(--shop-gap);
+    }
+
+    .shop-ui .shop-card {
+        padding: var(--shop-pad);
+        border-radius: 1.1em;
+        container-type: inline-size;
+    }
+
+    .shop-ui .shop-title {
+        font-size: var(--shop-title);
+        line-height: 1.15;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .shop-ui .shop-meta {
+        font-size: var(--shop-meta);
+        line-height: 1.2;
+    }
+
+    .shop-ui .shop-price {
+        font-size: var(--shop-price);
+    }
+
+    .shop-ui .shop-btn {
+        font-size: var(--shop-btn);
+        padding: var(--shop-btn-pad-y) var(--shop-btn-pad-x);
+        border-radius: 0.6em;
+    }
+
+    .shop-ui .min-w-0 {
+        min-width: 0;
+    }
+
+    @container (max-width: 22rem) {
+        .shop-ui .shop-card {
+            padding: 0.75em;
+        }
+
+        .shop-ui .shop-title {
+            font-size: 1em;
+            -webkit-line-clamp: 1;
+        }
+
+        .shop-ui .shop-meta {
+            font-size: 0.85em;
+        }
+
+        .shop-ui .shop-btn {
+            font-size: 0.85em;
+            padding: 0.4em 0.8em;
+        }
+    }
+
+    @container (max-width: 18rem) {
+        .shop-ui .shop-card {
+            padding: 0.65em;
+        }
+
+        .shop-ui .shop-title {
+            font-size: 0.95em;
+        }
+
+        .shop-ui .shop-meta {
+            font-size: 0.8em;
+        }
+
+        .shop-ui .shop-price {
+            font-size: 0.85em;
+        }
+
+        .shop-ui .shop-btn {
+            font-size: 0.8em;
+            padding: 0.35em 0.7em;
+        }
+    }
+}
+
 
 .shop-header {
     display: flex;
@@ -80,7 +177,7 @@ main {
 
 .shop-card {
     background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 0.0625rem solid rgba(255, 255, 255, 0.1);
     border-radius: 0.75rem;
     padding: var(--pad-card);
     display: grid;
@@ -127,7 +224,7 @@ main {
     letter-spacing: 0.08em;
     padding: clamp(0.12rem, 0.08rem + 0.15vw, 0.22rem)
         clamp(0.25rem, 0.18rem + 0.2vw, 0.4rem);
-    border-radius: 999px;
+    border-radius: 999rem;
     background: rgba(255, 255, 255, 0.12);
     color: rgba(255, 255, 255, 0.8);
     flex-shrink: 0;
@@ -165,6 +262,7 @@ main {
     align-items: center;
     justify-content: space-between;
     gap: var(--gap-grid);
+    min-width: 0;
 }
 
 .shop-card-price {
@@ -180,22 +278,33 @@ main {
     white-space: nowrap;
 }
 
-@media (max-width: 1200px) {
+
+@media (max-height: 47.5rem) {
+    .shop-card-name {
+        -webkit-line-clamp: 1;
+    }
+
+    .shop-card-bonus {
+        -webkit-line-clamp: 1;
+    }
+}
+
+@media (max-width: 75rem) {
     .shop-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
     .shop-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
     main {
         height: auto;
-        min-height: calc(100dvh - var(--topbar-h, 0px) - var(--bottombar-h, 0px));
+        min-height: calc(100dvh - var(--topbar-h, 0) - var(--bottombar-h, 0));
         overflow-y: auto;
     }
 
@@ -213,12 +322,19 @@ main {
     }
 }
 
-@media (max-height: 760px) {
-    .shop-card-name {
-        -webkit-line-clamp: 1;
+@media (max-width: 40rem) {
+    .shop-grid--mount {
+        grid-auto-rows: auto;
     }
 
-    .shop-card-bonus {
-        -webkit-line-clamp: 1;
+    .shop-grid--mount .shop-card {
+        --fs-name: calc(var(--fs-name) * 0.7);
+        --fs-bonus: calc(var(--fs-bonus) * 0.7);
+        --fs-meta: calc(var(--fs-meta) * 0.7);
+        --fs-price: calc(var(--fs-price) * 0.7);
+        --fs-btn: calc(var(--fs-btn) * 0.7);
+        --pad-card: calc(var(--pad-card) * 0.7);
+        --pad-btn-y: calc(var(--pad-btn-y) * 0.7);
+        --pad-btn-x: calc(var(--pad-btn-x) * 0.7);
     }
 }

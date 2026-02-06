@@ -5,7 +5,7 @@
             <a href="{{ route('game.tienda') }}" class="text-white fs-4" title="Tienda">
                 <i class="bi bi-bag"></i>
             </a>
-            <a href="{{ route('game.inventario') }}" class="text-white fs-4" title="Inventario">
+            <a href="{{ route('game.equipamiento.edit') }}" class="text-white fs-4" title="Equipamiento">
                 <i class="bi bi-backpack"></i>
             </a>
         </div>

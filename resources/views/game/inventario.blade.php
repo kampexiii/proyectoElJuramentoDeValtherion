@@ -1,13 +1,14 @@
 @extends('layouts.game.app')
 
 @section('content')
-<div class="container-fluid h-100">
-    <div class="row h-100">
-        <div class="col-12 d-flex flex-column">
-            <div class="d-flex justify-content-between align-items-center mb-2">
+<!-- // Layout base compartido (tienda pattern) -->
+<main class="app-main inventario-viewport game-viewport">
+    <div class="game-stack">
+        <div class="game-section inventario-section">
+            <div class="inventario-header">
                 <div>
                     <h2 class="h5 mb-0">Inventario</h2>
-                    <p class="small text-secondary mb-0">Tu equipo disponible para equipar.</p>
+                    <p class="small text-secondary mb-0 inventario-subtitle">Tu equipo disponible para equipar.</p>
                 </div>
                 <a href="{{ route('game.personaje.edit') }}" class="btn btn-outline-light btn-sm">Equipar</a>
             </div>
@@ -15,9 +16,10 @@
             @if ($inventory->count() > 6)
                 <p class="small text-secondary mt-2 mb-0">Ver más (próximamente).</p>
             @else
-                <div class="row g-2">
+                <!-- // Grilla responsive 3/2/1 -->
+                <div class="inventario-grid">
                     @for ($i = 0; $i < 6; $i++)
-                        <div class="col-6 col-lg-4">
+                        <div>
                             <div class="card bg-dark border-secondary h-100">
                                 <div class="card-body p-2 d-flex flex-column">
                                     <div class="small fw-semibold text-truncate">Espacio vacío</div>
@@ -34,11 +36,11 @@
             @endif
         </div>
 
-        <div class="col-12 d-flex flex-column mt-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="game-section inventario-section">
+            <div class="inventario-header">
                 <div>
                     <h3 class="h6 mb-0">Pociones</h3>
-                    <p class="small text-secondary mb-0">Usa pociones para curarte o mejorar stats temporalmente.</p>
+                    <p class="small text-secondary mb-0 inventario-subtitle">Usa pociones para curarte o mejorar stats temporalmente.</p>
                 </div>
             </div>
 
@@ -49,9 +51,10 @@
             @endphp
 
             @if ($potions->count() > 0)
-                <div class="row g-2">
+                <!-- // Grilla responsive 3/2/1 -->
+                <div class="inventario-grid">
                     @foreach ($potions as $inv)
-                        <div class="col-6 col-lg-4">
+                        <div>
                             <div class="card bg-dark border-secondary h-100">
                                 <div class="card-body p-2 d-flex flex-column">
                                     <div class="small fw-semibold text-truncate">{{ $inv->item->name ?? 'Poción' }}</div>
@@ -103,5 +106,6 @@
             @endif
         </div>
     </div>
-</div>
+    </div>
+</main>
 @endsection

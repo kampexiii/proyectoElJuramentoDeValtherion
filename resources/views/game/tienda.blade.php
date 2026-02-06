@@ -17,13 +17,32 @@
     };
 
     $bonusLabel = function ($item) {
-        $bonuses = is_array($item->bonuses_json ?? null) ? $item->bonuses_json : [];
+        // // Prioriza bonuses_json (acepta formatos anidados) y cae a columnas legacy bonus_*.
+        $bonuses = $item->bonuses_json ?? [];
+        if (is_string($bonuses)) {
+            $decoded = json_decode($bonuses, true);
+            $bonuses = is_array($decoded) ? $decoded : [];
+        }
+        if (isset($bonuses['bonuses']) && is_array($bonuses['bonuses'])) {
+            $bonuses = $bonuses['bonuses'];
+        }
+        if (isset($bonuses['stats']) && is_array($bonuses['stats'])) {
+            $bonuses = $bonuses['stats'];
+        }
+
+        $strength = (int) ($bonuses['fuerza'] ?? $bonuses['strength'] ?? $bonuses['bonus_strength'] ?? $item->bonus_strength ?? 0);
+        $magic = (int) ($bonuses['magia'] ?? $bonuses['magic'] ?? $bonuses['bonus_magic'] ?? $item->bonus_magic ?? 0);
+        $defense = (int) ($bonuses['defensa'] ?? $bonuses['defense'] ?? $bonuses['bonus_defense'] ?? $item->bonus_defense ?? 0);
+        $speed = (int) ($bonuses['velocidad'] ?? $bonuses['speed'] ?? $bonuses['bonus_speed'] ?? $item->bonus_speed ?? 0);
+        $hp = (int) ($bonuses['hp'] ?? $bonuses['vida'] ?? $bonuses['bonus_hp'] ?? $item->bonus_hp ?? 0);
+
         $parts = [];
-        if (!empty($bonuses['strength'])) $parts[] = 'Fuerza +' . $bonuses['strength'];
-        if (!empty($bonuses['magic'])) $parts[] = 'Magia +' . $bonuses['magic'];
-        if (!empty($bonuses['defense'])) $parts[] = 'Defensa +' . $bonuses['defense'];
-        if (!empty($bonuses['speed'])) $parts[] = 'Velocidad +' . $bonuses['speed'];
-        if (!empty($bonuses['hp'])) $parts[] = 'HP +' . $bonuses['hp'];
+        if ($strength > 0) $parts[] = 'Fuerza +' . $strength;
+        if ($magic > 0) $parts[] = 'Magia +' . $magic;
+        if ($defense > 0) $parts[] = 'Defensa +' . $defense;
+        if ($speed > 0) $parts[] = 'Velocidad +' . $speed;
+        if ($hp > 0) $parts[] = 'HP +' . $hp;
+
         return $parts ? implode(' · ', $parts) : 'Sin bonus';
     };
 
@@ -37,25 +56,10 @@
     };
 @endphp
 
-<div class="shop-viewport game-viewport">
-    <div class="shop-header">
-        <div>
-            <h1 class="h5 mb-0">Tienda semanal</h1>
-            <div class="small text-secondary">{{ $weekLabel }} · {{ $weekRange }}</div>
-        </div>
-        @if (Route::has('game.equipamiento.edit'))
-            <a href="{{ route('game.equipamiento.edit') }}" class="btn btn-outline-light btn-sm">Ver equipo</a>
-        @else
-            <a href="{{ route('game.personaje.edit') }}" class="btn btn-outline-light btn-sm">Ver equipo</a>
-        @endif
-    </div>
-
+<main class="shop-viewport game-viewport shop-ui">
     <div class="shop-rows">
         @php // Secciones fijas, misma estructura en tablet/portátil/desktop. @endphp
         <section class="shop-section">
-            <div class="shop-section-header">
-                <h2 class="shop-section-title">Armaduras y cascos</h2>
-            </div>
             <div class="shop-grid">
                 @for ($i = 0; $i < 3; $i++)
                     @php $item = $offersArmor->get($i); @endphp
@@ -67,19 +71,19 @@
                             $rarity = $rarityLabel($item);
                         @endphp
                         <article class="shop-card">
-                            <div class="shop-card-header">
-                                <h3 class="shop-card-name" title="{{ $item->name }}">{{ $item->name }}</h3>
+                            <div class="shop-card-header min-w-0">
+                                <h3 class="shop-card-name shop-title" title="{{ $item->name }}">{{ $item->name }}</h3>
                                 @if ($rarity)
                                     <span class="shop-card-rarity">{{ strtoupper($rarity) }}</span>
                                 @endif
                             </div>
-                            <div class="shop-card-body">
-                                <div class="shop-card-type" title="{{ $label }}">{{ $label }}</div>
-                                <div class="shop-card-bonus" title="{{ $bonus }}">{{ $bonus }}</div>
+                            <div class="shop-card-body min-w-0">
+                                <div class="shop-card-bonus shop-meta" title="{{ $bonus }}">{{ $bonus }}</div>
+                                <div class="shop-card-type shop-meta" title="{{ $label }}">{{ $label }}</div>
                             </div>
-                            <div class="shop-card-footer">
-                                <div class="shop-card-price">Precio: {{ $price }}</div>
-                                <button type="button" class="btn btn-primary btn-sm">Comprar</button>
+                            <div class="shop-card-footer min-w-0">
+                                <div class="shop-card-price shop-price">Precio: {{ $price }}</div>
+                                <button type="button" class="btn btn-primary btn-sm shop-btn">Comprar</button>
                             </div>
                         </article>
                     @else
@@ -92,9 +96,6 @@
         </section>
 
         <section class="shop-section">
-            <div class="shop-section-header">
-                <h2 class="shop-section-title">Armas</h2>
-            </div>
             <div class="shop-grid">
                 @for ($i = 0; $i < 3; $i++)
                     @php $item = $offersWeapon->get($i); @endphp
@@ -106,19 +107,19 @@
                             $rarity = $rarityLabel($item);
                         @endphp
                         <article class="shop-card">
-                            <div class="shop-card-header">
-                                <h3 class="shop-card-name" title="{{ $item->name }}">{{ $item->name }}</h3>
+                            <div class="shop-card-header min-w-0">
+                                <h3 class="shop-card-name shop-title" title="{{ $item->name }}">{{ $item->name }}</h3>
                                 @if ($rarity)
                                     <span class="shop-card-rarity">{{ strtoupper($rarity) }}</span>
                                 @endif
                             </div>
-                            <div class="shop-card-body">
-                                <div class="shop-card-type" title="{{ $label }}">{{ $label }}</div>
-                                <div class="shop-card-bonus" title="{{ $bonus }}">{{ $bonus }}</div>
+                            <div class="shop-card-body min-w-0">
+                                <div class="shop-card-bonus shop-meta" title="{{ $bonus }}">{{ $bonus }}</div>
+                                <div class="shop-card-type shop-meta" title="{{ $label }}">{{ $label }}</div>
                             </div>
-                            <div class="shop-card-footer">
-                                <div class="shop-card-price">Precio: {{ $price }}</div>
-                                <button type="button" class="btn btn-primary btn-sm">Comprar</button>
+                            <div class="shop-card-footer min-w-0">
+                                <div class="shop-card-price shop-price">Precio: {{ $price }}</div>
+                                <button type="button" class="btn btn-primary btn-sm shop-btn">Comprar</button>
                             </div>
                         </article>
                     @else
@@ -131,9 +132,6 @@
         </section>
 
         <section class="shop-section">
-            <div class="shop-section-header">
-                <h2 class="shop-section-title">Accesorios</h2>
-            </div>
             <div class="shop-grid">
                 @for ($i = 0; $i < 3; $i++)
                     @php $item = $offersAccessory->get($i); @endphp
@@ -145,19 +143,19 @@
                             $rarity = $rarityLabel($item);
                         @endphp
                         <article class="shop-card">
-                            <div class="shop-card-header">
-                                <h3 class="shop-card-name" title="{{ $item->name }}">{{ $item->name }}</h3>
+                            <div class="shop-card-header min-w-0">
+                                <h3 class="shop-card-name shop-title" title="{{ $item->name }}">{{ $item->name }}</h3>
                                 @if ($rarity)
                                     <span class="shop-card-rarity">{{ strtoupper($rarity) }}</span>
                                 @endif
                             </div>
-                            <div class="shop-card-body">
-                                <div class="shop-card-type" title="{{ $label }}">{{ $label }}</div>
-                                <div class="shop-card-bonus" title="{{ $bonus }}">{{ $bonus }}</div>
+                            <div class="shop-card-body min-w-0">
+                                <div class="shop-card-bonus shop-meta" title="{{ $bonus }}">{{ $bonus }}</div>
+                                <div class="shop-card-type shop-meta" title="{{ $label }}">{{ $label }}</div>
                             </div>
-                            <div class="shop-card-footer">
-                                <div class="shop-card-price">Precio: {{ $price }}</div>
-                                <button type="button" class="btn btn-primary btn-sm">Comprar</button>
+                            <div class="shop-card-footer min-w-0">
+                                <div class="shop-card-price shop-price">Precio: {{ $price }}</div>
+                                <button type="button" class="btn btn-primary btn-sm shop-btn">Comprar</button>
                             </div>
                         </article>
                     @else
@@ -170,9 +168,6 @@
         </section>
 
         <section class="shop-section">
-            <div class="shop-section-header">
-                <h2 class="shop-section-title">Montura de la semana</h2>
-            </div>
             <div class="shop-grid shop-grid--mount">
                 @if ($offerMount)
                     @php
@@ -182,19 +177,19 @@
                         $rarity = $rarityLabel($offerMount);
                     @endphp
                     <article class="shop-card">
-                        <div class="shop-card-header">
-                            <h3 class="shop-card-name" title="{{ $offerMount->name }}">{{ $offerMount->name }}</h3>
+                        <div class="shop-card-header min-w-0">
+                            <h3 class="shop-card-name shop-title" title="{{ $offerMount->name }}">{{ $offerMount->name }}</h3>
                             @if ($rarity)
                                 <span class="shop-card-rarity">{{ strtoupper($rarity) }}</span>
                             @endif
                         </div>
-                        <div class="shop-card-body">
-                            <div class="shop-card-type" title="{{ $label }}">{{ $label }}</div>
-                            <div class="shop-card-bonus" title="{{ $bonus }}">{{ $bonus }}</div>
+                        <div class="shop-card-body min-w-0">
+                            <div class="shop-card-bonus shop-meta" title="{{ $bonus }}">{{ $bonus }}</div>
+                            <div class="shop-card-type shop-meta" title="{{ $label }}">{{ $label }}</div>
                         </div>
-                        <div class="shop-card-footer">
-                            <div class="shop-card-price">Precio: {{ $price }}</div>
-                            <button type="button" class="btn btn-primary btn-sm">Comprar</button>
+                        <div class="shop-card-footer min-w-0">
+                            <div class="shop-card-price shop-price">Precio: {{ $price }}</div>
+                            <button type="button" class="btn btn-primary btn-sm shop-btn">Comprar</button>
                         </div>
                     </article>
                 @else
@@ -209,5 +204,5 @@
     @if ($offersArmor->isEmpty() && $offersWeapon->isEmpty() && $offersAccessory->isEmpty() && !$offerMount)
         <div class="small text-secondary mt-2">No hay objetos cargados en la tienda. Ejecuta las migraciones y el seeder de items.</div>
     @endif
-</div>
+</main>
 @endsection

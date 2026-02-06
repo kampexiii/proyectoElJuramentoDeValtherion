@@ -12,7 +12,8 @@
     ];
 @endphp
 
-<div class="equipamiento-viewport">
+<!-- // Layout principal entre navbars (patrón tienda) -->
+<main class="app-main equipamiento-viewport game-viewport">
     <div class="mb-3">
         <h2 class="h6">Stats actuales</h2>
         <div id="stats-preview" class="mb-2 small text-secondary">
@@ -24,13 +25,51 @@
     </div>
     @push('scripts')
     <script src="{{ asset('js/equipamiento-stats-preview.js') }}"></script>
+    <script>
+        // Controla el botón de usar poción según selección.
+        (function () {
+            const select = document.getElementById('potion-select');
+            const button = document.getElementById('potion-submit');
+            if (!select || !button) {
+                return;
+            }
+            const syncState = () => {
+                button.disabled = !select.value;
+            };
+            select.addEventListener('change', syncState);
+            syncState();
+        })();
+    </script>
     @endpush
     <div class="equipamiento-header">
         <div>
             <h1 class="h5 mb-0">Armería</h1>
             <p class="small text-secondary mb-0">Elige el equipo que llevarás al combate.</p>
         </div>
-        <button form="equipamiento-form" type="submit" class="btn btn-primary btn-sm">Guardar equipamiento</button>
+        <div class="equipamiento-actions">
+            <form id="potion-form" method="POST" action="{{ route('game.pociones.usar') }}" class="equipamiento-potions">
+                @csrf
+                <label for="potion-select" class="form-label">Usar poción</label>
+                <div class="equipamiento-potions-row">
+                    <select id="potion-select" name="item_id" class="form-select form-select-sm" @disabled($potions->isEmpty())>
+                        <option value="">Selecciona una poción</option>
+                        @foreach ($potions as $potion)
+                            @php
+                                $item = $potion->item;
+                                $label = $item?->name ?? 'Poción';
+                                $cantidad = $potion->quantity ?? 0;
+                            @endphp
+                            <option value="{{ $item->id }}">{{ $label }} — Cantidad: {{ $cantidad }}</option>
+                        @endforeach
+                    </select>
+                    <button id="potion-submit" type="submit" class="btn btn-outline-light btn-sm" @disabled($potions->isEmpty())>Usar poción</button>
+                </div>
+                @if ($potions->isEmpty())
+                    <div class="small text-secondary">No tienes pociones.</div>
+                @endif
+            </form>
+            <button form="equipamiento-form" type="submit" class="btn btn-primary btn-sm">Guardar equipamiento</button>
+        </div>
     </div>
 
     @if ($errors->has('equipamiento'))
@@ -39,6 +78,14 @@
 
     @if (session('status'))
         <div class="alert alert-success small mb-2">{{ session('status') }}</div>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success small mb-2">{{ session('success') }}</div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger small mb-2">{{ session('error') }}</div>
     @endif
 
     <form id="equipamiento-form" method="POST" action="{{ route('game.equipamiento.update') }}" class="equipamiento-grid">
@@ -71,5 +118,5 @@
             @endif
         @endforeach
     </form>
-</div>
+</main>
 @endsection

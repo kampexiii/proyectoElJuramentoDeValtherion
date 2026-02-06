@@ -80,6 +80,7 @@ class EquipamientoController extends Controller
                 'options' => $this->emptyOptions(),
                 'current' => [],
                 'showMount' => false,
+                'potions' => collect(),
             ]);
         }
 
@@ -89,6 +90,13 @@ class EquipamientoController extends Controller
             ->get();
 
         $inventoryItems = $inventoryRows->pluck('item')->filter();
+
+        // Lista de pociones disponibles para el bloque "Usar poción".
+        $potions = $inventoryRows
+            ->filter(function ($row) {
+                return $row->item && $row->item->type === 'potion' && $row->quantity > 0;
+            })
+            ->values();
 
         $mountOptions = $this->optionsForSlot($inventoryItems, 'mount');
         // Si el personaje tiene montura real, añadirla como opción extra (si no está ya)
@@ -124,6 +132,7 @@ class EquipamientoController extends Controller
             'options' => $options,
             'current' => $current,
             'showMount' => true,
+            'potions' => $potions,
         ]);
     }
 

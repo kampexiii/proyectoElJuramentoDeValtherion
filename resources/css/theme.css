@@ -250,6 +250,27 @@ a:hover{ filter: brightness(1.1); }
 :root[data-theme] .text-gray-500,
 :root[data-theme] .text-gray-400{ color: var(--text-muted) !important; }
 
+/* ---------- Bootstrap: forzar texto claro a oscuro en modo LIGHT ---------- */
+:root[data-theme="light"] .text-white,
+:root[data-theme="light"] .text-light{
+  color: var(--text-main) !important;
+}
+
+:root[data-theme="light"] .text-secondary{
+  color: var(--text-muted) !important;
+}
+
+:root[data-theme="light"] .btn-outline-light{
+  color: var(--text-main);
+  border-color: var(--text-main);
+}
+
+:root[data-theme="light"] .btn-outline-light:hover{
+  color: var(--bg-app);
+  background-color: var(--text-main);
+  border-color: var(--text-main);
+}
+
 /* ---------- Tailwind: bordes típicos ---------- */
 :root[data-theme] .border-gray-50,
 :root[data-theme] .border-gray-100,

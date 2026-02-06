@@ -1,7 +1,7 @@
 @extends('layouts.game.app')
 
 @section('content')
-<div class="container-fluid h-100" id="chat-root"
+<div class="container-fluid h-100 chat-viewport game-viewport" id="chat-root"
     data-room-id="{{ $room->id }}"
     data-post-url="{{ route('game.chat.store', $room) }}"
     data-user-name="{{ auth()->user()->name ?? 'Usuario' }}">

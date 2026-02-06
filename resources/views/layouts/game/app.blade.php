@@ -18,9 +18,11 @@
 
     @include('game.partials.nav_top')
 
-    <main id="game-container">
-        @yield('content')
-    </main>
+    <div class="game-shell">
+        <main id="game-container">
+            @yield('content')
+        </main>
+    </div>
 
     @include('game.partials.nav_bottom')
 

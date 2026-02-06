@@ -1,7 +1,7 @@
 @extends('layouts.game.app')
 
 @section('content')
-<div class="container-fluid ajustes-viewport">
+<div class="container-fluid ajustes-viewport game-viewport">
     <div class="row g-2 ajustes-row">
         <div class="col-12 ajustes-col d-flex">
             <div class="card bg-zinc-900 border-secondary text-white shadow-sm ajustes-panel">

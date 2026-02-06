@@ -1,4 +1,10 @@
+/* Escalado fluido ajustes */
 .ajustes-viewport {
+    --aj-gap: clamp(0.25rem, 0.15rem + 0.35vw, 0.6rem);
+    --aj-pad: clamp(0.35rem, 0.25rem + 0.4vw, 0.7rem);
+    --aj-title: clamp(0.7rem, 0.6rem + 0.3vw, 0.9rem);
+    --aj-text: clamp(0.62rem, 0.52rem + 0.25vw, 0.82rem);
+
     height: 100%;
     display: flex;
 }
@@ -7,7 +13,7 @@
     height: 100%;
     flex: 1;
     justify-content: center;
-    row-gap: 0.3rem;
+    row-gap: var(--aj-gap);
 }
 
 .ajustes-col {
@@ -29,7 +35,7 @@
 .ajustes-header {
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    font-size: 0.7rem;
+    font-size: var(--aj-title);
 }
 
 .ajustes-title {
@@ -43,14 +49,14 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: var(--aj-gap);
     justify-content: center;
 }
 
 .ajustes-panel-body .form-control,
 .ajustes-panel-body .form-select,
 .ajustes-panel-body .btn {
-    font-size: 0.8rem;
+    font-size: var(--aj-text);
 }
 
 .ajustes-panel-body .alert {
@@ -58,15 +64,15 @@
 }
 
 .ajustes-panel-body .form-label {
-    font-size: 0.72rem;
+    font-size: var(--aj-text);
 }
 
 .ajustes-switch {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0.6rem;
+    gap: var(--aj-gap);
+    padding: var(--aj-pad);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 0.75rem;
     background: rgba(0, 0, 0, 0.25);
@@ -78,26 +84,26 @@
     }
 
     .ajustes-panel-body {
-        gap: 0.25rem;
+        gap: var(--aj-gap);
     }
 
     .ajustes-switch {
-        padding: 0.4rem 0.5rem;
+        padding: var(--aj-pad);
     }
 
     .ajustes-panel-body .btn {
-        padding-top: 0.25rem;
-        padding-bottom: 0.25rem;
+        padding-top: clamp(0.2rem, 0.15rem + 0.2vw, 0.35rem);
+        padding-bottom: clamp(0.2rem, 0.15rem + 0.2vw, 0.35rem);
     }
 
     .ajustes-panel-body .form-control,
     .ajustes-panel-body .form-select,
     .ajustes-panel-body .btn {
-        font-size: 0.74rem;
+        font-size: var(--aj-text);
     }
 
     .ajustes-panel-body .form-label {
-        font-size: 0.68rem;
+        font-size: var(--aj-text);
     }
 }
 

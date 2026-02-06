@@ -47,7 +47,12 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
         Route::post('/personaje/desequipar', [CharacterEquipmentController::class, 'unequip'])->name('game.personaje.desequipar');
 
         Route::get('/tienda', [GameShopController::class, 'index'])->name('game.tienda');
-        Route::get('/inventario', [\App\Http\Controllers\Game\InventoryController::class, 'index'])->name('game.inventario');
+        // Inventario ahora redirige a la armería.
+        Route::get('/inventario', function () {
+            return redirect()->route('game.equipamiento.edit');
+        })->name('game.inventario');
+        // Uso de pociones desde equipamiento.
+        Route::post('/pociones/usar', [PotionController::class, 'usePotionFromSelection'])->name('game.pociones.usar');
         Route::post('/inventario/pociones/usar/{item}', [PotionController::class, 'usePotion'])->name('game.inventario.pociones.usar');
         Route::get('/misiones', function () {
             return view('game.misiones');

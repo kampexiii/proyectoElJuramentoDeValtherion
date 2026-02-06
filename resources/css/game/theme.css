@@ -24,6 +24,13 @@ body {
     flex-direction: column;
 }
 
+.game-shell {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 main {
     flex: 1;
     overflow: hidden; /* Evita scroll absoluto, el contenido debe ajustarse */
@@ -31,10 +38,337 @@ main {
     flex-direction: column;
     padding: 1rem;
     position: relative;
+    height: calc(100dvh - var(--topbar-h, 0px) - var(--bottombar-h, 0px));
+}
+
+main > .container-fluid,
+main > .home-viewport,
+main > .shop-viewport,
+main > .equipamiento-viewport,
+main > .perfil-viewport,
+main > .ajustes-viewport,
+main > .chat-viewport,
+main > .inventario-viewport,
+main > .character-edit-viewport {
+    height: 100%;
+    min-height: 0;
 }
 
 .navbar-game {
     flex-shrink: 0;
     height: 64px;
     z-index: 1030;
+}
+
+.game-viewport {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* // Contenedor base reutilizable para pantallas tipo tienda */
+.app-main {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* // Personaje editar: escalado fluido y grilla 2/1 */
+.character-edit-viewport {
+    --ui-scale: 0.8;
+    --edit-gap: clamp(0.24rem, 0.16rem + 0.4vw, 0.7rem);
+    --edit-pad: clamp(0.22rem, 0.16rem + 0.35vw, 0.7rem);
+    --edit-title: clamp(0.72rem, 0.6rem + 0.4vw, 0.95rem);
+    --edit-text: clamp(0.54rem, 0.48rem + 0.25vw, 0.78rem);
+    --edit-btn: clamp(0.52rem, 0.46rem + 0.25vw, 0.78rem);
+    --edit-avatar: clamp(84px, 14vw, 160px);
+    font-size: clamp(0.76rem, 0.68rem + 0.3vw, 0.92rem);
+    zoom: var(--ui-scale);
+}
+
+.character-edit-viewport .character-edit-grid {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--edit-gap);
+}
+
+@media (min-width: 992px) {
+    .character-edit-viewport .character-edit-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.character-edit-viewport .card-body {
+    padding: var(--edit-pad) !important;
+    gap: var(--edit-gap) !important;
+}
+
+.character-edit-viewport .card-header,
+.character-edit-viewport h6 {
+    font-size: var(--edit-title);
+}
+
+.character-edit-viewport .small,
+.character-edit-viewport .text-secondary,
+.character-edit-viewport .form-label {
+    font-size: var(--edit-text);
+}
+
+.character-edit-viewport .btn {
+    font-size: var(--edit-btn);
+    padding: clamp(0.2rem, 0.15rem + 0.2vw, 0.35rem)
+        clamp(0.45rem, 0.35rem + 0.3vw, 0.75rem);
+}
+
+.character-edit-viewport .list-group-item {
+    min-width: 0;
+}
+
+.character-edit-viewport .text-truncate {
+    max-width: 100%;
+}
+
+.character-edit-viewport .edit-sprite-img {
+    max-width: 100%;
+    height: auto;
+    max-height: var(--edit-avatar);
+    width: auto;
+}
+
+.character-edit-viewport .progress-sm {
+    height: clamp(0.32rem, 0.28rem + 0.12vw, 0.42rem);
+}
+
+/* Inventario: escalado fluido similar a tienda */
+.inventario-viewport {
+    --ui-scale: 0.8;
+    --inv-gap: clamp(0.22rem, 0.16rem + 0.3vw, 0.5rem);
+    --inv-pad: clamp(0.24rem, 0.18rem + 0.3vw, 0.62rem);
+    --inv-title: clamp(0.7rem, 0.6rem + 0.3vw, 0.9rem);
+    --inv-text: clamp(0.52rem, 0.46rem + 0.2vw, 0.72rem);
+    --inv-btn: clamp(0.5rem, 0.45rem + 0.18vw, 0.72rem);
+    font-size: clamp(0.76rem, 0.68rem + 0.3vw, 0.92rem);
+    zoom: var(--ui-scale);
+}
+
+@supports not (zoom: 1) {
+    .character-edit-viewport,
+    .inventario-viewport {
+        transform: scale(var(--ui-scale));
+        transform-origin: top center;
+    }
+}
+
+.inventario-viewport .row {
+    --bs-gutter-x: var(--inv-gap);
+    --bs-gutter-y: var(--inv-gap);
+}
+
+.inventario-viewport h2,
+.inventario-viewport h3 {
+    font-size: var(--inv-title);
+}
+
+.inventario-viewport .small,
+.inventario-viewport .text-secondary {
+    font-size: var(--inv-text);
+}
+
+.inventario-viewport .card-body {
+    padding: var(--inv-pad) !important;
+}
+
+.inventario-viewport .btn {
+    font-size: var(--inv-btn);
+    padding: clamp(0.2rem, 0.15rem + 0.2vw, 0.35rem)
+        clamp(0.45rem, 0.35rem + 0.3vw, 0.7rem);
+}
+
+/* // Inventario: grilla 3/2/1 sin scroll interno */
+.inventario-viewport .inventario-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--inv-gap);
+}
+
+@media (min-width: 576px) {
+    .inventario-viewport .inventario-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 992px) {
+    .inventario-viewport .inventario-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.inventario-viewport .inventario-grid .card {
+    height: 100%;
+}
+
+/* Chat: tipografías y paddings fluidos */
+.chat-viewport {
+    --chat-gap: clamp(0.25rem, 0.15rem + 0.35vw, 0.6rem);
+    --chat-pad: clamp(0.4rem, 0.3rem + 0.4vw, 0.8rem);
+    --chat-text: clamp(0.65rem, 0.55rem + 0.25vw, 0.85rem);
+    --chat-title: clamp(0.75rem, 0.62rem + 0.3vw, 0.95rem);
+}
+
+.chat-viewport .card-header {
+    font-size: var(--chat-title);
+    padding-top: clamp(0.2rem, 0.15rem + 0.2vw, 0.4rem);
+    padding-bottom: clamp(0.2rem, 0.15rem + 0.2vw, 0.4rem);
+}
+
+.chat-viewport .card-body {
+    padding: var(--chat-pad);
+    gap: var(--chat-gap) !important;
+}
+
+.chat-viewport #chat-messages {
+    font-size: var(--chat-text);
+    padding: var(--chat-pad) !important;
+}
+
+.chat-viewport .form-control,
+.chat-viewport .btn {
+    font-size: var(--chat-text);
+}
+
+.game-stack {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.game-section {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.inventario-viewport .inventario-section {
+    flex: 1;
+    min-height: 0;
+    gap: var(--inv-gap);
+}
+
+/* // Inventario: títulos con spacing fluido (evita solape) */
+.inventario-viewport .inventario-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--inv-gap);
+    margin-bottom: clamp(0.2rem, 0.15rem + 0.35vw, 0.6rem);
+}
+
+.inventario-viewport .inventario-header h2,
+.inventario-viewport .inventario-header h3 {
+    line-height: clamp(1.15, 1.1 + 0.2vw, 1.35);
+}
+
+.inventario-viewport .inventario-subtitle {
+    line-height: clamp(1.2, 1.15 + 0.2vw, 1.45);
+    margin-top: clamp(0.1rem, 0.08rem + 0.2vw, 0.25rem);
+}
+
+@media (min-width: 992px) {
+    .inventario-viewport .inventario-section {
+        flex: 1 1 0;
+    }
+}
+
+/* =========================================================
+   Responsive global (móvil/tablet/portátil pequeño)
+   ========================================================= */
+@media (max-width: 575.98px) {
+    main {
+        padding: 0.5rem;
+        height: auto;
+        min-height: calc(100dvh - var(--topbar-h, 0px) - var(--bottombar-h, 0px));
+        overflow-y: auto;
+    }
+
+    .app-main {
+        height: 100%;
+    }
+
+    .game-stack {
+        flex: 1;
+        height: 100%;
+        gap: 0.25rem;
+    }
+
+    .game-section {
+        flex: 1 1 0;
+    }
+
+    .inventario-viewport,
+    .character-edit-viewport {
+        zoom: 1.4;
+    }
+
+    @supports not (zoom: 1) {
+        .inventario-viewport,
+        .character-edit-viewport {
+            transform: scale(1.4);
+            transform-origin: top center;
+        }
+    }
+
+    .navbar-game {
+        height: 56px;
+    }
+
+    .navbar-game .fs-4 {
+        font-size: 1.2rem !important;
+    }
+
+    .nav-top-logo {
+        height: 36px;
+    }
+
+    #themeToggle {
+        padding: 0.15rem 0.35rem;
+    }
+
+    .card-body {
+        padding: 0.5rem !important;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+    main {
+        padding: 0.75rem;
+    }
+
+    .navbar-game {
+        height: 60px;
+    }
+
+    .nav-top-logo {
+        height: 42px;
+    }
+}
+
+@media (max-height: 700px) {
+    main {
+        padding: 0.5rem;
+    }
+
+    .navbar-game {
+        height: 56px;
+    }
 }
