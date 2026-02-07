@@ -16,15 +16,17 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         // Usuario de prueba
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        User::query()->firstOrCreate(
+            ['email' => 'test@example.com'],
+            ['name' => 'Test User']
+        );
 
         // Seed de razas
         $this->call(\Database\Seeders\RaceSeeder::class);
         $this->call(\Database\Seeders\MountSeeder::class);
         $this->call(\Database\Seeders\ShopItemsSeeder::class);
         $this->call(\Database\Seeders\AdminUserSeeder::class);
+        $this->call(\Database\Seeders\FinalBossSeeder::class);
+        $this->call(\Database\Seeders\MissionSeeder::class);
     }
 }
