@@ -58,13 +58,13 @@ class HomeController extends Controller
         }
 
             // Pasar el modelo completo para que effectiveStats() esté disponible en la vista
-            return view('game.home.index', [
+            return view('game.home.index', array_merge($data, [
                 'character' => $data['character'],
                 'spriteUrl' => $spriteUrl,
                 'statsBase' => $statsBase,
                 'statsCurrent' => $statsCurrent,
                 'statsCurrentMultiplied' => $statsCurrentMultiplied,
                 'statsMultipliers' => $statsMultipliers,
-            ]);
+            ]));
     }
 }
