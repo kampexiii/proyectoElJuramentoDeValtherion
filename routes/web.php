@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\Admin\RewardCodeController as AdminRewardCodeController;
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\MissionPublishController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterEquipmentController;
@@ -101,6 +102,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::resource('missions', 'App\\Http\\Controllers\\Admin\\MissionController');
     Route::resource('missions.nodes', 'App\\Http\\Controllers\\Admin\\MissionNodeController');
     Route::resource('missions.nodes.choices', 'App\\Http\\Controllers\\Admin\\MissionChoiceController');
+    Route::post('missions/{mission}/publish', [MissionPublishController::class, 'store'])->name('missions.publish');
 });
 
 require __DIR__ . '/auth.php';

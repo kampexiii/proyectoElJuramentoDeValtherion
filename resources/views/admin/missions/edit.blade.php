@@ -36,19 +36,29 @@
             <form method="POST" action="{{ route('missions.update', $mission) }}" class="d-grid gap-3">
                 @csrf
                 @method('PUT')
-                @include('admin.missions._form', [
-                    'mission' => $mission,
-                    'bosses' => $bosses,
-                    'statusOptions' => $statusOptions,
-                ])
-                @include('admin.missions._rewards', [
-                    'mission' => $mission,
-                    'reward' => $mission->reward,
-                    'items' => $items,
-                    'hasItemsTable' => $hasItemsTable,
-                ])
+                <div class="row g-3">
+                    <div class="col-12 col-xl-6">
+                        @include('admin.missions._form', [
+                            'mission' => $mission,
+                            'bosses' => $bosses,
+                            'statusOptions' => $statusOptions,
+                        ])
+                    </div>
+                    <div class="col-12 col-xl-6">
+                        @include('admin.missions._rewards', [
+                            'mission' => $mission,
+                            'reward' => $mission->reward,
+                            'items' => $items,
+                            'hasItemsTable' => $hasItemsTable,
+                        ])
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-outline-info btn-sm">Actualizar mision</button>
             </form>
+        </div>
+
+        <div class="col-12">
+            @include('admin.missions._publish_panel', ['mission' => $mission])
         </div>
     </div>
 </div>
