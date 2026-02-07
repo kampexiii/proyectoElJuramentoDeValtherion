@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\MissionPublishController;
 use App\Http\Controllers\Missions\MissionBossController;
 use App\Http\Controllers\Missions\MissionController as PlayerMissionController;
 use App\Http\Controllers\Missions\MissionRunController;
+use App\Http\Controllers\Character\CharacterSheetController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterEquipmentController;
@@ -54,6 +55,7 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
     Route::post('/equipamiento/stats-preview', [EquipamientoController::class, 'statsPreview'])->middleware('auth');
 
     Route::middleware('has.character')->group(function () {
+        Route::get('/personaje', [CharacterSheetController::class, 'show'])->name('game.personaje.sheet');
         Route::post('/personaje/equipar', [CharacterEquipmentController::class, 'equip'])->name('game.personaje.equipar');
         Route::post('/personaje/desequipar', [CharacterEquipmentController::class, 'unequip'])->name('game.personaje.desequipar');
 

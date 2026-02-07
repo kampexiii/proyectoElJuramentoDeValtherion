@@ -22,11 +22,13 @@ class Character extends Model
         'has_mount',
         'hp_max',
         'hp_current',
+        'level',
     ];
 
     protected $casts = [
         'stats_json' => 'array',
         'has_mount' => 'boolean',
+        'level' => 'integer',
     ];
 
     public function user()
