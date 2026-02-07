@@ -1,5 +1,5 @@
 <div class="card bg-zinc-900 border-secondary text-white shadow-sm">
-    <div class="card-body p-3 d-grid gap-2">
+    <div class="card-body p-2 d-grid gap-2">
         <div>
             <label class="form-label" for="mission_title">Titulo</label>
             <input id="mission_title" name="title" class="form-control form-control-sm" value="{{ old('title', $mission->title ?? '') }}" required>
@@ -48,12 +48,12 @@
 
         <div>
             <label class="form-label" for="mission_intro">Intro</label>
-            <textarea id="mission_intro" name="intro_text" rows="4" class="form-control form-control-sm" required>{{ old('intro_text', $mission->intro_text ?? '') }}</textarea>
+            <textarea id="mission_intro" name="intro_text" rows="3" class="form-control form-control-sm" required>{{ old('intro_text', $mission->intro_text ?? '') }}</textarea>
         </div>
 
         <div>
             <label class="form-label" for="mission_context">Contexto</label>
-            <textarea id="mission_context" name="context_text" rows="4" class="form-control form-control-sm">{{ old('context_text', $mission->context_text ?? '') }}</textarea>
+            <textarea id="mission_context" name="context_text" rows="3" class="form-control form-control-sm">{{ old('context_text', $mission->context_text ?? '') }}</textarea>
         </div>
     </div>
 </div>

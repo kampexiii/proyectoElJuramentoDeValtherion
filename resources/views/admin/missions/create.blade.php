@@ -28,17 +28,23 @@
         <div class="col-12">
             <form method="POST" action="{{ route('missions.store') }}" class="d-grid gap-3">
                 @csrf
-                @include('admin.missions._form', [
-                    'mission' => null,
-                    'bosses' => $bosses,
-                    'statusOptions' => $statusOptions,
-                ])
-                @include('admin.missions._rewards', [
-                    'mission' => null,
-                    'reward' => null,
-                    'items' => $items,
-                    'hasItemsTable' => $hasItemsTable,
-                ])
+                <div class="row g-3">
+                    <div class="col-12 col-xl-6">
+                        @include('admin.missions._form', [
+                            'mission' => null,
+                            'bosses' => $bosses,
+                            'statusOptions' => $statusOptions,
+                        ])
+                    </div>
+                    <div class="col-12 col-xl-6">
+                        @include('admin.missions._rewards', [
+                            'mission' => null,
+                            'reward' => null,
+                            'items' => $items,
+                            'hasItemsTable' => $hasItemsTable,
+                        ])
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-outline-info btn-sm">Crear mision</button>
             </form>
         </div>
