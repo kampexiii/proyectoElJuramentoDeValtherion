@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\RewardCodeController as AdminRewardCodeController
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\MissionPublishController;
-use App\Http\Controllers\Missions\MissionBossController;
+use App\Http\Controllers\Missions\BossBattleController;
 use App\Http\Controllers\Missions\MissionController as PlayerMissionController;
 use App\Http\Controllers\Missions\MissionRunController;
 use App\Http\Controllers\Character\CharacterSheetController;
@@ -76,8 +76,8 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
         Route::get('/misiones/runs/{run}', [MissionRunController::class, 'show'])->name('game.missions.run');
         Route::post('/misiones/runs/{run}/choose', [MissionRunController::class, 'choose'])->name('game.missions.choose');
         Route::post('/misiones/runs/{run}/abandon', [MissionRunController::class, 'abandon'])->name('game.missions.abandon');
-        Route::get('/misiones/runs/{run}/boss', [MissionBossController::class, 'show'])->name('game.missions.boss.show');
-        Route::post('/misiones/runs/{run}/boss', [MissionBossController::class, 'fight'])->name('game.missions.boss.fight');
+        Route::get('/misiones/runs/{run}/boss', [BossBattleController::class, 'show'])->name('game.missions.boss.show');
+        Route::post('/misiones/runs/{run}/boss', [BossBattleController::class, 'submit'])->name('game.missions.boss.fight');
         Route::get('/peleas', function () {
             return view('game.peleas');
         })->name('game.peleas');
