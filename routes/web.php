@@ -20,6 +20,7 @@ use App\Http\Controllers\GameRewardCodeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PotionController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\Pvp\BattleRoomController;
 
 use App\Http\Controllers\ProfileController;
 
@@ -89,6 +90,15 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::prefix('pvp')->name('pvp.')->group(function () {
+        Route::get('/', [BattleRoomController::class, 'index'])->name('lobby');
+        Route::post('/rooms', [BattleRoomController::class, 'store'])->name('rooms.store');
+        Route::get('/rooms/{room}', [BattleRoomController::class, 'show'])->name('rooms.show');
+        Route::post('/rooms/{room}/join', [BattleRoomController::class, 'join'])->name('rooms.join');
+        Route::get('/rooms/{room}/battle', [BattleRoomController::class, 'battle'])->name('rooms.battle');
+        Route::post('/rooms/{room}/close', [BattleRoomController::class, 'close'])->name('rooms.close');
+    });
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
