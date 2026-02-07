@@ -96,6 +96,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::post('/usuarios', [AdminUserController::class, 'store'])->name('admin.users.store');
     Route::patch('/usuarios/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
     Route::delete('/usuarios/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+
+    Route::resource('final-bosses', 'App\\Http\\Controllers\\Admin\\FinalBossController');
+    Route::resource('missions', 'App\\Http\\Controllers\\Admin\\MissionController');
+    Route::resource('missions.nodes', 'App\\Http\\Controllers\\Admin\\MissionNodeController');
+    Route::resource('missions.nodes.choices', 'App\\Http\\Controllers\\Admin\\MissionChoiceController');
 });
 
 require __DIR__ . '/auth.php';
