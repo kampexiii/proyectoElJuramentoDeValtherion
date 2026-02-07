@@ -18,6 +18,7 @@ class Character extends Model
         'race_id',
         'mount_id',
         'name',
+        'sprite_path',
         'stats_json',
         'has_mount',
         'hp_max',
@@ -30,6 +31,20 @@ class Character extends Model
         'has_mount' => 'boolean',
         'level' => 'integer',
     ];
+
+    public function getSpriteUrlAttribute(): string
+    {
+        if (!empty($this->sprite_path)) {
+            return $this->sprite_path;
+        }
+
+        $raceSprite = $this->race?->sprite_path;
+        if (!empty($raceSprite)) {
+            return $raceSprite;
+        }
+
+        return '/assets/characters/placeholder.png';
+    }
 
     public function user()
     {
