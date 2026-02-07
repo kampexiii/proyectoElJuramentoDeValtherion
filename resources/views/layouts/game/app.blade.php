@@ -14,12 +14,12 @@
 
     @vite(['resources/css/game/app.css', 'resources/js/game/app.js'])
 </head>
-<body>
+<body class="@yield('body-class')">
 
     @include('game.partials.nav_top')
 
     <div class="game-shell">
-        <main id="game-container">
+        <main id="game-container" class="@yield('main-class')">
             @yield('content')
         </main>
     </div>

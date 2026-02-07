@@ -1,0 +1,21 @@
+.view-pvp .layout-main {
+    align-items: center;
+    justify-content: center;
+}
+
+.view-pvp .pvp-panel {
+    width: min(92vw, 55rem);
+    max-height: 100%;
+    overflow: auto;
+    border-radius: 1rem;
+}
+
+.view-pvp .pvp-panel img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.view-pvp .pvp-panel,
+.view-pvp .pvp-panel * {
+    overflow-wrap: anywhere;
+}

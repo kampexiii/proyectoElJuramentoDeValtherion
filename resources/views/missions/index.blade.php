@@ -1,9 +1,11 @@
 @extends('layouts.game.app')
 
+@section('body-class', 'screen-shell view-missions layout-shell')
+@section('main-class', 'layout-main')
 @section('content')
-<div class="container-fluid h-100">
-    <div class="row g-3 h-100">
-        <div class="col-12">
+<div class="view-missions w-100 h-100 d-flex align-items-center justify-content-center">
+    <section class="missions-panel card bg-zinc-900 border-secondary text-white shadow-sm w-100 p-3 p-md-4">
+        <div class="d-flex flex-column gap-3">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
                 <div>
                     <h1 class="h5 mb-0">Misiones publicadas</h1>
@@ -11,24 +13,18 @@
                 </div>
                 <a href="{{ route('home') }}" class="btn btn-outline-light btn-sm">Volver</a>
             </div>
-        </div>
 
-        <div class="col-12">
             @if (session('status'))
                 <div class="alert alert-success small mb-0">{{ session('status') }}</div>
             @endif
-        </div>
 
-        @if ($activeRun)
-            <div class="col-12">
+            @if ($activeRun)
                 <div class="alert alert-info small mb-0">
                     Tienes una run activa en "{{ $activeRun->mission?->title ?? 'Mision' }}".
                     <a href="{{ route('game.missions.run', $activeRun) }}" class="alert-link">Continuar</a>
                 </div>
-            </div>
-        @endif
+            @endif
 
-        <div class="col-12">
             <div class="card bg-zinc-900 border-secondary text-white shadow-sm">
                 <div class="card-body p-2">
                     @if ($missions->isEmpty())
@@ -64,6 +60,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </div>
 @endsection

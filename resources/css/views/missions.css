@@ -1,0 +1,16 @@
+.view-missions .layout-main {
+    align-items: center;
+    justify-content: center;
+}
+
+.view-missions .missions-panel {
+    width: min(92vw, 60rem);
+    max-height: 100%;
+    overflow: auto;
+    border-radius: 1rem;
+}
+
+.view-missions .missions-panel,
+.view-missions .missions-panel * {
+    overflow-wrap: anywhere;
+}

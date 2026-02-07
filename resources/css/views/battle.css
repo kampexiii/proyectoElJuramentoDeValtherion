@@ -1,0 +1,98 @@
+.view-battle .layout-main {
+    align-items: center;
+    justify-content: center;
+}
+
+.view-battle .battle-arena {
+    width: min(96vw, 70rem);
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1vh, 2vh, 3vh);
+}
+
+.view-battle .battle-stage {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(2vw, 4vw, 6vw);
+    padding: clamp(1vh, 2vh, 3vh);
+    border-radius: 1rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.view-battle .battle-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(0.5rem, 1vh, 1rem);
+}
+
+.view-battle .battle-side-right {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.view-battle .hud {
+    width: min(45%, 22rem);
+}
+
+.view-battle .battle-hp-bar {
+    margin-top: 0.35rem;
+    height: 0.5rem;
+    background: rgba(226, 232, 240, 0.15);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.view-battle .battle-hp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+}
+
+.view-battle .battle-hp-bar-fill.is-danger {
+    background: linear-gradient(90deg, #f97316 0%, #dc2626 100%);
+}
+
+.view-battle .sprite-slot {
+    width: 100%;
+    height: clamp(18vh, 26vh, 34vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.35);
+    border-radius: 1rem;
+}
+
+.view-battle .sprite {
+    width: min(35%, 18rem);
+    height: auto;
+    max-height: 60%;
+    object-fit: contain;
+}
+
+.view-battle .sprite-boss {
+    transform: scaleX(-1);
+}
+
+.view-battle .battle-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1vh, 2vh, 2.5vh);
+}
+
+@media (min-width: 48rem) {
+    .view-battle .battle-actions {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.view-battle .battle-arena,
+.view-battle .battle-arena * {
+    overflow-wrap: anywhere;
+}
