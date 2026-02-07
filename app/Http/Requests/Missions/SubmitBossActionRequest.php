@@ -16,7 +16,7 @@ class SubmitBossActionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'action' => ['required', 'string', 'in:attack,defend,magic'],
+            'action' => ['required', 'string', 'in:attack,defend,magic,potion'],
         ];
     }
 

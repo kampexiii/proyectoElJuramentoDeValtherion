@@ -38,7 +38,7 @@ class Character extends Model
             return $this->sprite_path;
         }
 
-        $raceSprite = $this->race?->sprite_path;
+        $raceSprite = $this->race?->sprite_url;
         if (!empty($raceSprite)) {
             return $raceSprite;
         }

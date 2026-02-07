@@ -28,5 +28,6 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\AdminUserSeeder::class);
         $this->call(\Database\Seeders\FinalBossSeeder::class);
         $this->call(\Database\Seeders\MissionSeeder::class);
+        $this->call(\Database\Seeders\MissionSeederBosses::class);
     }
 }

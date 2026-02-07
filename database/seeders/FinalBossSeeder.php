@@ -33,7 +33,7 @@ class FinalBossSeeder extends Seeder
         ];
 
         foreach ($bosses as $boss) {
-            $boss['sprite_path'] = '/assets/bosses/' . $boss['slug'] . '.png';
+            $boss['sprite_path'] = '/assets/sprites/bosses/' . $boss['slug'] . '.png';
             FinalBoss::query()->updateOrCreate(
                 ['slug' => $boss['slug']],
                 $boss
