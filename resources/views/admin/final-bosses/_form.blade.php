@@ -31,6 +31,17 @@
                 <textarea id="boss_lore" name="lore" rows="4" class="form-control form-control-sm">{{ old('lore', $boss->lore ?? '') }}</textarea>
             </div>
 
+            <div>
+                <label class="form-label" for="boss_sprite">Sprite (ruta)</label>
+                <input
+                    id="boss_sprite"
+                    name="sprite_path"
+                    class="form-control form-control-sm"
+                    placeholder="/assets/bosses/{{ old('slug', $boss->slug ?? 'slug-del-boss') }}.png"
+                    value="{{ old('sprite_path', $boss->sprite_path ?? '') }}"
+                >
+            </div>
+
             @php
                 $stats = old('base_stats_json', $boss->base_stats_json ?? []);
             @endphp

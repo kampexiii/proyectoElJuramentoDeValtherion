@@ -9,7 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class FinalBoss extends Model
 {
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'name',
+        'slug',
+        'lore',
+        'base_stats_json',
+        'sprite_path',
+    ];
 
     protected $casts = [
         'base_stats_json' => 'array',
@@ -18,5 +24,12 @@ class FinalBoss extends Model
     public function missions(): HasMany
     {
         return $this->hasMany(Mission::class);
+    }
+
+    public function getSpriteUrlAttribute(): string
+    {
+        $path = (string) ($this->sprite_path ?? '');
+
+        return $path !== '' ? $path : '/assets/bosses/placeholder.png';
     }
 }

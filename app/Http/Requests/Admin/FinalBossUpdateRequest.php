@@ -27,6 +27,7 @@ class FinalBossUpdateRequest extends FormRequest
                 Rule::unique('final_bosses', 'slug')->ignore($boss?->id),
             ],
             'lore' => ['nullable', 'string'],
+            'sprite_path' => ['nullable', 'string', 'max:255'],
             'base_stats_json' => ['required', 'array'],
             'base_stats_json.hp' => ['required', 'integer', 'min:0'],
             'base_stats_json.damage' => ['required', 'integer', 'min:0'],

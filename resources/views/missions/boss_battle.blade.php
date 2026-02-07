@@ -2,6 +2,8 @@
 @section('content')
 @php
     $bgClass = 'battle-bg-ruins';
+    $bossSprite = $mission->finalBoss?->sprite_url ?? '/assets/bosses/placeholder.png';
+    $playerSprite = '/assets/characters/placeholder.png';
     $p1MaxRaw = (int) ($battle->stats_p1_json['hp'] ?? 0);
     $p2MaxRaw = (int) ($battle->stats_p2_json['hp'] ?? 0);
     $p1Max = $p1MaxRaw > 0 ? $p1MaxRaw : null;
@@ -47,7 +49,7 @@
                         <div class="battle-hp-bar-fill" style="width: {{ $p1Pct }}%"></div>
                     </div>
                 </div>
-                <div class="battle-sprite battle-sprite-player" aria-hidden="true"></div>
+                <div class="battle-sprite battle-sprite-player" style="background-image: url('{{ $playerSprite }}'); background-size: cover; background-position: center;" aria-hidden="true"></div>
                 <div class="battle-sprite-label">Jugador</div>
             </div>
             <div class="battle-side battle-side-right">
@@ -60,7 +62,7 @@
                         <div class="battle-hp-bar-fill battle-hp-bar-fill-danger" style="width: {{ $p2Pct }}%"></div>
                     </div>
                 </div>
-                <div class="battle-sprite battle-sprite-boss" aria-hidden="true"></div>
+                <div class="battle-sprite battle-sprite-boss" style="background-image: url('{{ $bossSprite }}'); background-size: cover; background-position: center;" aria-hidden="true"></div>
                 <div class="battle-sprite-label">Boss</div>
             </div>
         </div>
