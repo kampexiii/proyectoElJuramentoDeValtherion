@@ -43,6 +43,7 @@
     @endif
 
     @if($room->status->value === 'finished')
+        <div class="alert alert-info">La batalla termino. Puedes cerrar la sala.</div>
         <form method="POST" action="{{ route('pvp.rooms.close', $room) }}">
             @csrf
             <button type="submit" class="btn btn-danger">Cerrar sala</button>

@@ -1,5 +1,17 @@
 @extends('layouts.game.app')
 @section('content')
+@php
+    $bgClass = 'battle-bg-plains';
+    $p1MaxRaw = (int) ($battle->stats_p1_json['hp'] ?? 0);
+    $p2MaxRaw = (int) ($battle->stats_p2_json['hp'] ?? 0);
+    $p1Max = $p1MaxRaw > 0 ? $p1MaxRaw : null;
+    $p2Max = $p2MaxRaw > 0 ? $p2MaxRaw : null;
+    $p1Hp = max(0, (int) $battle->p1_hp);
+    $p2Hp = max(0, (int) $battle->p2_hp);
+    $p1Pct = $p1Max ? min(100, (int) floor(($p1Hp / $p1Max) * 100)) : 0;
+    $p2Pct = $p2Max ? min(100, (int) floor(($p2Hp / $p2Max) * 100)) : 0;
+    $recentTurns = $turns->count() > 5 ? $turns->slice(-5) : $turns;
+@endphp
 <div class="container py-4">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <div>
@@ -17,98 +29,86 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <div class="row g-3">
-        <div class="col-md-6">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="small text-secondary">Jugador 1</div>
-                            <div class="fw-semibold">{{ $room->owner->name ?? 'Jugador' }}</div>
-                        </div>
-                        <i class="bi bi-person-badge fs-2 text-primary"></i>
+    <div class="battle-stage {{ $bgClass }}">
+        <div class="battle-stage-inner">
+            <div class="battle-side battle-side-left">
+                <div class="battle-hp">
+                    <div class="battle-hp-label">{{ $room->owner->name ?? 'Jugador' }}</div>
+                    <div class="battle-hp-text">
+                        HP: {{ $p1Hp }}@if($p1Max) / {{ $p1Max }}@endif
                     </div>
-                    @php
-                        $p1Max = max(1, (int) ($battle->stats_p1_json['hp'] ?? 1));
-                        $p1Hp = max(0, (int) $battle->p1_hp);
-                        $p1Pct = min(100, (int) floor(($p1Hp / $p1Max) * 100));
-                    @endphp
-                    <div class="mt-3">
-                        <div class="d-flex justify-content-between small">
-                            <span>HP</span>
-                            <span>{{ $p1Hp }} / {{ $p1Max }}</span>
-                        </div>
-                        <div class="progress" role="progressbar" aria-valuenow="{{ $p1Pct }}" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar bg-success" style="width: {{ $p1Pct }}%"></div>
-                        </div>
+                    <div class="battle-hp-bar">
+                        <div class="battle-hp-bar-fill" style="width: {{ $p1Pct }}%"></div>
                     </div>
                 </div>
+                <div class="battle-sprite battle-sprite-player" aria-hidden="true"></div>
+                <div class="battle-sprite-label">Jugador</div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="small text-secondary">Jugador 2</div>
-                            <div class="fw-semibold">{{ $room->guest->name ?? 'Rival' }}</div>
-                        </div>
-                        <i class="bi bi-person-badge fs-2 text-danger"></i>
+            <div class="battle-side battle-side-right">
+                <div class="battle-hp">
+                    <div class="battle-hp-label">{{ $room->guest->name ?? 'Rival' }}</div>
+                    <div class="battle-hp-text">
+                        HP: {{ $p2Hp }}@if($p2Max) / {{ $p2Max }}@endif
                     </div>
-                    @php
-                        $p2Max = max(1, (int) ($battle->stats_p2_json['hp'] ?? 1));
-                        $p2Hp = max(0, (int) $battle->p2_hp);
-                        $p2Pct = min(100, (int) floor(($p2Hp / $p2Max) * 100));
-                    @endphp
-                    <div class="mt-3">
-                        <div class="d-flex justify-content-between small">
-                            <span>HP</span>
-                            <span>{{ $p2Hp }} / {{ $p2Max }}</span>
-                        </div>
-                        <div class="progress" role="progressbar" aria-valuenow="{{ $p2Pct }}" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar bg-danger" style="width: {{ $p2Pct }}%"></div>
-                        </div>
+                    <div class="battle-hp-bar">
+                        <div class="battle-hp-bar-fill battle-hp-bar-fill-danger" style="width: {{ $p2Pct }}%"></div>
                     </div>
                 </div>
+                <div class="battle-sprite battle-sprite-rival" aria-hidden="true"></div>
+                <div class="battle-sprite-label">Rival</div>
             </div>
         </div>
     </div>
 
-    @if($battle->status->value === 'finished')
-        <div class="alert alert-info mt-3">Batalla finalizada. Resultado: {{ $battle->result ?? 'n/a' }}</div>
-    @else
-        <div class="card mt-3">
-            <div class="card-body">
-                <div class="mb-2 fw-semibold">Elige tu accion</div>
-                <form method="POST" action="{{ route('pvp.rooms.battle.submit', $room) }}" class="d-flex flex-wrap gap-2">
+    <div class="battle-panel mt-3">
+        @if($battle->status->value === 'finished')
+            <div class="battle-panel-header">
+                <div class="fw-semibold">Batalla finalizada</div>
+                <div class="small text-secondary">Resultado: {{ $battle->result ?? 'n/a' }}</div>
+            </div>
+            <div class="battle-panel-actions">
+                <form method="POST" action="{{ route('pvp.rooms.close', $room) }}">
                     @csrf
-                    <button type="submit" name="action" value="attack" class="btn btn-danger" @if($myPending) disabled @endif>
-                        Atacar
-                    </button>
-                    <button type="submit" name="action" value="defend" class="btn btn-secondary" @if($myPending) disabled @endif>
-                        Defender
-                    </button>
-                    <button type="submit" name="action" value="magic" class="btn btn-primary" @if($myPending) disabled @endif>
-                        Magia
-                    </button>
+                    <button type="submit" class="battle-action-btn battle-action-btn-danger">Cerrar sala</button>
                 </form>
+            </div>
+        @else
+            <div class="battle-panel-header">
+                <div class="fw-semibold">Elige tu accion</div>
                 @if($myPending && !$theirPending)
-                    <div class="small text-secondary mt-2">Esperando rival...</div>
+                    <div class="small text-secondary">Esperando rival...</div>
                 @elseif($myPending && $theirPending)
-                    <div class="small text-secondary mt-2">Resolviendo turno...</div>
+                    <div class="small text-secondary">Resolviendo turno...</div>
                 @endif
             </div>
-        </div>
-    @endif
+            <div class="battle-panel-actions">
+                <form method="POST" action="{{ route('pvp.rooms.battle.submit', $room) }}" class="battle-action-grid">
+                    @csrf
+                    <button type="submit" name="action" value="attack" class="battle-action-btn battle-action-btn-attack" @if($myPending) disabled @endif>
+                        Atacar
+                    </button>
+                    <button type="submit" name="action" value="magic" class="battle-action-btn battle-action-btn-magic" @if($myPending) disabled @endif>
+                        Magia
+                    </button>
+                    <button type="submit" name="action" value="defend" class="battle-action-btn battle-action-btn-defend" @if($myPending) disabled @endif>
+                        Defender
+                    </button>
+                </form>
+                <button type="button" class="battle-action-btn battle-action-btn-ghost" disabled>
+                    Rendirse (proximamente)
+                </button>
+            </div>
+        @endif
+    </div>
 
     <div class="card mt-3">
         <div class="card-header">Registro de turnos</div>
         <div class="card-body">
-            @if($turns->isEmpty())
+            @if($recentTurns->isEmpty())
                 <div class="text-secondary">Aun no hay turnos registrados.</div>
             @else
                 <div class="list-group">
-                    @foreach($turns as $turn)
+                    @foreach($recentTurns as $turn)
                         @php
                             $notes = $turn->notes_json ?? [];
                             $lines = $notes['lines'] ?? [];

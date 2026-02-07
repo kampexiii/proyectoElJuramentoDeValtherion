@@ -59,3 +59,183 @@
 	}
 }
 
+@layer components {
+	.battle-stage {
+		border-radius: 1.25rem;
+		padding: 1.5rem;
+		min-height: 16rem;
+		position: relative;
+		overflow: hidden;
+		border: 1px solid rgba(148, 163, 184, 0.35);
+		box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);
+	}
+
+	.battle-bg-plains {
+		background: linear-gradient(180deg, #b7d7a9 0%, #7fb069 45%, #5a8548 100%);
+	}
+
+	.battle-bg-ruins {
+		background: linear-gradient(180deg, #b7b7b7 0%, #7a7a7a 45%, #454545 100%);
+	}
+
+	.battle-bg-volcano {
+		background: linear-gradient(180deg, #f4b184 0%, #e06666 50%, #85200c 100%);
+	}
+
+	.battle-stage-inner {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 1.5rem;
+		min-height: 12rem;
+	}
+
+	.battle-side {
+		position: relative;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.battle-side-right {
+		align-items: flex-end;
+	}
+
+	.battle-hp {
+		background: rgba(15, 23, 42, 0.85);
+		color: #e2e8f0;
+		padding: 0.5rem 0.75rem;
+		border-radius: 0.75rem;
+		width: min(260px, 100%);
+		border: 1px solid rgba(148, 163, 184, 0.35);
+	}
+
+	.battle-hp-label {
+		font-weight: 600;
+		font-size: 0.9rem;
+	}
+
+	.battle-hp-text {
+		font-size: 0.8rem;
+		opacity: 0.85;
+	}
+
+	.battle-hp-bar {
+		margin-top: 0.35rem;
+		height: 0.5rem;
+		background: rgba(226, 232, 240, 0.15);
+		border-radius: 999px;
+		overflow: hidden;
+	}
+
+	.battle-hp-bar-fill {
+		height: 100%;
+		background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+		transition: width 0.2s ease;
+	}
+
+	.battle-hp-bar-fill-danger {
+		background: linear-gradient(90deg, #f97316 0%, #dc2626 100%);
+	}
+
+	.battle-sprite {
+		width: clamp(120px, 22vw, 180px);
+		height: clamp(120px, 22vw, 180px);
+		border-radius: 16px;
+		margin-top: 0.75rem;
+		background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent 45%),
+			linear-gradient(135deg, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.3));
+		border: 2px solid rgba(255, 255, 255, 0.25);
+		box-shadow: 0 10px 18px rgba(15, 23, 42, 0.45);
+	}
+
+	.battle-sprite-player {
+		background-color: rgba(59, 130, 246, 0.45);
+	}
+
+	.battle-sprite-rival {
+		background-color: rgba(248, 113, 113, 0.45);
+	}
+
+	.battle-sprite-boss {
+		background-color: rgba(239, 68, 68, 0.6);
+	}
+
+	.battle-sprite-label {
+		margin-top: 0.5rem;
+		font-weight: 600;
+		color: #0f172a;
+		text-shadow: 0 1px 2px rgba(255, 255, 255, 0.65);
+	}
+
+	.battle-panel {
+		background: #0f172a;
+		color: #e2e8f0;
+		border-radius: 1rem;
+		padding: 1rem 1.25rem;
+		border: 1px solid rgba(148, 163, 184, 0.35);
+	}
+
+	.battle-panel-header {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.battle-panel-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.battle-action-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		gap: 0.75rem;
+	}
+
+	.battle-action-btn {
+		font-size: 1rem;
+		font-weight: 700;
+		padding: 0.9rem 1rem;
+		border-radius: 0.9rem;
+		border: none;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.battle-action-btn:disabled {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+
+	.battle-action-btn-attack {
+		background: #dc2626;
+		color: #fff;
+	}
+
+	.battle-action-btn-magic {
+		background: #2563eb;
+		color: #fff;
+	}
+
+	.battle-action-btn-defend {
+		background: #475569;
+		color: #fff;
+	}
+
+	.battle-action-btn-ghost {
+		background: transparent;
+		border: 2px dashed rgba(148, 163, 184, 0.6);
+		color: #cbd5f5;
+	}
+
+	.battle-action-btn-danger {
+		background: #b91c1c;
+		color: #fff;
+		width: 100%;
+	}
+}
+
