@@ -13,6 +13,8 @@ class AbandonMissionRunRequest extends FormRequest
 
     public function rules(): array
     {
-        return [];
+        return [
+            'partial' => ['sometimes', 'boolean'],
+        ];
     }
 }

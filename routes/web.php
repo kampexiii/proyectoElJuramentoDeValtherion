@@ -76,8 +76,9 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
         Route::get('/misiones/runs/{run}', [MissionRunController::class, 'show'])->name('game.missions.run');
         Route::post('/misiones/runs/{run}/choose', [MissionRunController::class, 'choose'])->name('game.missions.choose');
         Route::post('/misiones/runs/{run}/abandon', [MissionRunController::class, 'abandon'])->name('game.missions.abandon');
-        Route::get('/misiones/runs/{run}/boss', [BossBattleController::class, 'show'])->name('game.missions.boss.show');
-        Route::post('/misiones/runs/{run}/boss', [BossBattleController::class, 'submit'])->name('game.missions.boss.fight');
+        Route::get('/misiones/run/{run}/boss', [BossBattleController::class, 'show'])->name('game.missions.boss.show');
+        Route::post('/misiones/run/{run}/boss/action', [BossBattleController::class, 'action'])->name('game.missions.boss.action');
+        Route::post('/misiones/runs/{run}/boss', [BossBattleController::class, 'action'])->name('game.missions.boss.fight');
         Route::get('/peleas', function () {
             return redirect()->route('pvp.lobby');
         })->name('game.peleas');

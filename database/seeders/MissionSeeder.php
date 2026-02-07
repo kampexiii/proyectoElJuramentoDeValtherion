@@ -9,6 +9,7 @@ use App\Models\Mission;
 use App\Models\MissionChoice;
 use App\Models\MissionNode;
 use App\Models\MissionReward;
+use App\Models\CharacterMissionRunStep;
 use App\Services\Missions\MissionGraphValidator;
 use Illuminate\Database\Seeder;
 use RuntimeException;
@@ -58,6 +59,20 @@ class MissionSeeder extends Seeder
     {
         $existingNodeIds = $mission->nodes()->pluck('id');
         if ($existingNodeIds->isNotEmpty()) {
+            $existingChoiceIds = MissionChoice::query()
+                ->whereIn('mission_node_id', $existingNodeIds)
+                ->pluck('id');
+
+            if ($existingChoiceIds->isNotEmpty()) {
+                CharacterMissionRunStep::query()
+                    ->whereIn('choice_id', $existingChoiceIds)
+                    ->delete();
+            }
+
+            CharacterMissionRunStep::query()
+                ->whereIn('node_id', $existingNodeIds)
+                ->delete();
+
             MissionChoice::query()->whereIn('mission_node_id', $existingNodeIds)->delete();
         }
         MissionNode::query()->where('mission_id', $mission->id)->delete();

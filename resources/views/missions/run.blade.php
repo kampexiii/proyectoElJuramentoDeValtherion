@@ -2,9 +2,9 @@
 
 @section('content')
 @php
-    $canAbandon = $run->status === \App\Enums\MissionRunStatus::Active
-        && (int) $run->current_step_index <= 6
-        && $run->status !== \App\Enums\MissionRunStatus::BossPending;
+    $isBossPending = $run->status === \App\Enums\MissionRunStatus::BossPending;
+    $canAbandonNormal = $run->status === \App\Enums\MissionRunStatus::Active;
+    $canRetreatPartial = in_array($run->status, [\App\Enums\MissionRunStatus::Active, \App\Enums\MissionRunStatus::BossPending], true);
 @endphp
 <div class="container-fluid h-100">
     <div class="row g-3 h-100">
@@ -16,11 +16,18 @@
                 </div>
                 <div class="d-flex gap-2">
                     <a href="{{ route('game.missions.index') }}" class="btn btn-outline-light btn-sm">Volver</a>
-                    @if ($canAbandon)
+                    @if ($canAbandonNormal)
+                        <form method="POST" action="{{ route('game.missions.abandon', $run) }}" onsubmit="return confirm('¿Seguro que quieres abandonar la mision?');">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Abandonar</button>
+                        </form>
+                    @endif
+                    @if ($canRetreatPartial && !$isBossPending)
                         <div class="d-flex flex-column align-items-start gap-1">
-                            <form method="POST" action="{{ route('game.missions.abandon', $run) }}" onsubmit="return confirm('¿Seguro que quieres abandonar la mision? Recibes 10% de XP.');">
+                            <form method="POST" action="{{ route('game.missions.abandon', $run) }}" onsubmit="return confirm('¿Seguro que quieres retirarte? Recibes 10% de XP.');">
                                 @csrf
-                                <button type="submit" class="btn btn-outline-danger btn-sm">Abandonar (10% XP)</button>
+                                <input type="hidden" name="partial" value="1">
+                                <button type="submit" class="btn btn-outline-warning btn-sm">Retirarse (10% XP)</button>
                             </form>
                             <div class="small text-warning">Solo XP (sin oro, sin objetos, sin puntos de raza).</div>
                         </div>
@@ -44,8 +51,19 @@
         <div class="col-12 col-lg-8">
             <div class="card bg-zinc-900 border-secondary text-white shadow-sm">
                 <div class="card-body p-3">
-                    @if ($run->status === \App\Enums\MissionRunStatus::BossPending)
-                        <div class="alert alert-info small mb-0">Has llegado al boss final. Espera el combate.</div>
+                    @if ($isBossPending)
+                        <div class="d-flex flex-column gap-2">
+                            <div class="alert alert-info small mb-0">Has llegado al boss final. Elige tu siguiente accion.</div>
+                            <div class="d-flex flex-wrap gap-2">
+                                <a class="btn btn-outline-info btn-sm" href="{{ route('game.missions.boss.show', $run) }}">Enfrentar boss</a>
+                                <form method="POST" action="{{ route('game.missions.abandon', $run) }}" onsubmit="return confirm('¿Seguro que quieres retirarte? Recibes 10% de XP.');">
+                                    @csrf
+                                    <input type="hidden" name="partial" value="1">
+                                    <button type="submit" class="btn btn-outline-warning btn-sm">Retirarse (10% XP)</button>
+                                </form>
+                            </div>
+                            <div class="small text-warning">Retirarse solo da XP (10%). Sin oro, sin objetos, sin puntos de raza.</div>
+                        </div>
                     @elseif (!$node)
                         <div class="small text-secondary">No hay nodo activo.</div>
                     @else

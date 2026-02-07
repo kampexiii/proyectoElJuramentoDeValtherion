@@ -98,6 +98,17 @@ class MissionRunController extends Controller
             abort(404);
         }
 
+        $usePartial = $request->boolean('partial');
+
+        if (!$usePartial) {
+            if ($run->status === MissionRunStatus::BossPending) {
+                return back()->withErrors(['Debes enfrentar al boss o retirarte con XP parcial.']);
+            }
+            $service->abandon($run);
+
+            return redirect()->route('game.missions.index')->with('status', 'Mision abandonada.');
+        }
+
         try {
             $result = $service->abandonWithPartialXp($run, $character);
         } catch (\RuntimeException $exception) {

@@ -8,9 +8,11 @@ use App\Enums\MissionRunStatus;
 use App\Models\Character;
 use App\Models\CharacterMissionRun;
 use App\Models\CharacterMissionRunStep;
+use App\Models\Battle;
 use App\Models\Mission;
 use App\Models\MissionChoice;
 use App\Models\MissionNode;
+use App\Enums\BattleStatus;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
 
@@ -122,18 +124,26 @@ class MissionRunService
                 throw new RuntimeException('No puedes abandonar este run.');
             }
 
-            if ($run->status === MissionRunStatus::BossPending) {
-                throw new RuntimeException('No puedes abandonar con XP parcial durante el boss. Rindete en la batalla.');
+            if (!in_array($run->status, [MissionRunStatus::Active, MissionRunStatus::BossPending], true)) {
+                throw new RuntimeException('La mision no esta activa.');
             }
 
-            if ($run->status !== MissionRunStatus::Active) {
-                throw new RuntimeException('La mision no esta activa.');
+            if ($run->status === MissionRunStatus::BossPending) {
+                $finishedBattle = Battle::query()
+                    ->where('mission_run_id', $run->id)
+                    ->where('type', 'pve')
+                    ->where('status', BattleStatus::Finished)
+                    ->exists();
+
+                if ($finishedBattle) {
+                    throw new RuntimeException('La batalla ya finalizo.');
+                }
             }
 
             $alreadyAwarded = $run->partial_xp_awarded_at !== null;
             $mission = $run->mission()->with('reward')->first();
             $rewardXp = $mission?->reward ? (int) $mission->reward->xp : 0;
-            $partialXp = $alreadyAwarded ? 0 : (int) floor($rewardXp * 0.10);
+            $partialXp = $alreadyAwarded ? (int) $run->partial_xp_amount : (int) floor($rewardXp * 0.10);
 
             if (!$alreadyAwarded && $partialXp > 0) {
                 Character::query()->whereKey($character->id)->increment('xp', $partialXp);
