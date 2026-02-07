@@ -4,7 +4,7 @@
         <a href="{{ route('home') }}" class="text-white fs-4" title="Home">
             <i class="bi bi-house"></i>
         </a>
-        <a href="{{ route('game.misiones') }}" class="text-white fs-4" title="Misiones">
+        <a href="{{ route('game.missions.index') }}" class="text-white fs-4" title="Misiones">
             <i class="bi bi-map"></i>
         </a>
         <a href="{{ route('game.peleas') }}" class="text-white fs-4" title="Peleas">
