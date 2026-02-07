@@ -3,7 +3,9 @@
 @section('content')
 <div class="home-viewport">
     <div class="home-content flex-grow-1">
-        <div class="d-flex justify-content-end mb-2">
+        <div class="d-flex justify-content-end mb-2 gap-2">
+            <a href="{{ route('final-bosses.index') }}" class="btn btn-outline-info btn-sm">Bosses finales</a>
+            <a href="{{ route('missions.index') }}" class="btn btn-outline-info btn-sm">Misiones</a>
             <a href="{{ route('admin.users') }}" class="btn btn-outline-light btn-sm">Gestionar usuarios</a>
         </div>
         <div class="row g-0 flex-grow-1 h-100">
