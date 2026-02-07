@@ -9,6 +9,7 @@ use App\Models\CharacterItem;
 use App\Models\Item;
 use App\Models\Mount;
 use App\Models\Race;
+use App\Services\Stats\CharacterStatsCalculator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
@@ -81,6 +82,7 @@ class EquipamientoController extends Controller
                 'current' => [],
                 'showMount' => false,
                 'potions' => collect(),
+                'statsBase' => [],
             ]);
         }
 
@@ -128,11 +130,14 @@ class EquipamientoController extends Controller
             $current[$slot] = $equipment->get($slot)?->item_id;
         }
 
+        $statsBase = app(CharacterStatsCalculator::class)->getBaseStats($character);
+
         return view('game.equipamiento', [
             'options' => $options,
             'current' => $current,
             'showMount' => true,
             'potions' => $potions,
+            'statsBase' => $statsBase,
         ]);
     }
 

@@ -122,13 +122,30 @@
                                     </div>
                                 </div>
                             </div>
-                            @if (!empty($characterSummary['stats']))
+                            @php
+                                $labels = [
+                                    'hp' => 'HP',
+                                    'attack' => 'Fuerza',
+                                    'defense' => 'Defensa',
+                                    'speed' => 'Velocidad',
+                                    'magic' => 'Magia',
+                                ];
+                                $statsBase = $characterSummary['stats_base'] ?? [];
+                                $statsTotal = $characterSummary['stats_total'] ?? [];
+                            @endphp
+                            @if (!empty($statsBase) || !empty($statsTotal))
                                 <div class="col-12">
                                     <div class="perfil-summary-item">
-                                        <span>Estadísticas</span>
+                                        <span>Estadisticas</span>
                                         <div class="small d-flex flex-wrap gap-2">
-                                            @foreach ($characterSummary['stats'] as $stat => $value)
-                                                <span>{{ ucfirst($stat) }}: <strong>{{ $value }}</strong></span>
+                                            @foreach ($labels as $stat => $label)
+                                                @php
+                                                    $base = $statsBase[$stat] ?? null;
+                                                    $total = $statsTotal[$stat] ?? null;
+                                                @endphp
+                                                @if ($base !== null || $total !== null)
+                                                    <span>{{ $label }}: <strong>{{ $base ?? 0 }}</strong> base / <strong>{{ $total ?? ($base ?? 0) }}</strong> total</span>
+                                                @endif
                                             @endforeach
                                         </div>
                                     </div>

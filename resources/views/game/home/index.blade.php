@@ -13,13 +13,35 @@
                         <p class="mb-2 text-truncate w-100">Aún no has forjado tu leyenda.</p>
                         <a href="{{ route('game.personaje.create') }}" class="btn btn-primary btn-sm">Crear personaje</a>
                     @else
-                        <p class="mb-2 text-truncate w-100">Nombre: {{ $character->name }}</p>
-                        <p class="mb-2 text-truncate w-100">Raza: {{ $character->race->name ?? 'Pendiente' }}</p>
-                        @php $stats = method_exists($character, 'effectiveStats') ? $character->effectiveStats() : ($character->stats_json ?? []); @endphp
-                        <div class="mb-2 small text-secondary">
-                            @foreach($stats as $stat => $valor)
-                                <span class="me-2">{{ ucfirst($stat) }}: <strong>{{ $valor }}</strong></span>
-                            @endforeach
+                        <p class="mb-2 text-truncate w-100"><span class="home-stats-key">Nombre:</span> <span class="home-name-value">{{ $character->name }}</span></p>
+                        <p class="mb-2 text-truncate w-100"><span class="home-stats-key">Raza:</span> <span class="home-race-value">{{ $character->race->name ?? 'Pendiente' }}</span></p>
+                        @php
+                            $labels = [
+                                'hp' => 'HP',
+                                'attack' => 'Fuerza',
+                                'defense' => 'Defensa',
+                                'speed' => 'Velocidad',
+                                'magic' => 'Magia',
+                            ];
+                            $baseStats = $statsBase ?? [];
+                            $currentStats = $statsCurrent ?? [];
+                            $currentMultiplied = $statsCurrentMultiplied ?? [];
+                        @endphp
+                        <div class="mb-1 small home-stats-block home-stats-base">
+                            <div class="fw-semibold home-stats-title">Stats base</div>
+                            <div class="home-stats-values">
+                                @foreach($labels as $stat => $label)
+                                    <span class="me-2"><span class="home-stats-key">{{ $label }}:</span> <strong class="home-stats-value">{{ $baseStats[$stat] ?? 0 }}</strong></span>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="mb-2 small home-stats-block home-stats-multiplied">
+                            <div class="fw-semibold home-stats-title">Stats actuales</div>
+                            <div class="home-stats-values">
+                                @foreach($labels as $stat => $label)
+                                    <span class="me-2"><span class="home-stats-key">{{ $label }}:</span> <strong class="home-stats-value">{{ $currentMultiplied[$stat] ?? 0 }}</strong></span>
+                                @endforeach
+                            </div>
                         </div>
                         <a href="{{ route('game.personaje.edit') }}" class="btn btn-outline-light btn-sm">Editar personaje</a>
                         @if($spriteUrl)

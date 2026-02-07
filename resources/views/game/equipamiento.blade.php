@@ -16,6 +16,23 @@
 <main class="app-main equipamiento-viewport game-viewport">
     <div class="mb-3">
         <h2 class="h6">Stats actuales</h2>
+        @php
+            $labels = [
+                'hp' => 'HP',
+                'attack' => 'Fuerza',
+                'defense' => 'Defensa',
+                'speed' => 'Velocidad',
+                'magic' => 'Magia',
+            ];
+            $statsBase = $statsBase ?? [];
+        @endphp
+        @if (!empty($statsBase))
+            <div class="small text-secondary mb-1">
+                @foreach ($labels as $stat => $label)
+                    <span class="me-2">{{ $label }} base: <strong>{{ $statsBase[$stat] ?? 0 }}</strong></span>
+                @endforeach
+            </div>
+        @endif
         <div id="stats-preview" class="mb-2 small text-secondary">
             @php $stats = method_exists(auth()->user()?->character, 'effectiveStats') ? auth()->user()->character->effectiveStats() : []; @endphp
             @foreach($stats as $stat => $valor)

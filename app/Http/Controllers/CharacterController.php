@@ -6,6 +6,7 @@ use App\Models\Character;
 use App\Models\Item;
 use App\Models\Mount;
 use App\Models\Race;
+use App\Services\Stats\CharacterStatsCalculator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -128,6 +129,7 @@ class CharacterController extends Controller
 
         // Stats actuales usando el sistema centralizado
         $stats = method_exists($character, 'effectiveStats') ? $character->effectiveStats() : ($character->stats_json ?? []);
+        $statsBreakdown = app(CharacterStatsCalculator::class)->getBreakdown($character);
 
         $spriteUrl = null;
         if ($character) {
@@ -163,6 +165,7 @@ class CharacterController extends Controller
             'slots' => $slots,
             'stats' => $stats,
             'statsView' => $statsView,
+            'statsBreakdown' => $statsBreakdown,
             'spriteUrl' => $spriteUrl,
         ]);
     }

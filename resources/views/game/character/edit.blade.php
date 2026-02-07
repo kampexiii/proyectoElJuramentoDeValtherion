@@ -38,15 +38,24 @@
                                 'defensa' => 'Defensa',
                                 'velocidad' => 'Velocidad',
                             ];
+                            $baseStats = $statsBreakdown['base_stats'] ?? [];
+                            $baseMap = [
+                                'fuerza' => 'attack',
+                                'magia' => 'magic',
+                                'defensa' => 'defense',
+                                'velocidad' => 'speed',
+                            ];
                         @endphp
                         <div class="d-grid gap-2">
                             @foreach ($labels as $key => $label)
                                 @php
                                     $stat = $statsView[$key] ?? ['valor' => 0, 'max' => 1, 'clase' => 'hx-bar-0', 'color' => 'bg-danger'];
+                                    $baseKey = $baseMap[$key] ?? null;
+                                    $baseValue = $baseKey ? ($baseStats[$baseKey] ?? 0) : 0;
                                 @endphp
                                 <div>
                                     <div class="d-flex justify-content-between small">
-                                        <span>{{ $label }}</span>
+                                        <span>{{ $label }} <span class="text-secondary">(Base {{ $baseValue }})</span></span>
                                         <span>{{ $stat['valor'] }}/{{ $stat['max'] }}</span>
                                     </div>
                                     <div class="progress progress-sm">
@@ -57,7 +66,7 @@
                             <!-- HP Bar -->
                             <div>
                                 <div class="d-flex justify-content-between small">
-                                    <span>HP</span>
+                                    <span>HP <span class="text-secondary">(Base {{ $baseStats['hp'] ?? 0 }})</span></span>
                                     <span>{{ $character->hp_current }}/{{ $character->hp_max }}</span>
                                 </div>
                                 <div class="progress progress-sm">

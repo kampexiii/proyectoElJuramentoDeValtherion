@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Character;
 use App\Models\User;
+use App\Services\Stats\CharacterStatsCalculator;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -48,8 +49,9 @@ class GameProfileController extends Controller
                     $hp_current = (int) ($character->hp_current ?? 100);
                 }
 
-                // Stats efectivas dinámicas
-                $stats = method_exists($character, 'effectiveStats') ? $character->effectiveStats() : ($character->stats_json ?? []);
+                $statsBreakdown = app(CharacterStatsCalculator::class)->getBreakdown($character);
+                $statsBase = $statsBreakdown['base_stats'] ?? [];
+                $statsTotal = $statsBreakdown['total_stats'] ?? [];
 
                 $characterSummary = [
                     'name' => $character->name,
@@ -59,7 +61,8 @@ class GameProfileController extends Controller
                     'level' => $level,
                     'hp_max' => $hp_max,
                     'hp_current' => $hp_current,
-                    'stats' => $stats,
+                    'stats_base' => $statsBase,
+                    'stats_total' => $statsTotal,
                 ];
             }
         }

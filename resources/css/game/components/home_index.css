@@ -138,3 +138,75 @@
         overflow: hidden;
     }
 }
+
+.home-stats-block {
+    line-height: 1.3;
+}
+
+.home-stats-title {
+    color: #e5e7eb !important;
+}
+
+.home-stats-key {
+    color: #cbd5f5 !important;
+}
+
+.home-stats-value {
+    color: #f8fafc !important;
+}
+
+.home-stats-base .home-stats-key {
+    color: #7dd3fc !important;
+}
+
+.home-stats-base .home-stats-value {
+    color: #e0f2fe !important;
+}
+
+.home-stats-multiplied .home-stats-key {
+    color: #6ee7b7 !important;
+}
+
+.home-stats-multiplied .home-stats-value {
+    color: #ecfdf5 !important;
+}
+
+.home-name-value {
+    color: #fcd34d !important;
+}
+
+.home-race-value {
+    color: #c0c7d1 !important;
+}
+
+:root[data-theme="light"] .home-name-value {
+    color: #b45309 !important;
+}
+
+:root[data-theme="light"] .home-race-value {
+    color: #4b5563 !important;
+}
+
+:root[data-theme="light"] .home-stats-title {
+    color: #111827 !important;
+}
+
+:root[data-theme="light"] .home-stats-value {
+    color: #111827 !important;
+}
+
+:root[data-theme="light"] .home-stats-key {
+    color: #1d4ed8 !important;
+}
+
+:root[data-theme="light"] .home-stats-multiplied .home-stats-key {
+    color: #166534 !important;
+}
+
+:root[data-theme="dark"] .home-name-value {
+    color: #fcd34d !important;
+}
+
+:root[data-theme="dark"] .home-race-value {
+    color: #c0c7d1 !important;
+}
