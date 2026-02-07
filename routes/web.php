@@ -6,6 +6,9 @@ use App\Http\Controllers\Admin\RewardCodeController as AdminRewardCodeController
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\MissionPublishController;
+use App\Http\Controllers\Missions\MissionBossController;
+use App\Http\Controllers\Missions\MissionController as PlayerMissionController;
+use App\Http\Controllers\Missions\MissionRunController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\CharacterEquipmentController;
@@ -63,9 +66,14 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
         // Uso de pociones desde equipamiento.
         Route::post('/pociones/usar', [PotionController::class, 'usePotionFromSelection'])->name('game.pociones.usar');
         Route::post('/inventario/pociones/usar/{item}', [PotionController::class, 'usePotion'])->name('game.inventario.pociones.usar');
-        Route::get('/misiones', function () {
-            return view('game.misiones');
-        })->name('game.misiones');
+        Route::get('/misiones', [PlayerMissionController::class, 'index'])->name('game.missions.index');
+        Route::get('/misiones/{mission}', [PlayerMissionController::class, 'show'])->name('game.missions.show');
+        Route::post('/misiones/{mission}/start', [MissionRunController::class, 'start'])->name('game.missions.start');
+        Route::get('/misiones/runs/{run}', [MissionRunController::class, 'show'])->name('game.missions.run');
+        Route::post('/misiones/runs/{run}/choose', [MissionRunController::class, 'choose'])->name('game.missions.choose');
+        Route::post('/misiones/runs/{run}/abandon', [MissionRunController::class, 'abandon'])->name('game.missions.abandon');
+        Route::get('/misiones/runs/{run}/boss', [MissionBossController::class, 'show'])->name('game.missions.boss.show');
+        Route::post('/misiones/runs/{run}/boss', [MissionBossController::class, 'fight'])->name('game.missions.boss.fight');
         Route::get('/peleas', function () {
             return view('game.peleas');
         })->name('game.peleas');
