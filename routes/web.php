@@ -79,7 +79,7 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
         Route::get('/misiones/runs/{run}/boss', [BossBattleController::class, 'show'])->name('game.missions.boss.show');
         Route::post('/misiones/runs/{run}/boss', [BossBattleController::class, 'submit'])->name('game.missions.boss.fight');
         Route::get('/peleas', function () {
-            return view('game.peleas');
+            return redirect()->route('pvp.lobby');
         })->name('game.peleas');
         Route::get('/chat', [ChatController::class, 'index'])->name('game.chat');
         Route::post('/chat/{room}/mensajes', [ChatController::class, 'store'])->name('game.chat.store');

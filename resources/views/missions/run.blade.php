@@ -1,6 +1,11 @@
 @extends('layouts.game.app')
 
 @section('content')
+@php
+    $canAbandon = $run->status === \App\Enums\MissionRunStatus::Active
+        && (int) $run->current_step_index <= 6
+        && $run->status !== \App\Enums\MissionRunStatus::BossPending;
+@endphp
 <div class="container-fluid h-100">
     <div class="row g-3 h-100">
         <div class="col-12">
@@ -11,10 +16,15 @@
                 </div>
                 <div class="d-flex gap-2">
                     <a href="{{ route('game.missions.index') }}" class="btn btn-outline-light btn-sm">Volver</a>
-                    <form method="POST" action="{{ route('game.missions.abandon', $run) }}" onsubmit="return confirm('¿Seguro que quieres abandonar la mision?');">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-danger btn-sm">Abandonar</button>
-                    </form>
+                    @if ($canAbandon)
+                        <div class="d-flex flex-column align-items-start gap-1">
+                            <form method="POST" action="{{ route('game.missions.abandon', $run) }}" onsubmit="return confirm('¿Seguro que quieres abandonar la mision? Recibes 10% de XP.');">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Abandonar (10% XP)</button>
+                            </form>
+                            <div class="small text-warning">Solo XP (sin oro, sin objetos, sin puntos de raza).</div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

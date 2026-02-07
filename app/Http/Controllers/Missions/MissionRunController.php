@@ -98,8 +98,16 @@ class MissionRunController extends Controller
             abort(404);
         }
 
-        $service->abandon($run);
+        try {
+            $result = $service->abandonWithPartialXp($run, $character);
+        } catch (\RuntimeException $exception) {
+            return back()->withErrors([$exception->getMessage()]);
+        }
 
-        return redirect()->route('game.missions.index')->with('status', 'Mision abandonada.');
+        $partialXp = (int) ($result['partial_xp'] ?? 0);
+
+        return redirect()
+            ->route('game.missions.index')
+            ->with('status', "Has abandonado la mision. XP obtenida: {$partialXp} (10%). Sin oro/objetos/puntos de raza.");
     }
 }

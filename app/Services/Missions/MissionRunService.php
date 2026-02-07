@@ -110,6 +110,50 @@ class MissionRunService
         });
     }
 
+    /**
+     * @return array{run: CharacterMissionRun, partial_xp: int}
+     */
+    public function abandonWithPartialXp(CharacterMissionRun $run, Character $character): array
+    {
+        return DB::transaction(function () use ($run, $character) {
+            $run = CharacterMissionRun::query()->whereKey($run->id)->lockForUpdate()->firstOrFail();
+
+            if ($run->character_id !== $character->id) {
+                throw new RuntimeException('No puedes abandonar este run.');
+            }
+
+            if ($run->status === MissionRunStatus::BossPending) {
+                throw new RuntimeException('No puedes abandonar con XP parcial durante el boss. Rindete en la batalla.');
+            }
+
+            if ($run->status !== MissionRunStatus::Active) {
+                throw new RuntimeException('La mision no esta activa.');
+            }
+
+            $alreadyAwarded = $run->partial_xp_awarded_at !== null;
+            $mission = $run->mission()->with('reward')->first();
+            $rewardXp = $mission?->reward ? (int) $mission->reward->xp : 0;
+            $partialXp = $alreadyAwarded ? 0 : (int) floor($rewardXp * 0.10);
+
+            if (!$alreadyAwarded && $partialXp > 0) {
+                Character::query()->whereKey($character->id)->increment('xp', $partialXp);
+            }
+
+            if (!$alreadyAwarded) {
+                $run->partial_xp_amount = $partialXp;
+                $run->partial_xp_awarded_at = now();
+            }
+
+            $run->status = MissionRunStatus::Abandoned;
+            $run->current_node_id = null;
+            $run->completed_at = now();
+            $run->abandoned_at = now();
+            $run->save();
+
+            return ['run' => $run, 'partial_xp' => $partialXp];
+        });
+    }
+
     public function abandon(CharacterMissionRun $run): CharacterMissionRun
     {
         $run->status = MissionRunStatus::Abandoned;
