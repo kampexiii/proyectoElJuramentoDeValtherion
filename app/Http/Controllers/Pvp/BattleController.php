@@ -37,6 +37,7 @@ class BattleController extends Controller
         }
 
         $battle = $room->battle;
+        $battle->loadMissing(['player1Character.race', 'player2Character.race']);
         $playerSide = $this->resolvePlayerSide($request, $battle);
         if ($playerSide === null) {
             return redirect()
@@ -80,6 +81,11 @@ class BattleController extends Controller
         }
 
         if ($room->status !== BattleRoomStatus::InProgress) {
+            if ($room->status === BattleRoomStatus::Closed) {
+                return redirect()
+                    ->route('pvp.lobby')
+                    ->with('success', 'La sala fue cerrada por el anfitrion.');
+            }
             return redirect()
                 ->route('pvp.rooms.show', $room)
                 ->with('error', 'La sala no esta en combate.');

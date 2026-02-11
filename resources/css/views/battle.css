@@ -1,6 +1,7 @@
 .view-battle .layout-main {
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .view-battle .battle-arena {
@@ -10,6 +11,45 @@
     display: flex;
     flex-direction: column;
     gap: clamp(1vh, 2vh, 3vh);
+}
+
+.view-battle .battle-header {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 1vh, 1rem);
+}
+
+.view-battle .battle-body {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1vh, 2vh, 3vh);
+}
+
+@media (min-width: 62rem) {
+    .view-battle .battle-body {
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    }
+}
+
+.view-battle .battle-main {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1vh, 2vh, 3vh);
+    min-height: 0;
+}
+
+.view-battle .battle-aside {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.view-battle .battle-aside .card-body {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
 }
 
 .view-battle .battle-stage {
@@ -60,7 +100,7 @@
 
 .view-battle .sprite-slot {
     width: 100%;
-    height: clamp(18vh, 26vh, 34vh);
+    height: clamp(16vh, 24vh, 30vh);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -95,4 +135,85 @@
 .view-battle .battle-arena,
 .view-battle .battle-arena * {
     overflow-wrap: anywhere;
+}
+
+.view-battle .battle-overlay,
+.view-battle-pvp .battle-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 2rem);
+    background: rgba(15, 23, 42, 0.65);
+    z-index: 50;
+}
+
+.view-battle .battle-overlay-card,
+.view-battle-pvp .battle-overlay-card {
+    width: min(92vw, 30rem);
+    padding: clamp(1rem, 3vw, 2rem);
+    border-radius: 1rem;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    display: grid;
+    gap: 0.75rem;
+    text-align: center;
+}
+
+.view-battle .battle-overlay-title,
+.view-battle-pvp .battle-overlay-title {
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 700;
+}
+
+.view-battle .battle-overlay-subtitle,
+.view-battle-pvp .battle-overlay-subtitle {
+    font-size: 1rem;
+    color: rgba(226, 232, 240, 0.85);
+}
+
+.view-battle-pvp .battle-shell {
+    position: relative;
+}
+
+.view-battle-pvp .battle-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1vh, 2vh, 3vh);
+    border-radius: 1rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.view-battle-pvp .battle-stage-inner {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: clamp(2vw, 4vw, 6vw);
+}
+
+.view-battle-pvp .battle-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(0.5rem, 1vh, 1rem);
+}
+
+.view-battle-pvp .battle-side-right {
+    text-align: right;
+}
+
+.view-battle-pvp .battle-sprite-img {
+    width: min(40%, 18rem);
+    height: auto;
+    max-height: 55vh;
+    object-fit: contain;
+}
+
+.view-battle-pvp .battle-sprite-img-rival {
+    transform: scaleX(-1);
 }

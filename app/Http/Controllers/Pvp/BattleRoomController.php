@@ -73,6 +73,12 @@ class BattleRoomController extends Controller
                 ->with('error', 'No perteneces a esta sala.');
         }
 
+        if ($room->status === BattleRoomStatus::Closed) {
+            return redirect()
+                ->route('pvp.lobby')
+                ->with('success', 'La sala fue cerrada por el anfitrion.');
+        }
+
         $room->load(['owner', 'guest', 'battle']);
 
         return view('pvp.room', [
@@ -186,6 +192,36 @@ class BattleRoomController extends Controller
         return view('game.peleas');
     }
 
+    public function leave(Request $request, BattleRoom $room): RedirectResponse
+    {
+        $user = $request->user();
+        if (!$this->userInRoom($room, $user->id)) {
+            return redirect()
+                ->route('pvp.lobby')
+                ->with('error', 'No perteneces a esta sala.');
+        }
+
+        if ($room->owner_user_id === $user->id) {
+            return redirect()
+                ->route('pvp.rooms.show', $room)
+                ->with('error', 'Solo el creador puede cerrar la sala.');
+        }
+
+        if (!in_array($room->status, [BattleRoomStatus::Finished, BattleRoomStatus::Closed], true)) {
+            return redirect()
+                ->route('pvp.rooms.show', $room)
+                ->with('error', 'Solo puedes salir cuando la batalla termina o la sala se cierra.');
+        }
+
+        $room->update([
+            'guest_user_id' => null,
+        ]);
+
+        return redirect()
+            ->route('pvp.lobby')
+            ->with('success', 'Has salido de la sala.');
+    }
+
     public function close(CloseRoomRequest $request, BattleRoom $room): RedirectResponse
     {
         $user = $request->user();
@@ -193,6 +229,12 @@ class BattleRoomController extends Controller
             return redirect()
                 ->route('pvp.lobby')
                 ->with('error', 'No perteneces a esta sala.');
+        }
+
+        if ($room->owner_user_id !== $user->id) {
+            return redirect()
+                ->route('pvp.rooms.show', $room)
+                ->with('error', 'Solo el creador puede cerrar la sala.');
         }
 
         if ($room->status === BattleRoomStatus::Closed) {

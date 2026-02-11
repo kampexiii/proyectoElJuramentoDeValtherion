@@ -36,6 +36,11 @@
         <div class="alert alert-info">Esperando rival...</div>
     @endif
 
+    @if($room->status->value === 'closed')
+        <div class="alert alert-warning">La sala fue cerrada por el anfitrion.</div>
+        <a class="btn btn-outline-secondary" href="{{ route('pvp.lobby') }}">Volver al lobby</a>
+    @endif
+
     @if($room->status->value === 'in_progress')
         <a class="btn btn-primary" href="{{ route('pvp.rooms.battle', $room) }}">
             Ir a batalla
@@ -43,11 +48,18 @@
     @endif
 
     @if($room->status->value === 'finished')
-        <div class="alert alert-info">La batalla termino. Puedes cerrar la sala.</div>
-        <form method="POST" action="{{ route('pvp.rooms.close', $room) }}">
-            @csrf
-            <button type="submit" class="btn btn-danger">Cerrar sala</button>
-        </form>
+        <div class="alert alert-info">La batalla termino.</div>
+        @if($room->owner_user_id === auth()->id())
+            <form method="POST" action="{{ route('pvp.rooms.close', $room) }}">
+                @csrf
+                <button type="submit" class="btn btn-danger">Cerrar sala</button>
+            </form>
+        @else
+            <form method="POST" action="{{ route('pvp.rooms.leave', $room) }}">
+                @csrf
+                <button type="submit" class="btn btn-outline-secondary">Salir</button>
+            </form>
+        @endif
     @endif
 
     @if($room->status->value === 'open' && !$room->guest_user_id && $room->owner_user_id === auth()->id())

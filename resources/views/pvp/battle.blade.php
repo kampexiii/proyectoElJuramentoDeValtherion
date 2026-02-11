@@ -1,4 +1,5 @@
 @extends('layouts.game.app')
+@section('body-class', 'screen-shell view-battle-pvp layout-shell')
 @section('content')
 @php
     $bgClass = 'battle-bg-plains';
@@ -11,8 +12,25 @@
     $p1Pct = $p1Max ? min(100, (int) floor(($p1Hp / $p1Max) * 100)) : 0;
     $p2Pct = $p2Max ? min(100, (int) floor(($p2Hp / $p2Max) * 100)) : 0;
     $recentTurns = $turns->count() > 5 ? $turns->slice(-5) : $turns;
+    $roomClosed = $room->status === \App\Enums\BattleRoomStatus::Closed;
+    $battleFinished = $battle->status === \App\Enums\BattleStatus::Finished;
+    $placeholderSprite = asset('assets/characters/placeholder.svg');
+    $p1SpriteRaw = $battle->player1Character?->sprite_url ?? '/assets/characters/placeholder.svg';
+    $p2SpriteRaw = $battle->player2Character?->sprite_url ?? '/assets/characters/placeholder.svg';
+    $p1SpriteUrl = str_starts_with($p1SpriteRaw, 'http') || str_starts_with($p1SpriteRaw, '//')
+        ? $p1SpriteRaw
+        : asset(ltrim($p1SpriteRaw, '/'));
+    $p2SpriteUrl = str_starts_with($p2SpriteRaw, 'http') || str_starts_with($p2SpriteRaw, '//')
+        ? $p2SpriteRaw
+        : asset(ltrim($p2SpriteRaw, '/'));
+    $resultText = 'Empate';
+    if ($battle->result === 'p1_win') {
+        $resultText = $playerSide === 'p1' ? 'Has ganado' : 'Has perdido';
+    } elseif ($battle->result === 'p2_win') {
+        $resultText = $playerSide === 'p2' ? 'Has ganado' : 'Has perdido';
+    }
 @endphp
-<div class="container py-4">
+<div class="container py-4 battle-shell">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <div>
             <h1 class="h3 mb-1">Batalla PVP</h1>
@@ -41,7 +59,12 @@
                         <div class="battle-hp-bar-fill" style="width: {{ $p1Pct }}%"></div>
                     </div>
                 </div>
-                <div class="battle-sprite battle-sprite-player" aria-hidden="true"></div>
+                <img
+                    src="{{ $p1SpriteUrl }}"
+                    alt="Sprite del jugador"
+                    class="battle-sprite-img"
+                    onerror="this.onerror=null;this.src='{{ $placeholderSprite }}';"
+                >
                 <div class="battle-sprite-label">Jugador</div>
             </div>
             <div class="battle-side battle-side-right">
@@ -54,25 +77,19 @@
                         <div class="battle-hp-bar-fill battle-hp-bar-fill-danger" style="width: {{ $p2Pct }}%"></div>
                     </div>
                 </div>
-                <div class="battle-sprite battle-sprite-rival" aria-hidden="true"></div>
+                <img
+                    src="{{ $p2SpriteUrl }}"
+                    alt="Sprite del rival"
+                    class="battle-sprite-img battle-sprite-img-rival"
+                    onerror="this.onerror=null;this.src='{{ $placeholderSprite }}';"
+                >
                 <div class="battle-sprite-label">Rival</div>
             </div>
         </div>
     </div>
 
     <div class="battle-panel mt-3">
-        @if($battle->status->value === 'finished')
-            <div class="battle-panel-header">
-                <div class="fw-semibold">Batalla finalizada</div>
-                <div class="small text-secondary">Resultado: {{ $battle->result ?? 'n/a' }}</div>
-            </div>
-            <div class="battle-panel-actions">
-                <form method="POST" action="{{ route('pvp.rooms.close', $room) }}">
-                    @csrf
-                    <button type="submit" class="battle-action-btn battle-action-btn-danger">Cerrar sala</button>
-                </form>
-            </div>
-        @else
+        @if(!$battleFinished && !$roomClosed)
             <div class="battle-panel-header">
                 <div class="fw-semibold">Elige tu accion</div>
                 @if($myPending && !$theirPending)
@@ -127,4 +144,30 @@
         </div>
     </div>
 </div>
+
+@if($battleFinished || $roomClosed)
+    <div class="battle-overlay" role="dialog" aria-modal="true">
+        <div class="battle-overlay-card">
+            @if($roomClosed)
+                <div class="battle-overlay-title">Sala cerrada por el anfitrion</div>
+                <div class="battle-overlay-subtitle">Vuelve al lobby para unirte a otra sala.</div>
+                <a href="{{ route('pvp.lobby') }}" class="btn btn-light w-100">Volver</a>
+            @else
+                <div class="battle-overlay-title">Fin del duelo</div>
+                <div class="battle-overlay-subtitle">{{ $resultText }}</div>
+                @if($room->owner_user_id === auth()->id())
+                    <form method="POST" action="{{ route('pvp.rooms.close', $room) }}">
+                        @csrf
+                        <button type="submit" class="btn btn-danger w-100">Salir y cerrar sala</button>
+                    </form>
+                @else
+                    <form method="POST" action="{{ route('pvp.rooms.leave', $room) }}">
+                        @csrf
+                        <button type="submit" class="btn btn-light w-100">Salir</button>
+                    </form>
+                @endif
+            @endif
+        </div>
+    </div>
+@endif
 @endsection
