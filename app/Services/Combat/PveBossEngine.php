@@ -14,6 +14,15 @@ use RuntimeException;
 
 class PveBossEngine
 {
+    private const BOSS_HP_MULT = 0.55;
+    private const BOSS_ATK_MULT = 0.60;
+    private const BOSS_DEF_MULT = 0.50;
+    private const BASE_POWER = 6.0;
+    private const DEF_K = 8.0;
+    private const DEFEND_DAMAGE_MULT = 0.70;
+    private const BOSS_MIN_HIT_PCT = 0.01;
+    private const BOSS_PLAYER_MAX_HIT_PCT = 0.35;
+
     public function __construct(
         private CharacterStatsCalculator $statsCalculator,
         private MissionDifficultyService $difficultyService
@@ -55,9 +64,9 @@ class PveBossEngine
         $tierKey = $tier['key'] ?? 'easy';
         $tierConfig = $this->tierConfig($tierKey);
 
-        $bossHpMax = max(1, (int) floor($bossHpBase * $tierConfig['boss_hp_mult']));
-        $bossAttack = max(1, (int) floor($bossAttackBase * $tierConfig['boss_atk_mult']));
-        $bossDefense = max(0, (int) floor($bossDefenseBase * $tierConfig['boss_def_mult']));
+        $bossHpMax = max(1, (int) round($bossHpBase * $tierConfig['boss_hp_mult'] * self::BOSS_HP_MULT));
+        $bossAttack = max(1, (int) round($bossAttackBase * $tierConfig['boss_atk_mult'] * self::BOSS_ATK_MULT));
+        $bossDefense = max(0, (int) round($bossDefenseBase * $tierConfig['boss_def_mult'] * self::BOSS_DEF_MULT));
 
         $character = $run->character()->firstOrFail();
         $totalStats = $this->statsCalculator->getTotalStats($character);
@@ -138,19 +147,23 @@ class PveBossEngine
         $p1Defending = $playerAction === 'defend';
         $p2Defending = $bossAction === 'defend';
 
-        $defMultiplier = (float) config('combat.defend_defense_multiplier', 1.8);
-        $p1DefEff = $this->effectiveDefense((int) ($statsP1['defense'] ?? 0), $p1Defending, $defMultiplier);
-        $p2DefEff = $this->effectiveDefense((int) ($statsP2['defense'] ?? 0), $p2Defending, $defMultiplier);
+        $p1DefEff = (int) ($statsP1['defense'] ?? 0);
+        $p2DefEff = (int) ($statsP2['defense'] ?? 0);
 
         $notes = [];
         $notes[] = 'Turno ' . $turnNumber;
 
         $damageToP1 = 0;
         $damageToP2 = 0;
+        $damageInfoToP1 = $this->emptyDamageInfo($p1DefEff, $p1Defending);
+        $damageInfoToP2 = $this->emptyDamageInfo($p2DefEff, $p2Defending);
         $secondSkipped = false;
 
         $potionsLeft = $battle->p1_potions_left ?? (int) config('combat.potion.max_charges', 2);
         $healAmount = 0;
+
+        $p1HpBefore = $p1Hp;
+        $p2HpBefore = $p2Hp;
 
         if ($playerAction === 'potion') {
             if ($potionsLeft <= 0) {
@@ -162,17 +175,20 @@ class PveBossEngine
                 $notes[] = 'Jugador usa pocion y cura ' . $healAmount . ' HP.';
             }
         } elseif ($playerAction === 'attack' || $playerAction === 'magic') {
-            $damageToP2 = $this->computePlayerDamage($playerAction, $statsP1, $p2DefEff);
-            $damageToP2 = $this->applyDamageCap($damageToP2, $p2HpMax, $maxHitPct);
+            $damageInfoToP2 = $this->computePveDamage($playerAction, $statsP1, $p2DefEff, $p2Defending);
+            $damageToP2 = $this->applyDamageCap($damageInfoToP2['final'], $p2HpMax, $maxHitPct);
+            $damageToP2 = max($damageToP2, $this->minBossDamage($p2HpMax));
             $p2Hp -= $damageToP2;
         }
+
+        $p1HpBeforeBoss = $p1Hp;
 
         if ($p2Hp <= 0) {
             $secondSkipped = true;
         } else {
             if ($bossAction === 'attack') {
-                $damageToP1 = $this->computeBossDamage($statsP2, $p1DefEff);
-                $damageToP1 = $this->applyDamageCap($damageToP1, $p1HpMax, $maxHitPct);
+                $damageInfoToP1 = $this->computePveDamage('attack', $statsP2, $p1DefEff, $p1Defending);
+                $damageToP1 = $this->applyDamageCap($damageInfoToP1['final'], $p1HpMax, self::BOSS_PLAYER_MAX_HIT_PCT);
                 $p1Hp -= $damageToP1;
             }
         }
@@ -182,8 +198,26 @@ class PveBossEngine
 
         $notes[] = 'Jugador usa ' . $this->label($playerAction) . '.';
         $notes[] = 'Boss usa ' . $this->label($bossAction) . '.';
-        $notes[] = 'Danio al boss: ' . $damageToP2 . '.';
-        $notes[] = 'Danio al jugador: ' . $damageToP1 . '.';
+        $notes[] = sprintf(
+            'Daño al boss: %d (raw %.2f). ATK %.2f vs DEF %.2f. DefendMult %.2f. HP boss: %d -> %d.',
+            $damageToP2,
+            $damageInfoToP2['raw'],
+            $damageInfoToP2['atk_used'],
+            $damageInfoToP2['def_used'],
+            $damageInfoToP2['defend_mult'],
+            $p2HpBefore,
+            $p2Hp
+        );
+        $notes[] = sprintf(
+            'Daño al jugador: %d (raw %.2f). ATK %.2f vs DEF %.2f. DefendMult %.2f. HP jugador: %d -> %d.',
+            $damageToP1,
+            $damageInfoToP1['raw'],
+            $damageInfoToP1['atk_used'],
+            $damageInfoToP1['def_used'],
+            $damageInfoToP1['defend_mult'],
+            $p1HpBeforeBoss,
+            $p1Hp
+        );
         $notes[] = 'HP jugador: ' . $p1Hp . ' / ' . ($p1HpMax > 0 ? $p1HpMax : 0) . '.';
         $notes[] = 'HP boss: ' . $p2Hp . ' / ' . ($p2HpMax > 0 ? $p2HpMax : 0) . '.';
 
@@ -249,33 +283,47 @@ class PveBossEngine
         return $turnNumber % $every === 0 ? 'attack' : 'defend';
     }
 
-    private function computePlayerDamage(string $action, array $attackerStats, int $targetDefEff): int
+    /**
+     * @return array{raw: float, final: int, atk_used: float, def_used: float, defend_mult: float}
+     */
+    private function computePveDamage(string $action, array $attackerStats, int $targetDefEff, bool $targetDefending): array
     {
-        $attack = (int) ($attackerStats['attack'] ?? 0);
-        $magic = (int) ($attackerStats['magic'] ?? 0);
+        if ($action !== 'attack' && $action !== 'magic') {
+            return $this->emptyDamageInfo($targetDefEff, $targetDefending);
+        }
 
-        $attackDefMultiplier = (float) config('combat.damage.attack_defense_multiplier', 0.6);
-        $magicMultiplier = (float) config('combat.damage.magic_multiplier', 1.2);
-        $magicDefMultiplier = (float) config('combat.damage.magic_defense_multiplier', 0.3);
+        $attack = (float) ($attackerStats['attack'] ?? 0);
+        $magic = (float) ($attackerStats['magic'] ?? 0);
+        $atkUsed = $action === 'magic'
+            ? ($magic > 0 ? $magic : ($attack * 0.90))
+            : $attack;
 
-        return match ($action) {
-            'attack' => max(1, (int) floor($attack - ($targetDefEff * $attackDefMultiplier))),
-            'magic' => max(1, (int) floor(($magic * $magicMultiplier) - ($targetDefEff * $magicDefMultiplier))),
-            default => 0,
-        };
+        $defendMult = $targetDefending ? self::DEFEND_DAMAGE_MULT : 1.0;
+        $raw = ($atkUsed * self::BASE_POWER) / ((float) $targetDefEff + self::DEF_K);
+        $raw *= $defendMult;
+        $raw = max(0.25, $raw);
+
+        return [
+            'raw' => $raw,
+            'final' => max(1, (int) round($raw)),
+            'atk_used' => $atkUsed,
+            'def_used' => (float) $targetDefEff,
+            'defend_mult' => $defendMult,
+        ];
     }
 
-    private function computeBossDamage(array $attackerStats, int $targetDefEff): int
+    /**
+     * @return array{raw: float, final: int, atk_used: float, def_used: float, defend_mult: float}
+     */
+    private function emptyDamageInfo(int $targetDefEff, bool $targetDefending): array
     {
-        $attack = (int) ($attackerStats['attack'] ?? 0);
-        $attackDefMultiplier = (float) config('combat.damage.attack_defense_multiplier', 0.6);
-
-        return max(1, (int) floor($attack - ($targetDefEff * $attackDefMultiplier)));
-    }
-
-    private function effectiveDefense(int $defense, bool $defending, float $multiplier): int
-    {
-        return $defending ? (int) floor($defense * $multiplier) : $defense;
+        return [
+            'raw' => 0.0,
+            'final' => 0,
+            'atk_used' => 0.0,
+            'def_used' => (float) $targetDefEff,
+            'defend_mult' => $targetDefending ? self::DEFEND_DAMAGE_MULT : 1.0,
+        ];
     }
 
     private function applyDamageCap(int $damage, int $targetHpMax, float $capPct): int
@@ -290,6 +338,11 @@ class PveBossEngine
         }
 
         return min($damage, $cap);
+    }
+
+    private function minBossDamage(int $bossHpMax): int
+    {
+        return max(1, (int) round($bossHpMax * self::BOSS_MIN_HIT_PCT));
     }
 
     private function potionHealAmount(int $hpMax): int

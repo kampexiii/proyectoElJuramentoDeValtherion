@@ -22,8 +22,8 @@ class CombatLogFormatter
         $lines[] = sprintf('P1 usa %s', $this->label($p1Action));
         $lines[] = sprintf('P2 usa %s', $this->label($p2Action));
         $lines[] = sprintf('Actua primero: %s', strtoupper($firstActor));
-        $lines[] = sprintf('Danio a P1: %d', $damageToP1);
-        $lines[] = sprintf('Danio a P2: %d', $damageToP2);
+        $lines[] = sprintf('Daño a P1: %d', $damageToP1);
+        $lines[] = sprintf('Daño a P2: %d', $damageToP2);
         $lines[] = sprintf('HP P1: %d | HP P2: %d', $p1Hp, $p2Hp);
 
         if ($secondSkipped) {
