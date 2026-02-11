@@ -121,15 +121,14 @@
 
 .view-battle .battle-actions {
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: nowrap;
     gap: clamp(1vh, 2vh, 2.5vh);
+    overflow-x: auto;
 }
 
-@media (min-width: 48rem) {
-    .view-battle .battle-actions {
-        grid-template-columns: repeat(4, 1fr);
-    }
+.view-battle .battle-actions > * {
+    flex: 0 0 auto;
 }
 
 .view-battle .battle-arena,
@@ -193,6 +192,48 @@
     align-items: flex-end;
     justify-content: space-between;
     gap: clamp(2vw, 4vw, 6vw);
+}
+
+.view-battle-pvp .battle-action-grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    overflow-x: auto;
+}
+
+.view-battle-pvp .battle-action-grid > * {
+    flex: 0 0 auto;
+}
+
+.view-battle .battle-turn-log,
+.view-battle-pvp .battle-turn-log {
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background: rgba(15, 23, 42, 0.35);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.view-battle .battle-turn-row,
+.view-battle-pvp .battle-turn-row {
+    line-height: 1.4;
+}
+
+.view-battle .battle-timer,
+.view-battle-pvp .battle-timer,
+.view-battle-boss .battle-timer {
+    position: fixed;
+    top: clamp(1vh, 2vh, 3vh);
+    right: clamp(2vw, 3vw, 4vw);
+    z-index: 1200;
+    padding: clamp(0.4rem, 1vw, 0.75rem) clamp(0.6rem, 1.2vw, 1rem);
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.9);
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.02em;
 }
 
 .view-battle-pvp .battle-side {

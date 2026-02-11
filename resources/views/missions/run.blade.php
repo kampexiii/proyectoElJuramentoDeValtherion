@@ -80,7 +80,6 @@
                                         @if ($choice->outcome_text)
                                             <div class="small text-secondary">{{ $choice->outcome_text }}</div>
                                         @endif
-                                        <div class="small text-secondary">Dificultad: {{ $choice->difficulty_points }}</div>
                                     </div>
                                 </label>
                             @endforeach
@@ -91,15 +90,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-lg-4">
-            <div class="card bg-zinc-900 border-secondary text-white shadow-sm">
-                <div class="card-body p-3">
-                    <div class="small text-secondary">Danger score: {{ $run->danger_score }}</div>
-                    <div class="small text-secondary">Wound stacks: {{ $run->wound_stacks }}</div>
-                    <div class="small text-secondary">Estado: {{ $run->status->value ?? $run->status }}</div>
-                </div>
-            </div>
-        </div>
+        <div class="col-12 col-lg-4"></div>
     </div>
 </div>
 @endsection

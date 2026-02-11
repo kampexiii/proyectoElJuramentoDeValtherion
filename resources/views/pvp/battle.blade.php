@@ -11,7 +11,7 @@
     $p2Hp = max(0, (int) $battle->p2_hp);
     $p1Pct = $p1Max ? min(100, (int) floor(($p1Hp / $p1Max) * 100)) : 0;
     $p2Pct = $p2Max ? min(100, (int) floor(($p2Hp / $p2Max) * 100)) : 0;
-    $recentTurns = $turns->count() > 5 ? $turns->slice(-5) : $turns;
+    $lastTurn = $turns->last();
     $roomClosed = $room->status === \App\Enums\BattleRoomStatus::Closed;
     $battleFinished = $battle->status === \App\Enums\BattleStatus::Finished;
     $placeholderSprite = asset('assets/characters/placeholder.svg');
@@ -31,6 +31,13 @@
     }
 @endphp
 <div class="container py-4 battle-shell">
+    <div
+        id="turn-timer"
+        class="battle-timer"
+        style="position: fixed; top: 1rem; right: 1rem; z-index: 2000; padding: 0.4rem 0.75rem; border-radius: 999px; background: rgba(15, 23, 42, 0.9); color: #fff; font-weight: 600;"
+    >
+        ⏳ 60s
+    </div>
     <div class="d-flex align-items-center justify-content-between mb-3">
         <div>
             <h1 class="h3 mb-1">Batalla PVP</h1>
@@ -88,6 +95,23 @@
         </div>
     </div>
 
+    <div class="battle-turn-log mt-3">
+        @if(!$lastTurn)
+            <div class="text-secondary">Aun no hay turnos registrados.</div>
+        @else
+            @php
+                $notes = $lastTurn->notes_json ?? [];
+                $lines = $notes['lines'] ?? [];
+                $summary = $notes['summary'] ?? ('Turno ' . $lastTurn->turn_number);
+                $detailText = !empty($lines)
+                    ? implode(' | ', array_map('strip_tags', $lines))
+                    : $summary;
+            @endphp
+            <div class="battle-turn-row fw-semibold">Turno {{ $lastTurn->turn_number }}</div>
+            <div class="battle-turn-row small text-secondary">{{ $detailText }}</div>
+        @endif
+    </div>
+
     <div class="battle-panel mt-3">
         @if(!$battleFinished && !$roomClosed)
             <div class="battle-panel-header">
@@ -111,39 +135,89 @@
                         Defender
                     </button>
                 </form>
-                <button type="button" class="battle-action-btn battle-action-btn-ghost" disabled>
-                    Rendirse (proximamente)
-                </button>
             </div>
         @endif
     </div>
-
-    <div class="card mt-3">
-        <div class="card-header">Registro de turnos</div>
-        <div class="card-body">
-            @if($recentTurns->isEmpty())
-                <div class="text-secondary">Aun no hay turnos registrados.</div>
-            @else
-                <div class="list-group">
-                    @foreach($recentTurns as $turn)
-                        @php
-                            $notes = $turn->notes_json ?? [];
-                            $lines = $notes['lines'] ?? [];
-                        @endphp
-                        <div class="list-group-item">
-                            <div class="fw-semibold">Turno {{ $turn->turn_number }}</div>
-                            @if(!empty($lines))
-                                <div class="small text-secondary">{!! implode('<br>', array_map('e', $lines)) !!}</div>
-                            @else
-                                <div class="small text-secondary">{{ $notes['summary'] ?? 'Sin detalles.' }}</div>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            @endif
-        </div>
-    </div>
 </div>
+
+<script>
+(() => {
+    const stateUrl = "{{ route('battle-rooms.state', $room) }}";
+    const autoResolveUrl = "{{ route('battle-rooms.auto-resolve', $room) }}";
+    const timerEl = document.getElementById('turn-timer');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    let stateVersion = null;
+    let turnNumber = null;
+    let serverUnix = null;
+    let deadlineUnix = null;
+    let lastSyncMs = Date.now();
+    let autoResolveTriggered = false;
+
+    const updateTimer = () => {
+        if (!timerEl || serverUnix === null || deadlineUnix === null) {
+            return;
+        }
+        const elapsed = (Date.now() - lastSyncMs) / 1000;
+        const remaining = Math.max(0, Math.ceil(deadlineUnix - (serverUnix + elapsed)));
+        timerEl.textContent = `⏳ ${remaining}s`;
+
+        if (remaining <= 0 && !autoResolveTriggered) {
+            autoResolveTriggered = true;
+            fetch(autoResolveUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken || '',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                credentials: 'same-origin',
+            }).finally(() => {
+                window.location.reload();
+            });
+        }
+    };
+
+    const applyState = (data) => {
+        if (!data) {
+            return;
+        }
+
+        if (stateVersion !== null && data.state_version !== stateVersion) {
+            window.location.reload();
+            return;
+        }
+
+        if (data.room_status && data.room_status !== 'active') {
+            window.location.reload();
+            return;
+        }
+
+        if (turnNumber !== null && data.turn_number !== turnNumber) {
+            autoResolveTriggered = false;
+        }
+
+        stateVersion = data.state_version;
+        turnNumber = data.turn_number;
+        serverUnix = data.server_unix;
+        deadlineUnix = data.turn_deadline_unix;
+        lastSyncMs = Date.now();
+    };
+
+    const poll = () => {
+        fetch(stateUrl, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin',
+        })
+            .then((response) => (response.ok ? response.json() : null))
+            .then((data) => applyState(data))
+            .catch(() => {});
+    };
+
+    poll();
+    updateTimer();
+    setInterval(poll, 2000);
+    setInterval(updateTimer, 1000);
+})();
+</script>
 
 @if($battleFinished || $roomClosed)
     <div class="battle-overlay" role="dialog" aria-modal="true">

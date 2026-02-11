@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
@@ -22,6 +23,8 @@ use App\Http\Controllers\PotionController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Pvp\BattleRoomController;
 use App\Http\Controllers\Pvp\BattleController;
+use App\Http\Controllers\Battles\BattleRoomStateController;
+use App\Http\Controllers\Battles\BattleRoomAutoResolveController;
 
 use App\Http\Controllers\ProfileController;
 
@@ -78,6 +81,7 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
         Route::post('/misiones/runs/{run}/abandon', [MissionRunController::class, 'abandon'])->name('game.missions.abandon');
         Route::get('/misiones/run/{run}/boss', [BossBattleController::class, 'show'])->name('game.missions.boss.show');
         Route::post('/misiones/run/{run}/boss/action', [BossBattleController::class, 'action'])->name('game.missions.boss.action');
+        Route::get('/misiones/run/{run}/boss/state', [BattleRoomStateController::class, 'bossState'])->name('game.missions.boss.state');
         Route::post('/misiones/runs/{run}/boss', [BossBattleController::class, 'action'])->name('game.missions.boss.fight');
         Route::get('/peleas', function () {
             return redirect()->route('pvp.lobby');
@@ -92,6 +96,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/battle-rooms/{room}/state', BattleRoomStateController::class)->name('battle-rooms.state');
+    Route::post('/battle-rooms/{room}/auto-resolve', BattleRoomAutoResolveController::class)->name('battle-rooms.auto-resolve');
+
     Route::prefix('pvp')->name('pvp.')->group(function () {
         Route::get('/', [BattleRoomController::class, 'index'])->name('lobby');
         Route::post('/rooms', [BattleRoomController::class, 'store'])->name('rooms.store');

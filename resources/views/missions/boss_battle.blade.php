@@ -1,6 +1,6 @@
 @extends('layouts.game.app')
 
-@section('body-class', 'screen-shell view-battle layout-shell')
+@section('body-class', 'screen-shell view-battle view-battle-boss layout-shell')
 @section('main-class', 'layout-main')
 @section('content')
 @php
@@ -41,8 +41,16 @@
     $battleFinished = $battle->status === \App\Enums\BattleStatus::Finished;
     $resultLabel = $battle->result === 'p1_win' ? 'VICTORIA' : ($battle->result === 'p2_win' ? 'DERROTA' : 'FIN');
     $resultText = $battle->result === 'p1_win' ? 'Has ganado' : ($battle->result === 'p2_win' ? 'Has perdido' : 'Empate');
+    $lastTurn = $turns->last();
 @endphp
 <div class="view-battle w-100 h-100 d-flex align-items-center justify-content-center">
+    <div
+        id="turn-timer"
+        class="battle-timer"
+        style="position: fixed; top: 1rem; right: 1rem; z-index: 2000; padding: 0.4rem 0.75rem; border-radius: 999px; background: rgba(15, 23, 42, 0.9); color: #fff; font-weight: 600;"
+    >
+        ⏳ 60s
+    </div>
     <section class="battle-arena w-100">
         <div class="battle-header">
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
@@ -109,6 +117,23 @@
                     </div>
                 </div>
 
+                <div class="battle-turn-log mt-3">
+                    @if(!$lastTurn)
+                        <div class="text-secondary">Aun no hay turnos registrados.</div>
+                    @else
+                        @php
+                            $notes = $lastTurn->notes_json ?? [];
+                            $lines = $notes['lines'] ?? [];
+                            $summary = $notes['summary'] ?? ('Turno ' . $lastTurn->turn_number);
+                            $detailText = !empty($lines)
+                                ? implode(' | ', array_map('strip_tags', $lines))
+                                : $summary;
+                        @endphp
+                        <div class="battle-turn-row fw-semibold">Turno {{ $lastTurn->turn_number }}</div>
+                        <div class="battle-turn-row small text-secondary">{{ $detailText }}</div>
+                    @endif
+                </div>
+
                 <div class="card">
                     <div class="card-body">
                         @if ($battleFinished)
@@ -131,35 +156,70 @@
                     </div>
                 </div>
             </div>
-
-            <aside class="battle-aside card">
-                <div class="card-body">
-                    <div class="fw-semibold mb-2">Registro de turnos</div>
-                    @if($turns->isEmpty())
-                        <div class="text-secondary">Aun no hay turnos registrados.</div>
-                    @else
-                        <div class="list-group">
-                            @foreach($turns as $turn)
-                                @php
-                                    $notes = $turn->notes_json ?? [];
-                                    $lines = $notes['lines'] ?? [];
-                                @endphp
-                                <div class="list-group-item">
-                                    <div class="fw-semibold">Turno {{ $turn->turn_number }}</div>
-                                    @if(!empty($lines))
-                                        <div class="small text-secondary">{!! implode('<br>', array_map('e', $lines)) !!}</div>
-                                    @else
-                                        <div class="small text-secondary">{{ $notes['summary'] ?? 'Sin detalles.' }}</div>
-                                    @endif
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </aside>
         </div>
     </section>
 </div>
+
+<script>
+(() => {
+    const stateUrl = "{{ route('game.missions.boss.state', $run) }}";
+    const timerEl = document.getElementById('turn-timer');
+    let stateVersion = null;
+    let turnNumber = null;
+    let serverUnix = null;
+    let deadlineUnix = null;
+    let lastSyncMs = Date.now();
+
+    const updateTimer = () => {
+        if (!timerEl || serverUnix === null || deadlineUnix === null) {
+            return;
+        }
+        const elapsed = (Date.now() - lastSyncMs) / 1000;
+        const remaining = Math.max(0, Math.ceil(deadlineUnix - (serverUnix + elapsed)));
+        timerEl.textContent = `⏳ ${remaining}s`;
+        if (remaining <= 0) {
+            window.location.reload();
+        }
+    };
+
+    const applyState = (data) => {
+        if (!data) {
+            return;
+        }
+
+        if (stateVersion !== null && data.state_version !== stateVersion) {
+            window.location.reload();
+            return;
+        }
+
+        if (data.room_status && data.room_status !== 'active') {
+            window.location.reload();
+            return;
+        }
+
+        stateVersion = data.state_version;
+        turnNumber = data.turn_number;
+        serverUnix = data.server_unix;
+        deadlineUnix = data.turn_deadline_unix;
+        lastSyncMs = Date.now();
+    };
+
+    const poll = () => {
+        fetch(stateUrl, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin',
+        })
+            .then((response) => (response.ok ? response.json() : null))
+            .then((data) => applyState(data))
+            .catch(() => {});
+    };
+
+    poll();
+    updateTimer();
+    setInterval(poll, 2000);
+    setInterval(updateTimer, 1000);
+})();
+</script>
 
 @if ($battleFinished)
     <div class="battle-overlay" role="dialog" aria-modal="true">

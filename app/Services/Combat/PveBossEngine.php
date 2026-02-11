@@ -26,8 +26,7 @@ class PveBossEngine
     public function __construct(
         private CharacterStatsCalculator $statsCalculator,
         private MissionDifficultyService $difficultyService
-    ) {
-    }
+    ) {}
 
     public function startBattleIfMissing(CharacterMissionRun $run): Battle
     {

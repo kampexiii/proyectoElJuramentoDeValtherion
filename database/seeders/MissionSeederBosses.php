@@ -47,8 +47,8 @@ class MissionSeederBosses extends Seeder
                 ['slug' => $missionSlug],
                 [
                     'title' => 'Mision: ' . $boss->name,
-                    'intro_text' => '[LORE TEMP] ' . $theme['intro'],
-                    'context_text' => '[LORE TEMP] ' . $theme['context'],
+                    'intro_text' => $theme['intro'],
+                    'context_text' => $theme['context'],
                     'status' => 'draft',
                     'repeatable' => false,
                     'base_race_points' => 20,
@@ -182,7 +182,7 @@ class MissionSeederBosses extends Seeder
                     'mission_id' => $mission->id,
                     'step_index' => $stepIndex,
                     'is_start' => $stepIndex === 1 && $index === 0,
-                    'body_text' => '[LORE TEMP] ' . $node['body'],
+                    'body_text' => $node['body'],
                 ];
 
                 if ($nodeColumns['title']) {
@@ -213,8 +213,8 @@ class MissionSeederBosses extends Seeder
                 foreach ($ordered as $order => $choice) {
                     $payload = [
                         'mission_node_id' => $nodeModel->id,
-                        'choice_text' => '[LORE TEMP] ' . $choice['choice_text'],
-                        'outcome_text' => '[LORE TEMP] ' . $choice['outcome_text'],
+                        'choice_text' => $choice['choice_text'],
+                        'outcome_text' => $choice['outcome_text'],
                         'difficulty_points' => (int) $choice['difficulty_points'],
                         'goes_to_boss' => $stepIndex === 6,
                         'order' => $order,
