@@ -12,7 +12,7 @@
     ];
 @endphp
 
-<!-- // Layout principal entre navbars (patrón tienda) -->
+<!-- Layout principal entre navbars (tienda) -->
 <main class="app-main equipamiento-viewport game-viewport">
     <div class="mb-3">
         <h2 class="h6">Stats actuales</h2>
@@ -43,7 +43,7 @@
     @push('scripts')
     <script src="{{ asset('js/equipamiento-stats-preview.js') }}"></script>
     <script>
-        // Controla el botón de usar poción según selección.
+        // Habilita el boton de pocion segun seleccion.
         (function () {
             const select = document.getElementById('potion-select');
             const button = document.getElementById('potion-submit');
@@ -121,7 +121,7 @@
                         @foreach ($items as $item)
                             <option value="{{ $item->id }}" @selected($currentId == $item->id)>
                                 {{ $item->name }}
-                                {{-- Montura real eliminado: ahora todas son equipables --}}
+                                {{-- Monturas: todas son equipables --}}
                             </option>
                         @endforeach
                     </select>

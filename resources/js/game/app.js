@@ -3,7 +3,7 @@ import './settings';
 import './profile';
 import './chat';
 
-// JS general zona logueada (migrado desde layouts si aplica)
+// JS base de zona logueada.
 (() => {
     const key = 'valtherion_theme';
     const root = document.documentElement;
@@ -25,7 +25,7 @@ import './chat';
     });
 })();
 
-// Medición segura de navbars para fijar el alto del main sin scroll.
+// Mide navbars para ajustar el alto del main.
 (() => {
     const root = document.documentElement;
 

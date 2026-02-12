@@ -8,7 +8,7 @@ Objetivo principal: **sitio completo (API + web) listo como tarde el lunes 2 de 
 - Zona logueada **sin scroll vertical ni horizontal**.
 - **Doble navbar** (superior e inferior) en TODO lo logueado.
 - **SEO-first** y **responsive-first**.
-- **No tocar** `.env` ni `database/database.sqlite`.
+- **No tocar** `.env` ni `database/db_proyecto_sevillano.sqlite`.
 - **No crear páginas ni layouts nuevos**: solo completar el `<main>` de cada sección existente.
 - **Admin** debe mostrar bloque visible de sesiones/cookies.
 - Cierre diario: **bitácora + commit + push**.

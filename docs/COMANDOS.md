@@ -29,7 +29,7 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -File "scripts\generate_entregable
 copy .env.example .env
 php artisan key:generate
 # (Editar manualmente .env: DB_CONNECTION=sqlite, DB_DATABASE=...etc)
-# (Crear database/database.sqlite si no existe)
+# (Crear database/db_proyecto_sevillano.sqlite si no existe)
 
 # Migración limpia y seed
 php artisan migrate:fresh --seed

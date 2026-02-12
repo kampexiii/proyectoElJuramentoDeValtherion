@@ -50,9 +50,10 @@ body.screen-shell > nav.navbar-game:last-of-type {
     height: var(--bottombar-h);
 }
 
-/* Paleta y estilos generales zona logueada */
-html, body {
-    height: 100dvh; /* Usamos dvh para navegadores móviles modernos */
+/* Paleta y estilos base de zona logueada */
+html,
+body {
+    height: 100dvh; /* 100dvh para viewport movil moderno */
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -74,7 +75,7 @@ body {
 
 main {
     flex: 1;
-    overflow: hidden; /* Evita scroll absoluto, el contenido debe ajustarse */
+    overflow: hidden; /* Evita scroll del body */
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -129,7 +130,7 @@ main > .battle-viewport {
     overflow: auto;
 }
 
-/* // Contenedor base reutilizable para pantallas tipo tienda */
+/* Contenedor base para pantallas tipo tienda */
 .app-main {
     flex: 1;
     min-height: 0;
@@ -141,7 +142,7 @@ main > .battle-viewport {
     gap: 0.75rem;
 }
 
-/* // Personaje editar: escalado fluido y grilla 2/1 */
+/* Personaje editar: escalado fluido y grilla 2/1 */
 .character-edit-viewport {
     --ui-scale: 0.8;
     --edit-gap: clamp(0.24rem, 0.16rem + 0.4vw, 0.7rem);
@@ -254,7 +255,7 @@ main > .battle-viewport {
         clamp(0.45rem, 0.35rem + 0.3vw, 0.7rem);
 }
 
-/* // Inventario: grilla 3/2/1 sin scroll interno */
+/* Inventario: grilla 3/2/1 sin scroll interno */
 .inventario-viewport .inventario-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -277,7 +278,7 @@ main > .battle-viewport {
     height: 100%;
 }
 
-/* Chat: tipografías y paddings fluidos */
+/* Chat: tipografias y paddings fluidos */
 .chat-viewport {
     --chat-gap: clamp(0.25rem, 0.15rem + 0.35vw, 0.6rem);
     --chat-pad: clamp(0.4rem, 0.3rem + 0.4vw, 0.8rem);
@@ -327,7 +328,7 @@ main > .battle-viewport {
     gap: var(--inv-gap);
 }
 
-/* // Inventario: títulos con spacing fluido (evita solape) */
+/* Inventario: titulos con espaciado fluido */
 .inventario-viewport .inventario-header {
     display: flex;
     align-items: flex-start;
@@ -359,7 +360,9 @@ main > .battle-viewport {
     main {
         padding: 0.5rem;
         height: auto;
-        min-height: calc(100dvh - var(--topbar-h, 0px) - var(--bottombar-h, 0px));
+        min-height: calc(
+            100dvh - var(--topbar-h, 0px) - var(--bottombar-h, 0px)
+        );
         overflow-y: auto;
     }
 

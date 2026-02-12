@@ -1,5 +1,5 @@
-// Actualiza los stats en tiempo real en la pantalla de equipamiento
-// Requiere que el backend exponga un endpoint para calcular stats dados los IDs de equipo seleccionados
+// Vista previa de stats en equipamiento.
+// Requiere el endpoint /game/equipamiento/stats-preview.
 
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('equipamiento-form');
@@ -26,14 +26,14 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify(data),
         })
-        .then(res => res.json())
-        .then(json => {
-            if (json.stats && statBox) {
-                statBox.innerHTML = Object.entries(json.stats).map(([k, v]) =>
-                    `<span class='me-2'>${k.charAt(0).toUpperCase() + k.slice(1)}: <strong>${v}</strong></span>`
-                ).join(' ');
-            }
-        });
+            .then(res => res.json())
+            .then(json => {
+                if (json.stats && statBox) {
+                    statBox.innerHTML = Object.entries(json.stats).map(([k, v]) =>
+                        `<span class='me-2'>${k.charAt(0).toUpperCase() + k.slice(1)}: <strong>${v}</strong></span>`
+                    ).join(' ');
+                }
+            });
     }
 
     selects.forEach(sel => {

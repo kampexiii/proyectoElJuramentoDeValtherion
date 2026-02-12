@@ -10,7 +10,7 @@ const reverbHost = import.meta.env.VITE_REVERB_HOST ?? window.location.hostname;
 const reverbPort = Number(import.meta.env.VITE_REVERB_PORT)
     || (reverbScheme === 'https' ? 443 : 80);
 
-// Conecta usando variables VITE_* para evitar localhost hardcodeado.
+// Inicializa Echo con variables VITE_*.
 if (reverbHost) {
     window.Echo = new Echo({
         broadcaster: 'reverb',

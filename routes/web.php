@@ -36,12 +36,11 @@ Route::view('/terminos', 'guest.legal.terms')->name('legal.terms');
 Route::view('/privacidad', 'guest.legal.privacy')->name('legal.privacy');
 Route::view('/lore', 'guest.lore')->name('legal.lore');
 
-// Se removió la ruta dedicada /prologo: el prólogo ahora es una sección
-// incluida directamente en la landing (`guest.sections.prologo`).
+// El prologo se incluye en la landing (guest.sections.prologo).
 
 Route::get('/home', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
 
-// Rutas del Juego (Placeholders)
+// Rutas del juego.
 Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
     Route::get('/personaje/crear', [CharacterController::class, 'create'])->name('game.personaje.create');
     Route::post('/personaje', [CharacterController::class, 'store'])->name('game.personaje.store');
@@ -66,11 +65,11 @@ Route::middleware(['auth', 'verified'])->prefix('game')->group(function () {
 
         Route::get('/tienda', [GameShopController::class, 'index'])->name('game.tienda');
         Route::post('/tienda/comprar', [GameShopController::class, 'buy'])->name('game.tienda.comprar');
-        // Inventario ahora redirige a la armería.
+        // Inventario redirige a la armeria.
         Route::get('/inventario', function () {
             return redirect()->route('game.equipamiento.edit');
         })->name('game.inventario');
-        // Uso de pociones desde equipamiento.
+        // Pociones desde equipamiento.
         Route::post('/pociones/usar', [PotionController::class, 'usePotionFromSelection'])->name('game.pociones.usar');
         Route::post('/inventario/pociones/usar/{item}', [PotionController::class, 'usePotion'])->name('game.inventario.pociones.usar');
         Route::get('/misiones', [PlayerMissionController::class, 'index'])->name('game.missions.index');
@@ -115,7 +114,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Panel de Administración
+// Panel de administracion.
 Route::get('/admin/login', [AdminAuthenticatedSessionController::class, 'create'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthenticatedSessionController::class, 'store'])->name('admin.login.store');
 

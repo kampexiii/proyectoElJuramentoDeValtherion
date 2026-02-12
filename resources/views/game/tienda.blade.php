@@ -2,7 +2,7 @@
 
 @section('content')
 @php
-    // Helpers de texto para mantener la tienda compacta y legible.
+    // Helpers de texto para etiquetas de tienda.
     $slotLabel = function ($item) {
         $slotKey = $item->slot ?? $item->type ?? '';
         return match ($slotKey) {
@@ -17,7 +17,7 @@
     };
 
     $bonusLabel = function ($item) {
-        // // Prioriza bonuses_json (acepta formatos anidados) y cae a columnas legacy bonus_*.
+        // Prioriza bonuses_json y fallback a bonus_* legacy.
         $bonuses = $item->bonuses_json ?? [];
         if (is_string($bonuses)) {
             $decoded = json_decode($bonuses, true);
@@ -66,7 +66,7 @@
     @endif
 
     <div class="shop-rows">
-        @php // Secciones fijas, misma estructura en tablet/portátil/desktop. @endphp
+        @php // Secciones fijas con la misma estructura responsiva. @endphp
         <section class="shop-section">
             <div class="shop-grid">
                 @for ($i = 0; $i < 3; $i++)

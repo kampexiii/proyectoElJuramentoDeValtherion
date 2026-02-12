@@ -21,9 +21,13 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $this->get('/dashboard');
+
         $response = $this->post('/login', [
             'email' => $user->email,
             'password' => 'password',
+            'accept_cookies' => 'on',
+            'accept_terms' => 'on',
         ]);
 
         $this->assertAuthenticated();
@@ -37,6 +41,8 @@ class AuthenticationTest extends TestCase
         $this->post('/login', [
             'email' => $user->email,
             'password' => 'wrong-password',
+            'accept_cookies' => 'on',
+            'accept_terms' => 'on',
         ]);
 
         $this->assertGuest();

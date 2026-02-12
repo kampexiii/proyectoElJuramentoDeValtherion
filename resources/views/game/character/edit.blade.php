@@ -1,9 +1,9 @@
 @extends('layouts.game.app')
 
 @section('content')
-<!-- // Layout base compartido (tienda pattern) -->
+<!-- Layout base compartido (tienda) -->
 <div class="app-main character-edit-viewport game-viewport">
-    <!-- // Grilla responsive 2/1 sin scroll interno -->
+    <!-- Grilla responsive 2/1 sin scroll interno -->
     <div class="character-edit-grid align-items-stretch">
         <div class="character-edit-panel">
             <div class="card bg-zinc-900 border-secondary text-white shadow-sm edit-card">
@@ -63,7 +63,6 @@
                                     </div>
                                 </div>
                             @endforeach
-                            <!-- HP Bar -->
                             <div>
                                 <div class="d-flex justify-content-between small">
                                     <span>HP <span class="text-secondary">(Base {{ $baseStats['hp'] ?? 0 }})</span></span>

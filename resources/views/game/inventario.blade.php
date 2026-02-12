@@ -1,7 +1,7 @@
 @extends('layouts.game.app')
 
 @section('content')
-<!-- // Layout base compartido (tienda pattern) -->
+<!-- Layout base compartido (tienda) -->
 <main class="app-main inventario-viewport game-viewport">
     <div class="game-stack">
         <div class="game-section inventario-section">
@@ -16,7 +16,7 @@
             @if ($inventory->count() > 6)
                 <p class="small text-secondary mt-2 mb-0">Ver más (próximamente).</p>
             @else
-                <!-- // Grilla responsive 3/2/1 -->
+                <!-- Grilla responsive 3/2/1 -->
                 <div class="inventario-grid">
                     @for ($i = 0; $i < 6; $i++)
                         <div>
@@ -51,7 +51,7 @@
             @endphp
 
             @if ($potions->count() > 0)
-                <!-- // Grilla responsive 3/2/1 -->
+                <!-- Grilla responsive 3/2/1 -->
                 <div class="inventario-grid">
                     @foreach ($potions as $inv)
                         <div>
