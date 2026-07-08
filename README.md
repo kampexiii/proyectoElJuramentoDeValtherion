@@ -134,3 +134,11 @@ Para ver la planificacion, diagramas, bitacora y documentacion tecnica, consulta
 Proyecto desarrollado por Kampexiii como proyecto final para 2º DAW.
 
 GitHub: @kampexiii
+
+<!-- ORGANIZACION-PROFESIONAL-20260708 -->
+## Organización profesional
+
+- Carpeta canónica local: `Juego-Movil-Valtherion`.
+- Remoto actual: `kampexiii/proyectoElJuramentoDeValtherion`.
+- Enfoque: transformar la base web existente en una línea de juego móvil.
+- Próximo paso recomendado: crear un documento de visión móvil con loop principal, pantallas, monetización si aplica y alcance MVP.
